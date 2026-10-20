@@ -44,6 +44,31 @@ Los resultados son trazables y no esconden supuestos.
 | Reporte de calidad del caso | Que el usuario sepa qué tan confiable es el resultado antes de interpretarlo |
 | Visualización y exportación | Que el resultado pueda leerse y reutilizarse fuera de la herramienta |
 
+## Clarifications
+
+### Session 2026-10-19
+
+- Q: ¿Qué niveles de tensión del SIN debe incluir la red que se construye a partir de PARATEC?
+  → A: STN + STR (≥ 57,5 kV). Primero se había respondido "solo STN"; el usuario lo cambió
+  durante la misma sesión.
+- Q: ¿Qué pasa con los generadores del despacho que, según PARATEC, se conectan por debajo del
+  nivel modelado? → A: Su potencia se traslada como inyección a la barra modelada de la
+  frontera a la que pertenecen, y cada traslado queda en el reporte de calidad. Al cambiar el
+  alcance a STN + STR, la frontera pasa a ser STR/SDL (< 57,5 kV).
+- Q: ¿De dónde sale la demanda del periodo y cómo se reparte entre las barras? → A: De la
+  demanda por barra del *Pronóstico oficial de demanda definitivo* publicado por XM
+  (https://www.xm.com.co/generaci%C3%B3n/informes-despacho/pronostico-oficial-de-demanda-definitivo),
+  archivo diario `PRON_BARRA<MMDD>`, que trae por barra la energía activa y reactiva de los 24
+  periodos.
+- Q: ¿Qué se hace con la fila `Perd.PSTR` (pérdidas del STR asignadas a cada barra) del
+  pronóstico de demanda? → A: Se suma a la demanda activa de la barra (Ener.Act. + Perd.PSTR).
+  Son pérdidas asignadas a la demanda, distintas de las pérdidas de los activos (líneas y
+  transformadores) que calcula el flujo, así que no se cuentan dos veces.
+- Q: ¿Cómo se elige el generador o los generadores que absorben la diferencia entre generación
+  y demanda (referencia o slack)? → A: Referencia distribuida entre los generadores despachados,
+  en proporción a su potencia programada; una barra fija configurada sirve como referencia de
+  ángulo.
+
 ## Escenarios de usuario y pruebas *(obligatorio)*
 
 ### Historia de usuario 1 - Correr un flujo de potencia con datos incluidos (Prioridad: P1, MVP)
@@ -70,8 +95,9 @@ demo produce un resultado convergido con trazabilidad completa.
    el sistema muestra el estado `no_convergio` con el número de iteraciones, el mayor
    desbalance y las barras donde ocurre, y no muestra tensiones ni flujos como si fueran
    válidos.
-4. **Given** una fecha seleccionada sin despacho disponible, **When** el usuario intenta
-   ejecutar, **Then** el sistema bloquea la ejecución e indica qué dato falta y cómo obtenerlo.
+4. **Given** una fecha seleccionada sin despacho o sin pronóstico de demanda disponible,
+   **When** el usuario intenta ejecutar, **Then** el sistema bloquea la ejecución e indica qué
+   dato falta y cómo obtenerlo.
 
 ---
 
@@ -162,13 +188,16 @@ vista de red, y la exportación produce archivos que coinciden valor a valor con
 - Planta que cambió de nombre entre la fecha del despacho y la del snapshot de PARATEC → se
   resuelve solo mediante la tabla de equivalencias versionada; si no está, queda como no
   ubicada.
+- Generador conectado por debajo de 57,5 kV sin frontera STR/SDL identificable → queda como no
+  ubicado, con su potencia programada en el reporte.
 - Fechas de snapshot de PARATEC y de despacho distintas → se permite, pero el resultado lo
   advierte de forma visible.
 - Snapshot cuyo checksum no coincide con su manifiesto → no se usa y se informa la corrupción.
-- Isla sin generador de referencia → sus barras quedan sin energizar y se reportan; no bloquean
+- Isla sin generador despachado que pueda actuar como referencia → sus barras quedan sin energizar y se reportan; no bloquean
   el resto del cálculo.
 - Generación ubicada muy distinta de la demanda asignada → se ejecuta, pero la diferencia queda
-  explícita en el balance (la absorbe la referencia).
+  explícita en el balance (la absorbe la referencia distribuida entre los generadores
+  despachados).
 
 ## Requisitos *(obligatorio)*
 
@@ -180,12 +209,14 @@ Tipos de patrón EARS: **[U]** Ubicuo · **[E]** Por evento (Cuando) · **[S]** 
 **Datos y snapshots**
 
 - **FR-001 [U]**: El sistema DEBE incluir en el repositorio al menos un snapshot de parámetros
-  PARATEC y el despacho programado de la misma fecha.
+  PARATEC, el despacho programado y el pronóstico oficial de demanda de la misma fecha.
 - **FR-002 [U]**: El sistema DEBE listar las fechas disponibles e indicar, para cada una, si
-  tiene parámetros PARATEC, despacho programado o ambos.
+  tiene parámetros PARATEC, despacho programado y pronóstico de demanda.
 - **FR-003 [E]**: Cuando el usuario ejecute el comando de actualización con una fecha, el
-  sistema DEBE descargar los parámetros técnicos de PARATEC y el despacho programado de esa
-  fecha y guardarlos como un snapshot nuevo con manifiesto.
+  sistema DEBE descargar los parámetros técnicos de PARATEC, el despacho programado y el
+  pronóstico oficial de demanda definitivo por barra de esa fecha, y guardarlos como un
+  snapshot nuevo con manifiesto. El manifiesto registra, para cada archivo de XM, su fecha de
+  última modificación en la fuente, porque XM puede republicar un archivo después de creado.
 - **FR-004 [N]**: Si ya existe un snapshot para la fecha solicitada, entonces el sistema DEBE
   abortar sin modificar archivos e informar el conflicto. (Ver "Decisiones pendientes": el
   borrador incluía una opción de forzar que contradice la inmutabilidad de snapshots.)
@@ -209,22 +240,36 @@ Tipos de patrón EARS: **[U]** Ubicuo · **[E]** Por evento (Cuando) · **[S]** 
 - **FR-013 [N]**: Si a un elemento de red le falta un parámetro obligatorio, entonces el sistema
   DEBE excluirlo o imputarlo según la regla configurada, marcándolo como `imputado` con el
   método de imputación y registrándolo en el reporte de calidad.
-- **FR-014 [U]**: El sistema DEBE asignar la demanda a las barras según
-  [NEEDS CLARIFICATION: ¿qué método de asignación de demanda por barra se usa? (a) archivo de
-  factores de distribución versionado y editable; (b) proporcional a la capacidad de
-  transformación hacia niveles inferiores; (c) demanda por barra ingresada por el usuario].
-- **FR-015 [U]**: El sistema DEBE definir la barra de referencia (slack) según
-  [NEEDS CLARIFICATION: ¿qué criterio de selección de la referencia se usa? (a) la elige el
-  usuario por caso; (b) un generador fijo configurado en el repositorio; (c) referencia
-  distribuida entre generadores despachados].
+- **FR-014 [U]**: El sistema DEBE asignar a cada barra, para el periodo, una demanda activa
+  igual a `Ener.Act.` + `Perd.PSTR` y una demanda reactiva igual a `Ener.Reac`, tomadas del
+  pronóstico oficial de demanda definitivo de XM para esa fecha. El caso conserva por separado
+  los dos componentes de la demanda activa de cada barra. Las barras del pronóstico se asocian a barras del modelo mediante la
+  tabla de equivalencias versionada (FR-011). La demanda de barras por debajo de 57,5 kV (por
+  ejemplo, 44 kV o 13,2 kV) se agrega a la barra del STR de la frontera STR/SDL a la que
+  pertenecen, igual que los generadores (FR-019).
+- **FR-014a [N]**: Si una barra del pronóstico de demanda no se puede asociar a una barra STN
+  del modelo, entonces el sistema DEBE excluir esa demanda y registrar en el reporte de calidad
+  la barra y sus MW, que también aparecen como demanda no ubicada en el balance.
+- **FR-015 [U]**: El sistema DEBE usar una referencia (slack) distribuida: la diferencia entre
+  generación y demanda más pérdidas se reparte entre los generadores conciliados con potencia
+  programada mayor a 0 MW en el periodo, en proporción a esa potencia programada. Una barra
+  fija, configurada en el repositorio con su criterio de elección documentado, sirve como
+  referencia de ángulo. El caso muestra la barra de ángulo y los factores de participación
+  como supuestos.
 - **FR-016 [U]**: El sistema DEBE detectar islas eléctricas y reportarlas antes de ejecutar el
   cálculo.
-- **FR-017 [U]**: El sistema DEBE construir la red con el alcance de niveles de tensión
-  [NEEDS CLARIFICATION: ¿qué alcance de red se modela? (a) solo STN (≥ 220 kV); (b) STN + STR;
-  (c) seleccionable por el usuario].
+- **FR-017 [U]**: El sistema DEBE construir la red con los elementos del STN (tensión nominal
+  ≥ 220 kV) y del STR (≥ 57,5 kV y < 220 kV). Los elementos de PARATEC por debajo de 57,5 kV
+  (SDL) se excluyen del modelo, y su demanda y generación se ubican en la barra del STR de la
+  frontera STR/SDL a la que pertenecen.
 - **FR-018 [U]**: El sistema DEBE mostrar en el caso, como supuestos explícitos, la potencia
   reactiva y la consigna de tensión asignadas a cada generador, con la fuente de cada valor
   por defecto.
+- **FR-019 [N]**: Si un generador conciliado se conecta por debajo de 57,5 kV, entonces el
+  sistema DEBE trasladar su potencia programada como inyección a la barra del STR de la
+  frontera STR/SDL a la que pertenece, y registrar en el reporte de calidad el generador, su
+  barra original, la barra de destino y los MW trasladados. Si no se puede identificar esa
+  frontera, el generador se trata como no ubicado (FR-012).
 
 **Ejecución**
 
@@ -239,7 +284,8 @@ Tipos de patrón EARS: **[U]** Ubicuo · **[E]** Por evento (Cuando) · **[S]** 
   periodo del despacho, tipo de flujo, versión del motor de cálculo, parámetros del solver e
   identificador (hash) del caso.
 - **FR-024 [U]**: El sistema DEBE calcular un balance con generación ubicada, demanda asignada,
-  pérdidas y generación de la referencia.
+  pérdidas y ajuste total absorbido por la referencia distribuida, además del ajuste de cada
+  generador participante.
 - **FR-025 [N]**: Si las fechas del snapshot PARATEC y del despacho difieren, entonces el
   sistema DEBE mostrar una advertencia en el resultado.
 - **FR-026 [U]**: El sistema DEBE describir todo resultado como "flujo sobre despacho
@@ -289,12 +335,17 @@ Tipos de patrón EARS: **[U]** Ubicuo · **[E]** Por evento (Cuando) · **[S]** 
   (fecha de extracción, fuentes, conteo de registros por entidad, checksums).
 - **Despacho programado**: generación activa programada por recurso y periodo para un día;
   incluye la versión del estándar de información con que se validó.
+- **Pronóstico oficial de demanda por barra**: archivo diario de XM con, por cada barra, su
+  UCP, su tensión nominal (kV) y tres series de 24 valores horarios: energía activa, energía
+  reactiva y pérdidas del STR asignadas a la demanda (que forman parte de la demanda activa,
+  FR-014). Incluye barras de distintos niveles de tensión. Se
+  guarda en el mismo snapshot que el despacho de esa fecha.
 - **Tabla de equivalencias**: relación entre el nombre del recurso en el despacho y el generador
   en PARATEC; versionada; con vigencia.
 - **Caso de estudio**: red construida para una fecha y un periodo, más los supuestos aplicados
   (demanda, referencia, alcance, imputaciones, consignas de generadores).
-- **Reporte de calidad**: recursos no ubicados, elementos excluidos o imputados, islas y
-  balance.
+- **Reporte de calidad**: recursos no ubicados, generadores trasladados a la frontera STR/SDL,
+  elementos excluidos o imputados, islas y balance.
 - **Ejecución**: corrida del flujo sobre un caso, con su estado (`convergio` / `no_convergio`),
   sus parámetros del solver y su trazabilidad.
 - **Resultado**: valores por elemento de una ejecución convergida.
@@ -339,6 +390,13 @@ Supuestos a validar en `/speckit-clarify`:
   constitución).
 - **A-07**: La aplicación es local y monousuario; no hay requisitos de autenticación (ver
   NG-08).
+- **A-08**: El pronóstico por barra se publica como archivo de texto diario `PRON_BARRA<MMDD>`
+  en la biblioteca de XM y en la ruta pública FTPS
+  `/INFORMACION_XM/Publico/DEMANDAS/Pronostico Oficial/` (verificado el 2026-10-19). Cada fila
+  tiene: UCP, barra, tensión (kV), tipo (`Ener.Act.`, `Ener.Reac` o `Perd.PSTR`) y 24 valores
+  horarios. Junto a él se publica `PRON_SIN<MMDD>` (total del SIN), que esta feature no usa.
+  Unidades a confirmar: se asume que los valores horarios están en MWh y Mvarh, equivalentes a
+  MW y Mvar medios del periodo.
 
 ## No objetivos
 
@@ -361,7 +419,8 @@ código para ello.
 - **NG-11**: Representación de interconexiones internacionales como algo distinto de
   inyecciones fijas.
 - **NG-12**: Mapas georreferenciados. La vista de topología es lógica, no geográfica.
-- **NG-13**: Soporte para fuentes de datos distintas de PARATEC y del despacho programado.
+- **NG-13**: Soporte para fuentes de datos distintas de PARATEC, del despacho programado y del
+  pronóstico oficial de demanda definitivo de XM.
 - **NG-14**: Aceleración por GPU. Si se evalúa, será una feature aparte.
 
 ## Decisiones pendientes
@@ -370,5 +429,3 @@ código para ello.
    forzar", lo que implica que existe una opción que sobrescribe un snapshot existente. Eso
    contradice la constitución III.4 ("no se edita tras su commit") y R-02 de esta spec. Mientras
    no se decida, FR-004 se redactó sin esa opción, porque la constitución prevalece.
-2. **Demanda por barra (FR-014)**, **referencia (FR-015)** y **alcance de red (FR-017)**: ver
-   los marcadores en cada requisito.
