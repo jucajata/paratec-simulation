@@ -1,8 +1,11 @@
 <!--
 Sync Impact Report
-- Versión: 1.0.0 → 1.1.0 (MINOR). Se amplía materialmente la guía: nuevas fuentes de datos,
-  nuevos directorios, un comando público y un uso adicional de HTTP 409. No se elimina ni se
-  redefine ningún principio.
+- Versión: 1.1.0 → 1.1.1 (PATCH, 2026-10-20). Aclaración en IV "Comandos públicos":
+  `--fecha` de `sinsim scrape` pasa de opcional a obligatoria (hallazgo I2 de
+  /speckit-analyze; decisión del usuario). Sin cambios de principios.
+- Enmienda anterior, 1.0.0 → 1.1.0 (MINOR). Se amplía materialmente la guía: nuevas fuentes
+  de datos, nuevos directorios, un comando público y un uso adicional de HTTP 409. No se
+  elimina ni se redefine ningún principio.
 - Origen: decisiones del usuario del 2026-10-20 y la tabla "Complejidad y desviaciones" de
   specs/001-flujo-potencia-despacho/plan.md.
 - Principios modificados (sin cambio de título):
@@ -181,8 +184,8 @@ origen verificables; cualquier valor silencioso o inventado invalida el análisi
 
 #### Comandos públicos (contrato con quien clona el repo)
 
-- `uv run sinsim scrape [--fecha YYYY-MM-DD] [--out data/paratec/]` — genera un snapshot
-  nuevo.
+- `uv run sinsim scrape --fecha YYYY-MM-DD [--out data/paratec/]` — genera un snapshot
+  nuevo. La fecha es obligatoria para no descargar por accidente un día incompleto.
 - `uv run sinsim snapshots list` — lista snapshots disponibles.
 - `uv run sinsim run --fecha YYYY-MM-DD --periodo N` — construye el caso y ejecuta el flujo
   para una fecha y un periodo.
@@ -310,4 +313,4 @@ decisión documentada; el código no especificado es deuda que nadie revisó.
   `.specify/templates/`.
 - El "Constitution Check" de cada `plan.md` DEBE verificar los principios III, IV y VI.
 
-**Versión**: 1.1.0 | **Ratificada**: 2026-10-19 | **Última enmienda**: 2026-10-20
+**Versión**: 1.1.1 | **Ratificada**: 2026-10-19 | **Última enmienda**: 2026-10-20

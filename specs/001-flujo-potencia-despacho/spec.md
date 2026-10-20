@@ -4,14 +4,14 @@
 
 **Creada**: 2026-10-19
 
-**Estado**: Borrador (pendiente `/speckit-clarify`)
+**Estado**: Clarificada el 2026-10-19; plan y tareas listos (analizada el 2026-10-20)
 
 **Entrada**: Descripción del usuario: "Correr flujo de potencia sobre el SIN usando los parámetros
 técnicos de PARATEC y el despacho programado publicado por XM, con datos incluidos en el
 repositorio y un comando para actualizarlos."
 
 > Esta spec describe **qué** y **por qué**. El **cómo** (librerías, endpoints, estructura de
-> código) va en `plan.md` y debe cumplir `.specify/memory/constitution.md` v1.1.0.
+> código) va en `plan.md` y debe cumplir `.specify/memory/constitution.md` v1.1.1.
 
 ## Intención
 
@@ -251,15 +251,16 @@ Tipos de patrón EARS: **[U]** Ubicuo · **[E]** Por evento (Cuando) · **[S]** 
   tabla de equivalencias versionada (FR-011). La demanda de barras por debajo de 57,5 kV (por
   ejemplo, 44 kV o 13,2 kV) se agrega a la barra del STR de la frontera STR/SDL a la que
   pertenecen, igual que los generadores (FR-019).
-- **FR-014a [N]**: Si una barra del pronóstico de demanda no se puede asociar a una barra STN
-  del modelo, entonces el sistema DEBE excluir esa demanda y registrar en el reporte de calidad
+- **FR-014a [N]**: Si una barra del pronóstico de demanda no se puede asociar a una barra del
+  modelo (≥ 57,5 kV), entonces el sistema DEBE excluir esa demanda y registrar en el reporte de calidad
   la barra y sus MW, que también aparecen como demanda no ubicada en el balance.
 - **FR-015 [U]**: El sistema DEBE usar una referencia (slack) distribuida: la diferencia entre
   generación y demanda más pérdidas se reparte entre los generadores conciliados con potencia
   programada mayor a 0 MW en el periodo, en proporción a esa potencia programada. Una barra
-  fija, configurada en el repositorio con su criterio de elección documentado, sirve como
-  referencia de ángulo. El caso muestra la barra de ángulo y los factores de participación
-  como supuestos.
+  fija, configurada en el repositorio, sirve como referencia de ángulo; se elige con este
+  criterio: la barra del STN con mayor suma de capacidad de generación (`p_max_mw`) conectada
+  en el snapshot incluido, y el valor queda en la configuración junto con el criterio. El caso
+  muestra la barra de ángulo y los factores de participación como supuestos.
 - **FR-016 [U]**: El sistema DEBE detectar islas eléctricas y reportarlas antes de ejecutar el
   cálculo.
 - **FR-017 [U]**: El sistema DEBE construir la red con los elementos del STN (tensión nominal
@@ -272,8 +273,10 @@ Tipos de patrón EARS: **[U]** Ubicuo · **[E]** Por evento (Cuando) · **[S]** 
 - **FR-019 [N]**: Si un generador conciliado se conecta por debajo de 57,5 kV, entonces el
   sistema DEBE trasladar su potencia programada como inyección a la barra del STR de la
   frontera STR/SDL a la que pertenece, y registrar en el reporte de calidad el generador, su
-  barra original, la barra de destino y los MW trasladados. Si no se puede identificar esa
-  frontera, el generador se trata como no ubicado (FR-012).
+  barra original, la barra de destino y los MW trasladados. La barra de la frontera es la de
+  la **misma subestación** con el nivel de tensión ≥ 57,5 kV **más bajo** que esté unido por
+  un transformador al nivel original. Si no existe, el generador se trata como no ubicado
+  (FR-012). La misma regla aplica a la demanda (FR-014).
 
 **Ejecución**
 
@@ -335,8 +338,9 @@ Tipos de patrón EARS: **[U]** Ubicuo · **[E]** Por evento (Cuando) · **[S]** 
 
 ### Entidades clave
 
-- **Snapshot PARATEC**: parámetros técnicos de equipos en una fecha; inmutable; con manifiesto
-  (fecha de extracción, fuentes, conteo de registros por entidad, checksums).
+- **Snapshot**: parámetros técnicos de PARATEC más el despacho programado y el pronóstico de
+  demanda de una fecha; inmutable; con manifiesto (fecha de extracción, fuentes, conteo de
+  registros por entidad, checksums).
 - **Despacho programado**: generación activa programada por recurso y periodo para un día;
   incluye la versión del estándar de información con que se validó.
 - **Pronóstico oficial de demanda por barra**: archivo diario de XM con, por cada barra, su
@@ -364,7 +368,7 @@ Tipos de patrón EARS: **[U]** Ubicuo · **[E]** Por evento (Cuando) · **[S]** 
 - **SC-002**: El 100 % de los recursos del despacho con generación mayor a 0 MW en el periodo
   aparecen como ubicados o como no ubicados; ninguno se descarta en silencio.
 - **SC-003**: Para el snapshot incluido, la generación ubicada cubre al menos el 95 % de la
-  generación programada del periodo (valor provisional; ver Supuestos A-05).
+  generación programada del periodo (umbral confirmado por el usuario el 2026-10-20).
 - **SC-004**: El flujo AC sobre el caso incluido converge para todos los periodos 1–24 de la
   fecha incluida, cada uno ejecutado por separado.
 - **SC-005**: El proceso de construcción y cálculo, aplicado a una red de referencia con
@@ -376,19 +380,20 @@ Tipos de patrón EARS: **[U]** Ubicuo · **[E]** Por evento (Cuando) · **[S]** 
 
 ## Supuestos
 
-Supuestos a validar en `/speckit-clarify`:
+Supuestos del diseño, con su estado de verificación:
 
 - **A-01**: El despacho programado tiene 24 periodos horarios por día, y el periodo 1
   corresponde a 00:00–01:00.
-- **A-02**: Los archivos públicos de despacho son accesibles sin credenciales, por web o por la
-  ruta pública de FTPS de XM.
+- **A-02**: Los archivos públicos de despacho y demanda se descargan sin credenciales por
+  HTTPS, a través de la API de archivos del portal de XM (research R2, verificado el
+  2026-10-19). El FTPS de XM exige credenciales y no se usa.
 - **A-03**: PARATEC permite identificar la subestación o barra de conexión de cada generador y
   los extremos de cada línea.
 - **A-04**: Por defecto, los generadores se modelan como nodos PV con consigna de tensión
   configurable. El valor por defecto se muestra en el caso como supuesto y cita su fuente
   (R-13).
-- **A-05**: El umbral de cobertura de SC-003 (95 %) es provisional; el borrador lo dejaba sin
-  definir y debe confirmarse en clarify.
+- **A-05**: El umbral de cobertura de SC-003 es 95 %, confirmado por el usuario el
+  2026-10-20.
 - **A-06**: Los datos de XM (PARATEC, despacho programado y pronóstico de demanda) se
   redistribuyen en el repositorio con la atribución exigida por la constitución III.10
   (v1.1.0).
@@ -399,8 +404,8 @@ Supuestos a validar en `/speckit-clarify`:
   `/INFORMACION_XM/Publico/DEMANDAS/Pronostico Oficial/` (verificado el 2026-10-19). Cada fila
   tiene: UCP, barra, tensión (kV), tipo (`Ener.Act.`, `Ener.Reac` o `Perd.PSTR`) y 24 valores
   horarios. Junto a él se publica `PRON_SIN<MMDD>` (total del SIN), que esta feature no usa.
-  Unidades a confirmar: se asume que los valores horarios están en MWh y Mvarh, equivalentes a
-  MW y Mvar medios del periodo.
+  Unidades confirmadas con el estándar XM-CND-2025-055 (research R3): energía activa y
+  `Perd.PSTR` en MWh por periodo, equivalentes a MW medios; reactiva en Mvar.
 
 ## No objetivos
 

@@ -86,7 +86,7 @@ IV y VI; se revisan todos los principios.*
 | Regla | Estado | Evidencia |
 |---|---|---|
 | Árbol de carpetas de la constitución | ✅ | Incluye `data/equivalencias/` y `config/` (constitución 1.1.0) |
-| Dependencias `api → services → domain`; `domain` sin pandapower, httpx ni FastAPI | ✅ | Ver estructura abajo; las islas (networkx/pandapower) viven en `services/` |
+| Dependencias `api → services → domain`; `domain` sin pandapower, httpx ni FastAPI | ✅ | Ver estructura abajo; las islas (networkx/pandapower) viven en `services/`; CLI y API acceden a snapshots solo vía `services/snapshots.py` (tasks T025) |
 | `pandapowerNet` solo en `services/` y `adapters/` | ✅ | |
 | Un único archivo de mapeo de campos PARATEC | ✅ | `adapters/sources_to_pandapower/field_mapping.py` |
 | Fixtures grabados; cobertura ≥ 85 % | ✅ | |
@@ -100,7 +100,7 @@ IV y VI; se revisan todos los principios.*
 | Códigos HTTP | ✅ | `SNAPSHOT_NOT_FOUND`/`OPERATING_POINT_MISSING` → 404; `PERIOD_OUT_OF_RANGE` → 422 (esquema); fecha futura → 400; `SNAPSHOT_CORRUPTED` → 409 (constitución 1.1.0) |
 | Códigos de salida del CLI 0–4 | ✅ | [contracts/cli.md](./contracts/cli.md) |
 | Scraper atómico | ✅ | Directorio temporal + rename |
-| Validación en tres puntos | ✅ | Pydantic, scraper ([data-model.md §2](./data-model.md)) y rangos físicos antes de simular |
+| Validación en tres puntos | ✅ | Pydantic (API), scraper ([data-model.md §2](./data-model.md)) y `domain/physical_checks.py` antes de simular (tasks T038): comprobaciones estructurales sin rangos numéricos inventados |
 
 ### VI. Agente
 
@@ -172,7 +172,9 @@ backend/
 │   │   ├── case_hash.py                # JSON canónico + SHA-256 (puro)
 │   │   ├── balance.py                  # balance y cobertura (puro)
 │   │   ├── limits.py                   # violaciones de tensión y cargabilidad (puro)
+│   │   ├── physical_checks.py          # validación física antes de simular (puro, V)
 │   │   └── ports.py                    # interfaces que implementan los adapters
+│   ├── observability.py                # logs JSON con trace_id (V)
 │   ├── adapters/
 │   │   ├── sources_to_pandapower/
 │   │   │   ├── field_mapping.py        # único mapeo de campos PARATEC → internos
