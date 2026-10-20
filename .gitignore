@@ -218,3 +218,20 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- sinsim ----------------------------------------------------------------
+# El patrón genérico `lib/` de arriba no debe ocultar el código del frontend.
+!frontend/src/lib/
+frontend/node_modules/
+frontend/dist/
+frontend/coverage/
+frontend/test-results/
+frontend/playwright-report/
+out/
+# Casos de estudio generados localmente; solo se versiona el de demostración.
+cases/*
+!cases/.gitkeep
+!cases/demo/
+# Directorios temporales del scraper (escritura atómica)
+data/paratec/.tmp-*/
+.DS_Store

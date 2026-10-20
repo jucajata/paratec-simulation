@@ -1,0 +1,89 @@
+# Configuración por defecto de sinsim.
+# Todo valor numérico cita su fuente (constitución III.9, R-13). Los supuestos aprobados por el
+# usuario se marcan como tales y aparecen en cada caso y exportación (FR-018).
+
+[limits.voltage]
+# Tensión en estado estacionario, en pu de la tensión nominal.
+# Fuente: Resolución CREG 025 de 1995, Código de Operación, num. 5.1 (500 kV: 90–105 %;
+# 110/115/220/230 kV: 90–110 %). STR: Resolución CREG 153 de 2019, art. 1 (Reglamento de
+# Distribución, num. 6.2.1.1: 90–110 %). Para 57,5 y 66 kV se aplica el art. 1 de la CREG 153/2019
+# por inferencia (no hay cifra expresa).
+[[limits.voltage.levels]]
+name = "500 kV"
+vn_kv_min = 400.0
+vn_kv_max = 600.0
+vm_min_pu = 0.90
+vm_max_pu = 1.05
+source = "CREG 025/1995, Código de Operación, num. 5.1"
+
+[[limits.voltage.levels]]
+name = "STN 220/230 kV"
+vn_kv_min = 220.0
+vn_kv_max = 400.0
+vm_min_pu = 0.90
+vm_max_pu = 1.10
+source = "CREG 025/1995, Código de Operación, num. 5.1"
+
+[[limits.voltage.levels]]
+name = "STR (57,5–<220 kV)"
+vn_kv_min = 57.5
+vn_kv_max = 220.0
+vm_min_pu = 0.90
+vm_max_pu = 1.10
+source = "CREG 153/2019, art. 1 (Reglamento de Distribución, num. 6.2.1.1); 57,5 y 66 kV por inferencia"
+
+[limits.loading]
+# Cargabilidad máxima de líneas y transformadores en % de su valor nominal.
+max_percent = 100.0
+source = "CREG 025/1995, Código de Planeamiento, num. 5.2: no se permiten sobrecargas"
+
+[generator]
+# Consigna de tensión por defecto para generadores y compensadores (SVC/STATCOM).
+vm_pu_default = 1.0
+vm_pu_source = "Supuesto del proyecto aprobado por el usuario el 2026-10-20 (sin norma aplicable: CREG 135/2013 num. 5.7 remite al planeamiento operativo del CND)"
+
+[trafo]
+# PARATEC no publica la corriente de magnetización; se desprecia.
+i0_percent = 0.0
+i0_source = "Supuesto del proyecto aprobado por el usuario el 2026-10-20 (PARATEC no publica i0)"
+# Posición del cambiador: PARATEC no publica la posición operativa; se usa el paso neutro.
+tap_policy = "neutral"
+tap_source = "Supuesto del proyecto aprobado por el usuario el 2026-10-20 (PARATEC publica rango, paso y neutro, no la posición operativa)"
+
+[imputation]
+# Regla ante parámetros faltantes: "exclude" descarta el elemento; "median" imputa con la mediana
+# de elementos del mismo tipo y nivel de tensión del mismo snapshot, solo para los parámetros
+# listados en `params` (constitución III.5). Cada imputación queda en el reporte de calidad.
+# PARATEC no publica pérdidas de cobre ni de hierro en ~25 % de los transformadores; excluirlos
+# partiría la red, y la resistencia serie del transformador tiene poco efecto en el flujo.
+# Decisión del proyecto (2026-10-20): imputar solo esos parámetros. Las impedancias (vk) y las
+# tensiones nunca se imputan.
+rule = "median"
+params = ["vkr_percent", "pfe_kw", "vkr_hv_percent", "vkr_mv_percent", "vkr_lv_percent"]
+
+[network]
+# Alcance del modelo (FR-017): STN + STR.
+min_vn_kv = 57.5
+# Barra de referencia de ángulo (FR-015). Criterio: barra del STN con mayor suma de capacidad
+# de generación (p_max_mw) conectada en el snapshot incluido. Calculado sobre el snapshot
+# 2026-10-20: SAN CARLOS|230 (1 292 MW), seguida de GUAVIO|230 (1 250 MW) y ANTIOQUIA|500.
+# Si en un periodo esa barra no tiene generación despachada, el caso usa la barra del
+# generador con mayor P programada y lo declara como supuesto.
+angle_ref_bus = "SAN CARLOS|230"
+angle_ref_source = "Criterio de FR-015: barra STN con mayor Σ p_max_mw conectada en el snapshot incluido (2026-10-20)"
+
+[solver]
+algorithm = "nr"
+tolerance_mva = 1e-8
+max_iteration = 30
+init = "dc"
+enforce_q_lims = true
+distributed_slack = true
+
+[scraper]
+min_interval_s = 1.0
+timeout_s = 60.0
+user_agent = "sinsim/{version} (+https://github.com/jucajata/paratec-simulation)"
+
+[attribution]
+text = "Información proporcionada por XM S.A. E.S.P. – PARATEC y archivos públicos de despacho"

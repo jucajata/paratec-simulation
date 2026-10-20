@@ -74,6 +74,7 @@ Esquema en [contracts/snapshot-format.md §3](./contracts/snapshot-format.md).
 |---|---|---|---|
 | `recursos_despacho.csv` | (`resource`, `valid_from`) | `resource`, `kind` ∈ {plant, unit, intl_link}, `paratec_ids` (separados por `;`), `connection_bus` (solo para `intl_link`), `valid_from`, `valid_to`, `note` | Una sola fila vigente por recurso y fecha |
 | `nodos_demanda.csv` | (`node`, `vn_kv`, `valid_from`) | `node`, `ucp`, `vn_kv`, `substation`, `paratec_vn_kv`, `valid_from`, `valid_to`, `note` | Igual |
+| `subestaciones_alias.csv` (añadida en la implementación, ver plan "Complejidad y desviaciones") | (`alias`, `valid_from`) | `alias`, `substation`, `valid_from`, `valid_to`, `note` | Nombres distintos de la misma subestación entre entidades de PARATEC (p. ej. `MONTERIA (ISA)` → `NUEVA MONTERIA`); los alias aplicados aparecen en `assumptions.alias_subestaciones` |
 
 Una vigencia que se solapa es un error de validación. Un recurso o nodo sin fila vigente
 queda **no ubicado** (FR-012, FR-014a).
@@ -100,7 +101,11 @@ ordenadas y floats con `repr`):
 | Versión | `sinsim_version` |
 
 **Supuestos visibles** (FR-018, R-11, A-04), que forman parte del reporte:
-- consigna de tensión por generador y su fuente;
+- consigna de tensión y límites de reactiva por generador, con la fuente de cada valor
+  (`assumptions.generadores`: `gen_id`, `barra`, `vm_pu`, `fuente_vm`, `q_min_mvar`,
+  `q_max_mvar`, `fuente_q`; incluye los SVC/STATCOM);
+- demanda activa de cada barra con sus dos componentes por separado
+  (`assumptions.demanda_por_barra`: `barra`, `p_act_mw`, `p_pstr_mw`, `q_mvar`; FR-014);
 - barra de referencia de ángulo y su criterio;
 - factores de participación de la referencia distribuida;
 - repartos de P entre barras de un mismo recurso;

@@ -1,0 +1,90 @@
+[project]
+name = "sinsim"
+version = "0.1.0"
+description = "Flujo de potencia del SIN colombiano con pandapower, PARATEC y archivos públicos de XM"
+license = "MIT"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "pandapower==3.5.6",
+    "httpx>=0.27",
+    "typer>=0.12",
+    "fastapi>=0.115",
+    "pydantic>=2.9",
+    "uvicorn>=0.30",
+    "pyarrow>=17",
+    "duckdb>=1.1",
+    "networkx>=3.3",
+]
+
+[project.scripts]
+sinsim = "sinsim.cli:app"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-cov>=5",
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "pandas-stubs",
+    "types-networkx",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sinsim"]
+
+# --- Calidad (constitución IV) ---------------------------------------------
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "N", "D", "ANN", "RUF"]
+ignore = [
+    "D100", "D104",          # docstrings de módulo y paquete no obligatorios
+    "ANN401",                # Any permitido en firmas de entrada JSON
+    "RUF001", "RUF002", "RUF003",  # tildes y guiones largos en textos en español
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D", "ANN", "E501"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+mypy_path = "src"
+packages = ["sinsim"]
+warn_unreachable = true
+
+[[tool.mypy.overrides]]
+module = ["pandapower.*", "duckdb.*", "pyarrow.*", "pypower.*"]
+ignore_missing_imports = true
+
+# --- Pruebas (constitución IV: cobertura mínima de domain/ y adapters/) -------
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q"
+markers = [
+    "included_snapshot: requiere el snapshot real versionado en data/paratec/",
+]
+filterwarnings = [
+    "ignore:numba cannot be imported:UserWarning",
+]
+
+[tool.coverage.run]
+source = ["sinsim.domain", "sinsim.adapters"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 85
+show_missing = true

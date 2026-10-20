@@ -1,0 +1,217 @@
+"""Carga de `config/defaults.toml` y resolución de rutas del repositorio.
+
+Los límites y supuestos citan su fuente en el propio TOML (constitución III.9). El hash del
+archivo forma parte del identificador del caso (data-model.md §4).
+"""
+
+from __future__ import annotations
+
+import hashlib
+import os
+import tomllib
+from dataclasses import dataclass
+from importlib.metadata import PackageNotFoundError, version
+from pathlib import Path
+
+from pydantic import BaseModel, ConfigDict
+
+from sinsim.domain.limits import LoadingLimit, VoltageBand
+
+CONFIG_ENV = "SINSIM_CONFIG"
+
+
+def sinsim_version() -> str:
+    """Versión instalada de `sinsim`."""
+    try:
+        return version("sinsim")
+    except PackageNotFoundError:  # pragma: no cover - solo fuera de un entorno instalado
+        return "0.0.0"
+
+
+class _Model(BaseModel):
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+
+class VoltageLevelCfg(_Model):
+    """Banda de tensión con su fuente."""
+
+    name: str
+    vn_kv_min: float
+    vn_kv_max: float
+    vm_min_pu: float
+    vm_max_pu: float
+    source: str
+
+
+class VoltageCfg(_Model):
+    """Lista de bandas de tensión."""
+
+    levels: list[VoltageLevelCfg]
+
+
+class LoadingCfg(_Model):
+    """Límite de cargabilidad con su fuente."""
+
+    max_percent: float
+    source: str
+
+
+class LimitsCfg(_Model):
+    """Límites operativos (III.9)."""
+
+    voltage: VoltageCfg
+    loading: LoadingCfg
+
+
+class GeneratorCfg(_Model):
+    """Consigna de tensión por defecto (D-2)."""
+
+    vm_pu_default: float
+    vm_pu_source: str
+
+
+class TrafoCfg(_Model):
+    """Supuestos de transformadores (D-2)."""
+
+    i0_percent: float
+    i0_source: str
+    tap_policy: str
+    tap_source: str
+
+
+class ImputationCfg(_Model):
+    """Regla ante parámetros faltantes (III.5)."""
+
+    rule: str
+    params: list[str]
+
+
+class NetworkCfg(_Model):
+    """Alcance y barra de referencia de ángulo (FR-015, FR-017)."""
+
+    min_vn_kv: float
+    angle_ref_bus: str
+    angle_ref_source: str
+
+
+class SolverCfg(_Model):
+    """Parámetros del solver (FR-023)."""
+
+    algorithm: str
+    tolerance_mva: float
+    max_iteration: int
+    init: str
+    enforce_q_lims: bool
+    distributed_slack: bool
+
+
+class ScraperCfg(_Model):
+    """Parámetros del scraper (III.10)."""
+
+    min_interval_s: float
+    timeout_s: float
+    user_agent: str
+
+
+class AttributionCfg(_Model):
+    """Atribución obligatoria a XM (III.10)."""
+
+    text: str
+
+
+class Config(_Model):
+    """Configuración completa de `defaults.toml`."""
+
+    limits: LimitsCfg
+    generator: GeneratorCfg
+    trafo: TrafoCfg
+    imputation: ImputationCfg
+    network: NetworkCfg
+    solver: SolverCfg
+    scraper: ScraperCfg
+    attribution: AttributionCfg
+
+    def voltage_bands(self) -> list[VoltageBand]:
+        """Bandas de tensión para `domain.limits`."""
+        return [
+            VoltageBand(
+                name=lv.name,
+                vn_kv_min=lv.vn_kv_min,
+                vn_kv_max=lv.vn_kv_max,
+                vm_min_pu=lv.vm_min_pu,
+                vm_max_pu=lv.vm_max_pu,
+                source=lv.source,
+            )
+            for lv in self.limits.voltage.levels
+        ]
+
+    def loading_limit(self) -> LoadingLimit:
+        """Límite de cargabilidad para `domain.limits`."""
+        return LoadingLimit(
+            max_percent=self.limits.loading.max_percent, source=self.limits.loading.source
+        )
+
+    def user_agent(self) -> str:
+        """User-Agent del scraper con la versión real."""
+        return self.scraper.user_agent.replace("{version}", sinsim_version())
+
+
+@dataclass(frozen=True)
+class LoadedConfig:
+    """Configuración cargada con su ruta y su hash."""
+
+    config: Config
+    path: Path
+    sha256: str
+
+
+@dataclass(frozen=True)
+class RepoPaths:
+    """Rutas del repositorio que usan CLI y API."""
+
+    root: Path
+    config_file: Path
+    snapshots: Path
+    equivalences: Path
+    cases: Path
+
+
+def find_repo_root(start: Path | None = None) -> Path:
+    """Busca hacia arriba el directorio que contiene `config/defaults.toml`.
+
+    Empieza en `start` (por defecto el directorio actual) y, si no lo encuentra, en la
+    ubicación del paquete instalado en modo editable.
+    """
+    candidates = [start or Path.cwd(), Path(__file__).resolve()]
+    for base in candidates:
+        for d in (base, *base.parents):
+            if (d / "config" / "defaults.toml").exists():
+                return d
+    msg = "no se encontró config/defaults.toml; ejecuta desde el repositorio o define SINSIM_CONFIG"
+    raise FileNotFoundError(msg)
+
+
+def repo_paths(start: Path | None = None) -> RepoPaths:
+    """Resuelve las rutas del repositorio."""
+    root = find_repo_root(start)
+    return RepoPaths(
+        root=root,
+        config_file=root / "config" / "defaults.toml",
+        snapshots=root / "data" / "paratec",
+        equivalences=root / "data" / "equivalencias",
+        cases=root / "cases",
+    )
+
+
+def load_config(path: Path | None = None) -> LoadedConfig:
+    """Carga y valida la configuración.
+
+    Args:
+        path: Ruta del TOML; por defecto `$SINSIM_CONFIG` o `config/defaults.toml` del repo.
+    """
+    if path is None:
+        env = os.environ.get(CONFIG_ENV)
+        path = Path(env) if env else repo_paths().config_file
+    raw = path.read_bytes()
+    config = Config.model_validate(tomllib.loads(raw.decode("utf-8")))
+    return LoadedConfig(config=config, path=path, sha256=hashlib.sha256(raw).hexdigest())

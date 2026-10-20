@@ -1,0 +1,170 @@
+:root {
+  --bg: #fafafa;
+  --fg: #1f2328;
+  --muted: #6b7280;
+  --border: #d0d7de;
+  --accent: #0b5fff;
+  --warn: #9a6700;
+  --error: #b42318;
+  --violation: #fde8e8;
+  --panel: #ffffff;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--fg);
+  background: var(--bg);
+}
+body {
+  margin: 0;
+  background: var(--bg);
+}
+header,
+main,
+footer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+header h1 {
+  margin: 16px 0 4px;
+}
+.label {
+  font-weight: 600;
+  margin: 0;
+}
+.trace {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+footer {
+  color: var(--muted);
+  font-size: 0.85rem;
+  padding: 24px 16px;
+}
+.picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  padding: 12px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin: 12px 0;
+}
+.picker label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.9rem;
+}
+button,
+.button {
+  background: var(--accent);
+  color: #fff;
+  border: 0;
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.toolbar button {
+  background: #eef2f7;
+  color: var(--fg);
+}
+.toolbar button.active {
+  background: var(--accent);
+  color: #fff;
+}
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 8px 0;
+}
+.error {
+  color: var(--error);
+}
+.warning {
+  color: var(--warn);
+}
+.muted {
+  color: var(--muted);
+}
+.section {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  margin: 6px 0;
+  background: var(--panel);
+}
+.section summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.count {
+  color: var(--muted);
+  font-weight: 400;
+}
+.balance {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 16px;
+}
+.balance dt {
+  color: var(--muted);
+}
+.balance dd {
+  margin: 0;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.88rem;
+}
+th,
+td {
+  text-align: left;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+tr.violation {
+  background: var(--violation);
+}
+.results table {
+  display: block;
+  max-height: 420px;
+  overflow: auto;
+}
+.graph {
+  width: 100%;
+  height: 560px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--panel);
+}
+.legend i {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  vertical-align: middle;
+  margin: 0 2px 0 6px;
+}
+.hover {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+@media (max-width: 640px) {
+  .balance {
+    grid-template-columns: 1fr;
+  }
+  .graph {
+    height: 380px;
+  }
+}

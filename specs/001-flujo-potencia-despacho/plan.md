@@ -234,6 +234,23 @@ Makefile
 
 ## Complejidad y desviaciones
 
-No hay desviaciones. Las cinco que tenía la versión anterior de este plan (`data/equivalencias/`,
+Las cinco desviaciones que tenía la versión anterior de este plan (`data/equivalencias/`,
 `config/`, el paquete `sources_to_pandapower`, `SNAPSHOT_CORRUPTED` → 409 y el comando
 `sinsim run`) quedaron incorporadas en la enmienda 1.1.0 de la constitución (2026-10-20).
+
+Durante la implementación (2026-10-20) el código añadió lo siguiente, que no estaba en la spec,
+en este plan ni en las tareas. Se registra aquí con su justificación (constitución VI.2,
+hallazgo F4 de `/speckit-converge`, tarea T085):
+
+| Desviación | Por qué hizo falta | Alternativa descartada |
+|---|---|---|
+| Módulos `backend/src/sinsim/config.py` (carga y hash de `config/defaults.toml`) y `bootstrap.py` (`AppContext`: rutas, configuración, repositorios) | La CLI y la API necesitan el mismo contexto; sin un punto único cada entrada repetía la carga de configuración y el cálculo de `config_sha256` del caso | Duplicar la carga en `cli.py` y `api/app.py`, que rompe la dirección `api → services → domain` |
+| Tabla `data/equivalencias/subestaciones_alias.csv` y el supuesto `alias_subestaciones` del caso | PARATEC nombra la misma subestación de forma distinta entre entidades (`MONTERIA (ISA)` ≡ `NUEVA MONTERIA`, sufijos de tensión u operador); sin el alias la red queda partida y el flujo no converge | Curar a mano cada nombre en `nodos_demanda.csv` y `recursos_despacho.csv`, que no resuelve las líneas ni los transformadores |
+| Base de tensión por clase (110/112/115 → 115 kV; 220/230 → 230 kV; 13,2/13,8 → 13,8 kV) conservando la nominal declarada en `nominal_kv` para límites en pu y reportes | pandapower exige una sola `vn_kv` por barra conectada y PARATEC mezcla 220 y 230 kV, o 110 y 115 kV, en una misma subestación o línea | Crear barras distintas por tensión declarada, que introduce transformadores inexistentes |
+| Códigos `REQUEST_INVALID` y `XM_FILE_NOT_FOUND` en `domain/errors.py` | Peticiones mal formadas (400, constitución V) y la ausencia del `dDEC`/`PRON_BARRA` del día en el portal de XM no tenían código propio | Reutilizar `PARATEC_SCHEMA_CHANGED`, que confunde "no publicado" con "cambió la estructura" |
+| `imputation.rule = "median"` con `params` limitados a pérdidas de cobre y hierro de transformadores, en lugar del `"exclude"` que pedía T008 | Cerca del 25 % de los transformadores no publican pérdidas; excluirlos parte la red, y la resistencia serie tiene poco efecto en el flujo. Las impedancias y tensiones nunca se imputan; cada imputación aparece en el reporte | Excluir (red partida) o imputar también `vk` (valor eléctrico inventado, prohibido por III.5) |
+| Tridevanados con solo dos devanados publicados modelados como 2 devanados; tridevanados con terciario < 57,5 kV modelados HV–MV con la impedancia HM | PARATEC etiqueta "Tridevanado" transformadores de los que publica dos devanados; el terciario SDL queda fuera del alcance (FR-017) | Excluirlos, que elimina enlaces STN/STR reales |
+| Supuestos `generadores` y `demanda_por_barra` en `StudyCase.assumptions` | FR-018 pide consigna y reactiva por generador con fuente; FR-014 pide conservar `Ener.Act.` y `Perd.PSTR` por separado (T082, T083) | Nuevos campos en `QualityReport`, que obligaban a cambiar OpenAPI y la exportación |
+
+Todo lo anterior queda visible en `config/defaults.toml` (con fuente) o en `assumptions` del
+caso; no hay valores eléctricos inventados ni endpoints, flags o pantallas nuevas.

@@ -1,0 +1,627 @@
+resource,kind,paratec_ids,connection_bus,valid_from,valid_to,note
+AGUA FRESCA,plant,AGUA FRESCA,,2020-01-01,,propuesta heurística: nombre exacto
+ALEJANDRIA,plant,ALEJANDRIA,,2020-01-01,,propuesta heurística: nombre exacto
+ALMA II,plant,ALMA II,,2020-01-01,,propuesta heurística: nombre exacto
+ALTO TULUA,plant,ALTO TULUA,,2020-01-01,,propuesta heurística: nombre exacto
+AMAIME,plant,AMAIME,,2020-01-01,,propuesta heurística: nombre exacto
+AMALFI,plant,AMALFI,,2020-01-01,,propuesta heurística: nombre exacto
+AMERICA,plant,AMERICA,,2020-01-01,,propuesta heurística: nombre exacto
+AMOYA LA ESPERANZA,plant,AMOYA LA ESPERANZA,,2020-01-01,,propuesta heurística: nombre exacto
+ASNAZU,plant,ASNAZU,,2020-01-01,,propuesta heurística: nombre exacto
+ATLANTICO,plant,ATLANTICO,,2020-01-01,,propuesta heurística: nombre exacto
+AURES BAJO,plant,AURES BAJO,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG ARGOS EL CAIRO,plant,AUTOG ARGOS EL CAIRO,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG ARGOS SOGAMOSO,plant,AUTOG ARGOS SOGAMOSO,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG ARGOS YUMBO,plant,AUTOG ARGOS YUMBO,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG AYURA,plant,AUTOG AYURA,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG BIODIANA,plant,AUTOG BIODIANA,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG BIOS CIENAGA ORO,plant,AUTOG BIOS CIENAGA ORO,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG BIOS CONTEGRAL CARTAGO,plant,AUTOG BIOS CONTEGRAL CARTAGO,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG BIOS CONTEGRAL NEIVA,plant,AUTOG BIOS CONTEGRAL NEIVA,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG BIOS FINCA BUGA,plant,AUTOG BIOS FINCA BUGA,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG BUGA I GRASAS,plant,AUTOG BUGA I GRASAS,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG BUGA I SOLLA,plant,AUTOG BUGA I SOLLA,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG CANAHUATE,plant,AUTOG CANAHUATE,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG CANTAYUS,plant,AUTOG CANTAYUS,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG CARVAJAL GINEBRA,plant,AUTOG CARVAJAL GINEBRA,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG CELSIA SOLAR ESCOBAL CEMEX,plant,AUTOG CELSIA SOLAR ESCOBAL CEMEX,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG CELSIA SOLAR ESPINAL,plant,AUTOG CELSIA SOLAR ESPINAL,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG CELSIA SOLAR HARINAS,plant,AUTOG CELSIA SOLAR HARINAS,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG CELSIA SOLAR LEVAPAN,plant,AUTOG CELSIA SOLAR LEVAPAN,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG CELSIA SOLAR PALMIRA 3,plant,AUTOG CELSIA SOLAR PALMIRA 3,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG CELSIA SOLAR PALMIRA 3 ZONA FRANCA,plant,AUTOG CELSIA SOLAR PALMIRA 3 ZONA FRANCA,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG CELSIA SOLAR TQ JAMUNDI,plant,AUTOG CELSIA SOLAR TQ JAMUNDI,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG CELSIA SOLAR TQ TECNOSUR,plant,AUTOG CELSIA SOLAR TQ TECNOSUR,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG CELSIA SOLAR YUMBO,plant,AUTOG CELSIA SOLAR YUMBO,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG CEMENTOS DEL NARE,plant,AUTOG CEMENTOS DEL NARE,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG CI JEANS,plant,AUTOG CI JEANS,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG COCA-COLA FEMSA,plant,AUTOG COCA-COLA FEMSA,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG COMOLSA,plant,AUTOG COMOLSA,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG CORONA SOPO,plant,AUTOG CORONA SOPO,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG CORPACERO,plant,AUTOG CORPACERO,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG ECOPETROL ORITO,plant,AUTOG ECOPETROL ORITO,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG EL COPEY,plant,AUTOG EL COPEY,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG ENKA DE COLOMBIA,plant,AUTOG ENKA DE COLOMBIA,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG EXTRACTORA MONTERREY,plant,AUTOG EXTRACTORA MONTERREY,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG GOLOSINAS TRULULU,plant,AUTOG GOLOSINAS TRULULU,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG GRAN COLOMBIA GOLD,plant,AUTOG GRAN COLOMBIA GOLD,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG HIDROSOLAR I,plant,AUTOG HIDROSOLAR I,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG INGENIO CARMELITA,plant,AUTOG INGENIO CARMELITA,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG INGENIO MARIA LUISA,plant,AUTOG INGENIO MARIA LUISA,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG LOS POCITOS,plant,AUTOG LOS POCITOS,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG MILPA SAN CARLOS,plant,AUTOG MILPA SAN CARLOS,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG MOLINOS SANTA MARTA,plant,AUTOG MOLINOS SANTA MARTA,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG PALMERAS DE LA COSTA,plant,AUTOG PALMERAS DE LA COSTA,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG PINTUCO,plant,AUTOG PINTUCO,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG PTAR BELLO,plant,AUTOG PTAR BELLO,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG QBCO,plant,AUTOG QBCO,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG REFICAR,plant,AUTOG REFICAR,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG SOLAR AYACUCHO,plant,AUTOG SOLAR AYACUCHO,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG SOLAR PALMIRA,plant,AUTOG SOLAR PALMIRA,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG SOLAR PALMIRA II BERRY,plant,AUTOG SOLAR PALMIRA II BERRY,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG SOLAR VASCONIA,plant,AUTOG SOLAR VASCONIA,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG TERMOARAUCA,plant,AUTOG TERMOARAUCA,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG TERMOCOROCITO,plant,AUTOG TERMOCOROCITO,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG TERMOMACAGUA,plant,AUTOG TERMOMACAGUA,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG TERMOTAME,plant,AUTOG TERMOTAME,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG TURGAS,plant,AUTOG TURGAS,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG UNIBOL,plant,AUTOG UNIBOL,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG UNIMINAS,plant,AUTOG UNIMINAS,,2020-01-01,,propuesta heurística: nombre exacto
+AUTOG YAGUARITO,plant,AUTOG YAGUARITO,,2020-01-01,,propuesta heurística: nombre exacto
+BAJO TULUA,plant,BAJO TULUA,,2020-01-01,,propuesta heurística: nombre exacto
+BARAYA,plant,BARAYA,,2020-01-01,,propuesta heurística: nombre exacto
+BARRANQUILLA 3,plant,BARRANQUILLA 3,,2020-01-01,,propuesta heurística: nombre exacto
+BARRANQUILLA 4,plant,BARRANQUILLA 4,,2020-01-01,,propuesta heurística: nombre exacto
+BARROSO,plant,BARROSO,,2020-01-01,,propuesta heurística: nombre exacto
+BAYONA,plant,BAYONA,,2020-01-01,,propuesta heurística: nombre exacto
+BELLO,plant,BELLO,,2020-01-01,,propuesta heurística: nombre exacto
+BELMONTE,plant,BELMONTE,,2020-01-01,,propuesta heurística: nombre exacto
+BETANIA,plant,BETANIA,,2020-01-01,,propuesta heurística: nombre exacto
+BIOENERGY,plant,BIOENERGY,,2020-01-01,,propuesta heurística: nombre exacto
+BOSQUES SOLARES DE LOS LLANOS 4,plant,BOSQUES SOLARES DE LOS LLANOS 4,,2020-01-01,,propuesta heurística: nombre exacto
+BOSQUES SOLARES DE LOS LLANOS 5,plant,BOSQUES SOLARES DE LOS LLANOS 5,,2020-01-01,,propuesta heurística: nombre exacto
+BSB 500,plant,BSB 500,,2020-01-01,,propuesta heurística: nombre exacto
+BSB 501,plant,BSB 501,,2020-01-01,,propuesta heurística: nombre exacto
+BSB 502,plant,BSB 502,,2020-01-01,,propuesta heurística: nombre exacto
+BSB 503,plant,BSB 503,,2020-01-01,,propuesta heurística: nombre exacto
+BSB 504,plant,BSB 504,,2020-01-01,,propuesta heurística: nombre exacto
+BUENAVISTA,plant,BUENAVISTA,,2020-01-01,,propuesta heurística: nombre exacto
+CAIMAN CIENAGUERO,plant,CAIMAN CIENAGUERO,,2020-01-01,,propuesta heurística: nombre exacto
+CALDERAS,plant,CALDERAS,,2020-01-01,,propuesta heurística: nombre exacto
+CALIMA,plant,CALIMA,,2020-01-01,,propuesta heurística: nombre exacto
+CAMPESTRE (CALARCA),plant,CAMPESTRE (CALARCA),,2020-01-01,,propuesta heurística: nombre exacto
+CAMPESTRE (EPM),plant,CAMPESTRE (EPM),,2020-01-01,,propuesta heurística: nombre exacto
+CANAHUATE,plant,CANAHUATE,,2020-01-01,,propuesta heurística: nombre exacto
+CARACOLI,plant,CARACOLI,,2020-01-01,,propuesta heurística: nombre exacto
+CARACOLI I,plant,CARACOLI I,,2020-01-01,,propuesta heurística: nombre exacto
+CARLOS LLERAS,plant,CARLOS LLERAS,,2020-01-01,,propuesta heurística: nombre exacto
+CARTAGENA 1,plant,CARTAGENA 1,,2020-01-01,,propuesta heurística: nombre exacto
+CARTAGENA 2,plant,CARTAGENA 2,,2020-01-01,,propuesta heurística: nombre exacto
+CARTAGENA 3,plant,CARTAGENA 3,,2020-01-01,,propuesta heurística: nombre exacto
+CARUQUIA,plant,CARUQUIA,,2020-01-01,,propuesta heurística: nombre exacto
+CASCADA,plant,CASCADA,,2020-01-01,,propuesta heurística: nombre exacto
+CAUYA,plant,CAUYA,,2020-01-01,,propuesta heurística: nombre exacto
+CELSIA SOLAR ALUMINA,plant,CELSIA SOLAR ALUMINA,,2020-01-01,,propuesta heurística: nombre exacto
+CELSIA SOLAR BOLIVAR,plant,CELSIA SOLAR BOLIVAR,,2020-01-01,,propuesta heurística: nombre exacto
+CELSIA SOLAR BUGALAGRANDE,plant,CELSIA SOLAR BUGALAGRANDE,,2020-01-01,,propuesta heurística: nombre exacto
+CELSIA SOLAR CARMELO,plant,CELSIA SOLAR CARMELO,,2020-01-01,,propuesta heurística: nombre exacto
+CELSIA SOLAR DULIMA,plant,CELSIA SOLAR DULIMA,,2020-01-01,,propuesta heurística: nombre exacto
+CELSIA SOLAR ESCOBAL I,plant,CELSIA SOLAR ESCOBAL I,,2020-01-01,,propuesta heurística: nombre exacto
+CELSIA SOLAR ESCOBAL II,plant,CELSIA SOLAR ESCOBAL II,,2020-01-01,,propuesta heurística: nombre exacto
+CELSIA SOLAR ESCOBAL III,plant,CELSIA SOLAR ESCOBAL III,,2020-01-01,,propuesta heurística: nombre exacto
+CELSIA SOLAR ESCOBAL IV,plant,CELSIA SOLAR ESCOBAL IV,,2020-01-01,,propuesta heurística: nombre exacto
+CELSIA SOLAR ESCOBAL V,plant,CELSIA SOLAR ESCOBAL V,,2020-01-01,,propuesta heurística: nombre exacto
+CELSIA SOLAR LA PAILA,plant,CELSIA SOLAR LA PAILA,,2020-01-01,,propuesta heurística: nombre exacto
+CELSIA SOLAR LA VICTORIA I,plant,CELSIA SOLAR LA VICTORIA I,,2020-01-01,,propuesta heurística: nombre exacto
+CELSIA SOLAR LA VICTORIA II,plant,CELSIA SOLAR LA VICTORIA II,,2020-01-01,,propuesta heurística: nombre exacto
+CELSIA SOLAR PUERTO TEJADA,plant,CELSIA SOLAR PUERTO TEJADA,,2020-01-01,,propuesta heurística: nombre exacto
+CELSIA SOLAR YUMA,plant,CELSIA SOLAR YUMA,,2020-01-01,,propuesta heurística: nombre exacto
+CENTRAL CASTILLA 1,plant,CENTRAL CASTILLA 1,,2020-01-01,,propuesta heurística: nombre exacto
+CENTRO SOLAR,plant,CENTRO SOLAR,,2020-01-01,,propuesta heurística: nombre exacto
+CERRITOS,plant,CERRITOS,,2020-01-01,,propuesta heurística: nombre exacto
+CHARQUITO,plant,CHARQUITO,,2020-01-01,,propuesta heurística: nombre exacto
+CHENCHE PURIFICACION,plant,CHENCHE PURIFICACION,,2020-01-01,,propuesta heurística: nombre exacto
+CHIVOR,plant,CHIVOR,,2020-01-01,,propuesta heurística: nombre exacto
+COCONUCO,plant,COCONUCO,,2020-01-01,,propuesta heurística: nombre exacto
+COELLO,plant,COELLO,,2020-01-01,,propuesta heurística: nombre exacto
+COGENERADOR MANUELITA 2,plant,COGENERADOR MANUELITA 2,,2020-01-01,,propuesta heurística: nombre exacto
+COGENERADOR PROENCA,plant,COGENERADOR PROENCA,,2020-01-01,,propuesta heurística: nombre exacto
+COMUNIDAD EL SALVADOR I,plant,COMUNIDAD EL SALVADOR I,,2020-01-01,,propuesta heurística: nombre exacto
+COMUNIDAD EL SALVADOR II,plant,COMUNIDAD EL SALVADOR II,,2020-01-01,,propuesta heurística: nombre exacto
+CONDOR,plant,CONDOR,,2020-01-01,,propuesta heurística: nombre exacto
+CUCUANA,plant,CUCUANA,,2020-01-01,,propuesta heurística: nombre exacto
+CURRUCUCUES,plant,CURRUCUCUES,,2020-01-01,,propuesta heurística: nombre exacto
+DARIO VALENCIA SAMPER,plant,DARIO VALENCIA SAMPER,,2020-01-01,,propuesta heurística: nombre exacto
+DELTA I,plant,DELTA I,,2020-01-01,,propuesta heurística: nombre exacto
+DOÑA JUANA,plant,DOÑA JUANA,,2020-01-01,,propuesta heurística: nombre exacto
+DRUMMOND,plant,DRUMMOND,,2020-01-01,,propuesta heurística: nombre exacto
+ECOPARQUE SOLAR LA CIRA,plant,ECOPARQUE SOLAR LA CIRA,,2020-01-01,,propuesta heurística: nombre exacto
+ECUADOR138_1,intl_link,,PANAMERICANA|138,2020-01-01,,"propuesta heurística: enlace internacional, barra por nombre"
+ECUADOR230_1,intl_link,,JAMONDINO|230,2020-01-01,,"propuesta heurística: enlace internacional, barra por nombre"
+EL BOSQUE,plant,EL BOSQUE,,2020-01-01,,propuesta heurística: nombre exacto
+EL COCUYO,plant,EL COCUYO,,2020-01-01,,propuesta heurística: nombre exacto
+EL EDEN,plant,EL EDEN,,2020-01-01,,propuesta heurística: nombre exacto
+EL LIMONAR,plant,EL LIMONAR,,2020-01-01,,propuesta heurística: nombre exacto
+EL MOLINO,plant,EL MOLINO,,2020-01-01,,propuesta heurística: nombre exacto
+EL PASO,plant,EL PASO,,2020-01-01,,propuesta heurística: nombre exacto
+EL POPAL,plant,EL POPAL,,2020-01-01,,propuesta heurística: nombre exacto
+EL QUIMBO,plant,EL QUIMBO,,2020-01-01,,propuesta heurística: nombre exacto
+EL TAMARINDO I,plant,EL TAMARINDO I,,2020-01-01,,propuesta heurística: nombre exacto
+EL TAMARINDO II,plant,EL TAMARINDO II,,2020-01-01,,propuesta heurística: nombre exacto
+ESCUELA DE MINAS,plant,ESCUELA DE MINAS,,2020-01-01,,propuesta heurística: nombre exacto
+ESMERALDA,plant,ESMERALDA,,2020-01-01,,propuesta heurística: nombre exacto
+FLORES 4 CC,plant,FLORES 4 CC,,2020-01-01,,propuesta heurística: nombre exacto
+FLORES I CC,plant,FLORES I CC,,2020-01-01,,propuesta heurística: nombre exacto
+FLORIDA,plant,FLORIDA,,2020-01-01,,propuesta heurística: nombre exacto
+FUNDACION,plant,FUNDACION,,2020-01-01,,propuesta heurística: nombre exacto
+GANDALF,plant,GANDALF,,2020-01-01,,propuesta heurística: nombre exacto
+GD AGUSTIN I,plant,GD AGUSTIN I,,2020-01-01,,propuesta heurística: nombre exacto
+GD AGUSTIN II,plant,GD AGUSTIN II,,2020-01-01,,propuesta heurística: nombre exacto
+GD AGUSTIN III,plant,GD AGUSTIN III,,2020-01-01,,propuesta heurística: nombre exacto
+GD ALAMO SOLAR,plant,GD ALAMO SOLAR,,2020-01-01,,propuesta heurística: nombre exacto
+GD ALEJANDRIA I,plant,GD ALEJANDRIA I,,2020-01-01,,propuesta heurística: nombre exacto
+GD ALEJANDRIA II,plant,GD ALEJANDRIA II,,2020-01-01,,propuesta heurística: nombre exacto
+GD ALEJANDRIA III,plant,GD ALEJANDRIA III,,2020-01-01,,propuesta heurística: nombre exacto
+GD ALFEREZ,plant,GD ALFEREZ,,2020-01-01,,propuesta heurística: nombre exacto
+GD ASTRA I,plant,GD ASTRA I,,2020-01-01,,propuesta heurística: nombre exacto
+GD ASTROLUMEN LA GARITA,plant,GD ASTROLUMEN LA GARITA,,2020-01-01,,propuesta heurística: nombre exacto
+GD ATTIE KAI PRINCESA NEGRA,plant,GD ATTIE KAI PRINCESA NEGRA,,2020-01-01,,propuesta heurística: nombre exacto
+GD BASILICA,plant,GD BASILICA,,2020-01-01,,propuesta heurística: nombre exacto
+GD BIOSOLAR,plant,GD BIOSOLAR,,2020-01-01,,propuesta heurística: nombre exacto
+GD BLANCA ENERGY I,plant,GD BLANCA ENERGY I,,2020-01-01,,propuesta heurística: nombre exacto
+GD BLANCA ENERGY II,plant,GD BLANCA ENERGY II,,2020-01-01,,propuesta heurística: nombre exacto
+GD BLANCA ENERGY III,plant,GD BLANCA ENERGY III,,2020-01-01,,propuesta heurística: nombre exacto
+GD BLANCA ENERGY SOLAR 23,plant,GD BLANCA ENERGY SOLAR 23,,2020-01-01,,propuesta heurística: nombre exacto
+GD BLANCA ENERGY SOLAR 24,plant,GD BLANCA ENERGY SOLAR 24,,2020-01-01,,propuesta heurística: nombre exacto
+GD BOCAS DEL PALO,plant,GD BOCAS DEL PALO,,2020-01-01,,propuesta heurística: nombre exacto
+GD BONILLA A I,plant,GD BONILLA A I,,2020-01-01,,propuesta heurística: nombre exacto
+GD BONILLA A II,plant,GD BONILLA A II,,2020-01-01,,propuesta heurística: nombre exacto
+GD BONILLA A III,plant,GD BONILLA A III,,2020-01-01,,propuesta heurística: nombre exacto
+GD BONILLA A IV,plant,GD BONILLA A IV,,2020-01-01,,propuesta heurística: nombre exacto
+GD BONILLA A V,plant,GD BONILLA A V,,2020-01-01,,propuesta heurística: nombre exacto
+GD CADILLO II,plant,GD CADILLO II,,2020-01-01,,propuesta heurística: nombre exacto
+GD CALIPSO SOLAR,plant,GD CALIPSO SOLAR,,2020-01-01,,propuesta heurística: nombre exacto
+GD CANARIOS I,plant,GD CANARIOS I,,2020-01-01,,propuesta heurística: nombre exacto
+GD CANARIOS II,plant,GD CANARIOS II,,2020-01-01,,propuesta heurística: nombre exacto
+GD CANARIOS III,plant,GD CANARIOS III,,2020-01-01,,propuesta heurística: nombre exacto
+GD CAPILLA I,plant,GD CAPILLA I,,2020-01-01,,propuesta heurística: nombre exacto
+GD CARACOL I,plant,GD CARACOL I,,2020-01-01,,propuesta heurística: nombre exacto
+GD CARACOL II,plant,GD CARACOL II,,2020-01-01,,propuesta heurística: nombre exacto
+GD CARACOL III,plant,GD CARACOL III,,2020-01-01,,propuesta heurística: nombre exacto
+GD CHICORAL,plant,GD CHICORAL,,2020-01-01,,propuesta heurística: nombre exacto
+GD CHIMBI,plant,GD CHIMBI,,2020-01-01,,propuesta heurística: nombre exacto
+GD CHIRIGUANA NORTE I,plant,GD CHIRIGUANA NORTE I,,2020-01-01,,propuesta heurística: nombre exacto
+GD CHIRIGUANA NORTE II,plant,GD CHIRIGUANA NORTE II,,2020-01-01,,propuesta heurística: nombre exacto
+GD CHIRIGUANA NORTE IV,plant,GD CHIRIGUANA NORTE IV,,2020-01-01,,propuesta heurística: nombre exacto
+GD CORALITO,plant,GD CORALITO,,2020-01-01,,propuesta heurística: nombre exacto
+GD CSF ARENALES I,plant,GD CSF ARENALES I,,2020-01-01,,propuesta heurística: nombre exacto
+GD CSF PINONES,plant,GD CSF PINONES,,2020-01-01,,propuesta heurística: nombre exacto
+GD DELTA II,plant,GD DELTA II,,2020-01-01,,propuesta heurística: nombre exacto
+GD DELTA III,plant,GD DELTA III,,2020-01-01,,propuesta heurística: nombre exacto
+GD DIOCESIS DE RIOHACHA,plant,GD DIOCESIS DE RIOHACHA,,2020-01-01,,propuesta heurística: nombre exacto
+GD EDEQ SOLAR LA TEBAIDA,plant,GD EDEQ SOLAR LA TEBAIDA,,2020-01-01,,propuesta heurística: nombre exacto
+GD EDEQ SOLAR MONTENEGRO,plant,GD EDEQ SOLAR MONTENEGRO,,2020-01-01,,propuesta heurística: nombre exacto
+GD EL BANCO,plant,GD EL BANCO,,2020-01-01,,propuesta heurística: nombre exacto
+GD EL CASTILLO I,plant,GD EL CASTILLO I,,2020-01-01,,propuesta heurística: nombre exacto
+GD EL CASTILLO II,plant,GD EL CASTILLO II,,2020-01-01,,propuesta heurística: nombre exacto
+GD EL CASTILLO III,plant,GD EL CASTILLO III,,2020-01-01,,propuesta heurística: nombre exacto
+GD EL CASTILLO IV,plant,GD EL CASTILLO IV,,2020-01-01,,propuesta heurística: nombre exacto
+GD EL CASTILLO V,plant,GD EL CASTILLO V,,2020-01-01,,propuesta heurística: nombre exacto
+GD EL MANDARINO,plant,GD EL MANDARINO,,2020-01-01,,propuesta heurística: nombre exacto
+GD EL PASO NORTE,plant,GD EL PASO NORTE,,2020-01-01,,propuesta heurística: nombre exacto
+GD EL ROBLE,plant,GD EL ROBLE,,2020-01-01,,propuesta heurística: nombre exacto
+GD EL TRIUNFO,plant,GD EL TRIUNFO,,2020-01-01,,propuesta heurística: nombre exacto
+GD EMPERATRIZ I,plant,GD EMPERATRIZ I,,2020-01-01,,propuesta heurística: nombre exacto
+GD EMPERATRIZ II,plant,GD EMPERATRIZ II,,2020-01-01,,propuesta heurística: nombre exacto
+GD ENCANTO,plant,GD ENCANTO,,2020-01-01,,propuesta heurística: nombre exacto
+GD ERCO BELEN I,plant,GD ERCO BELEN I,,2020-01-01,,propuesta heurística: nombre exacto
+GD ERCO BELEN II,plant,GD ERCO BELEN II,,2020-01-01,,propuesta heurística: nombre exacto
+GD ERCO GOLONDRINA I,plant,GD ERCO GOLONDRINA I,,2020-01-01,,propuesta heurística: nombre exacto
+GD ERCO GOLONDRINA II,plant,GD ERCO GOLONDRINA II,,2020-01-01,,propuesta heurística: nombre exacto
+GD ERCO GUAMO I,plant,GD ERCO GUAMO I,,2020-01-01,,propuesta heurística: nombre exacto
+GD ERCO GUAMO II,plant,GD ERCO GUAMO II,,2020-01-01,,propuesta heurística: nombre exacto
+GD ERCO GUAMO III,plant,GD ERCO GUAMO III,,2020-01-01,,propuesta heurística: nombre exacto
+GD ERCO GUAMO IV,plant,GD ERCO GUAMO IV,,2020-01-01,,propuesta heurística: nombre exacto
+GD ERCO ISIDORI,plant,GD ERCO ISIDORI,,2020-01-01,,propuesta heurística: nombre exacto
+GD ERCO LAS PIEDRAS I,plant,GD ERCO LAS PIEDRAS I,,2020-01-01,,propuesta heurística: nombre exacto
+GD ERCO LAS PIEDRAS II,plant,GD ERCO LAS PIEDRAS II,,2020-01-01,,propuesta heurística: nombre exacto
+GD ERCO MARIANGOLA,plant,GD ERCO MARIANGOLA,,2020-01-01,,propuesta heurística: nombre exacto
+GD ERCO PALMAS,plant,GD ERCO PALMAS,,2020-01-01,,propuesta heurística: nombre exacto
+GD ERCO PALMAS II,plant,GD ERCO PALMAS II,,2020-01-01,,propuesta heurística: nombre exacto
+GD ERCO SALDANA I,plant,GD ERCO SALDANA I,,2020-01-01,,propuesta heurística: nombre exacto
+GD ERCO SALDANA II,plant,GD ERCO SALDANA II,,2020-01-01,,propuesta heurística: nombre exacto
+GD ERCO TOLDADO,plant,GD ERCO TOLDADO,,2020-01-01,,propuesta heurística: nombre exacto
+GD ESPERANZA I,plant,GD ESPERANZA I,,2020-01-01,,propuesta heurística: nombre exacto
+GD ESPERANZA I ETAPA II,plant,GD ESPERANZA I ETAPA II,,2020-01-01,,propuesta heurística: nombre exacto
+GD ESPERANZA II,plant,GD ESPERANZA II,,2020-01-01,,propuesta heurística: nombre exacto
+GD EVOLTI I,plant,GD EVOLTI I,,2020-01-01,,propuesta heurística: nombre exacto
+GD FINCA ISABEL LOPEZ,plant,GD FINCA ISABEL LOPEZ,,2020-01-01,,propuesta heurística: nombre exacto
+GD FINCA JM,plant,GD FINCA JM,,2020-01-01,,propuesta heurística: nombre exacto
+GD GALERAS OCCIDENTE,plant,GD GALERAS OCCIDENTE,,2020-01-01,,propuesta heurística: nombre exacto
+GD GALILEO SOLAR,plant,GD GALILEO SOLAR,,2020-01-01,,propuesta heurística: nombre exacto
+GD GARZA,plant,GD GARZA,,2020-01-01,,propuesta heurística: nombre exacto
+GD GOLONDRINA,plant,GD GOLONDRINA,,2020-01-01,,propuesta heurística: nombre exacto
+GD GRANJA LA RUBIELA,plant,GD GRANJA LA RUBIELA,,2020-01-01,,propuesta heurística: nombre exacto
+GD GRANJA SAN PELAYO,plant,GD GRANJA SAN PELAYO,,2020-01-01,,propuesta heurística: nombre exacto
+GD GRANJA SOLAR EL BOTE,plant,GD GRANJA SOLAR EL BOTE,,2020-01-01,,propuesta heurística: nombre exacto
+GD GRANJA SOLAR SAN AGUSTIN,plant,GD GRANJA SOLAR SAN AGUSTIN,,2020-01-01,,propuesta heurística: nombre exacto
+GD GUADALUPE I,plant,GD GUADALUPE I,,2020-01-01,,propuesta heurística: nombre exacto
+GD GY SAN MARTIN II,plant,GD GY SAN MARTIN II,,2020-01-01,,propuesta heurística: nombre exacto
+GD JARDINCITO,plant,GD JARDINCITO,,2020-01-01,,propuesta heurística: nombre exacto
+GD LA CACICA,plant,GD LA CACICA,,2020-01-01,,propuesta heurística: nombre exacto
+GD LA CATEDRAL,plant,GD LA CATEDRAL,,2020-01-01,,propuesta heurística: nombre exacto
+GD LA HONDA,plant,GD LA HONDA,,2020-01-01,,propuesta heurística: nombre exacto
+GD LA HORMIGUITA,plant,GD LA HORMIGUITA,,2020-01-01,,propuesta heurística: nombre exacto
+GD LA MACANA,plant,GD LA MACANA,,2020-01-01,,propuesta heurística: nombre exacto
+GD LA PERDIZ,plant,GD LA PERDIZ,,2020-01-01,,propuesta heurística: nombre exacto
+GD LA URIBE,plant,GD LA URIBE,,2020-01-01,,propuesta heurística: nombre exacto
+GD LAS MARGARITAS,plant,GD LAS MARGARITAS,,2020-01-01,,propuesta heurística: nombre exacto
+GD LAS MERCEDES I,plant,GD LAS MERCEDES I,,2020-01-01,,propuesta heurística: nombre exacto
+GD LAS MERCEDES II,plant,GD LAS MERCEDES II,,2020-01-01,,propuesta heurística: nombre exacto
+GD LAS PILONERAS,plant,GD LAS PILONERAS,,2020-01-01,,propuesta heurística: nombre exacto
+GD LEGACY,plant,GD LEGACY,,2020-01-01,,propuesta heurística: nombre exacto
+GD LOS CHORROS,plant,GD LOS CHORROS,,2020-01-01,,propuesta heurística: nombre exacto
+GD LOS MANGOS I,plant,GD LOS MANGOS I,,2020-01-01,,propuesta heurística: nombre exacto
+GD LOS MANGOS II,plant,GD LOS MANGOS II,,2020-01-01,,propuesta heurística: nombre exacto
+GD LOS MANGOS III,plant,GD LOS MANGOS III,,2020-01-01,,propuesta heurística: nombre exacto
+GD LURUACO I A I,plant,GD LURUACO I A I,,2020-01-01,,propuesta heurística: nombre exacto
+GD LURUACO I A II,plant,GD LURUACO I A II,,2020-01-01,,propuesta heurística: nombre exacto
+GD LURUACO I A III,plant,GD LURUACO I A III,,2020-01-01,,propuesta heurística: nombre exacto
+GD LURUACO I A IV,plant,GD LURUACO I A IV,,2020-01-01,,propuesta heurística: nombre exacto
+GD LYRA,plant,GD LYRA,,2020-01-01,,propuesta heurística: nombre exacto
+GD LYRA II,plant,GD LYRA II,,2020-01-01,,propuesta heurística: nombre exacto
+GD MARIANGEL,plant,GD MARIANGEL,,2020-01-01,,propuesta heurística: nombre exacto
+GD MEISSA II,plant,GD MEISSA II,,2020-01-01,,propuesta heurística: nombre exacto
+GD MGS 0013 LA MESA,plant,GD MGS 0013 LA MESA,,2020-01-01,,propuesta heurística: nombre exacto
+GD NAOS I,plant,GD NAOS I,,2020-01-01,,propuesta heurística: nombre exacto
+GD NAOS II,plant,GD NAOS II,,2020-01-01,,propuesta heurística: nombre exacto
+GD NAOS III,plant,GD NAOS III,,2020-01-01,,propuesta heurística: nombre exacto
+GD NAOS IV,plant,GD NAOS IV,,2020-01-01,,propuesta heurística: nombre exacto
+GD NAOS V,plant,GD NAOS V,,2020-01-01,,propuesta heurística: nombre exacto
+GD NOVA I,plant,GD NOVA I,,2020-01-01,,propuesta heurística: nombre exacto
+GD NOVA II,plant,GD NOVA II,,2020-01-01,,propuesta heurística: nombre exacto
+GD ORBIS,plant,GD ORBIS,,2020-01-01,,propuesta heurística: nombre exacto
+GD PALERMO,plant,GD PALERMO,,2020-01-01,,propuesta heurística: nombre exacto
+GD PALMERAS I,plant,GD PALMERAS I,,2020-01-01,,propuesta heurística: nombre exacto
+GD PALMERAS II,plant,GD PALMERAS II,,2020-01-01,,propuesta heurística: nombre exacto
+GD PALMERAS III,plant,GD PALMERAS III,,2020-01-01,,propuesta heurística: nombre exacto
+GD PALMERAS IV,plant,GD PALMERAS IV,,2020-01-01,,propuesta heurística: nombre exacto
+GD PARQUE SOLAR GRANADA I,plant,GD PARQUE SOLAR GRANADA I,,2020-01-01,,propuesta heurística: nombre exacto
+GD PARQUE SOLAR GRANADA II,plant,GD PARQUE SOLAR GRANADA II,,2020-01-01,,propuesta heurística: nombre exacto
+GD PARQUE SOLAR LA ESPERANZA,plant,GD PARQUE SOLAR LA ESPERANZA,,2020-01-01,,propuesta heurística: nombre exacto
+GD PARQUE SOLAR TRONCAL,plant,GD PARQUE SOLAR TRONCAL,,2020-01-01,,propuesta heurística: nombre exacto
+GD PARQUE SOLAR TRONCAL II,plant,GD PARQUE SOLAR TRONCAL II,,2020-01-01,,propuesta heurística: nombre exacto
+GD PEGASUS SOLAR,plant,GD PEGASUS SOLAR,,2020-01-01,,propuesta heurística: nombre exacto
+GD PIEDECUESTA I,plant,GD PIEDECUESTA I,,2020-01-01,,propuesta heurística: nombre exacto
+GD PIEDECUESTA II,plant,GD PIEDECUESTA II,,2020-01-01,,propuesta heurística: nombre exacto
+GD PIEDECUESTA III,plant,GD PIEDECUESTA III,,2020-01-01,,propuesta heurística: nombre exacto
+GD PISINGO I,plant,GD PISINGO I,,2020-01-01,,propuesta heurística: nombre exacto
+GD PISINGO II,plant,GD PISINGO II,,2020-01-01,,propuesta heurística: nombre exacto
+GD POLARIS II,plant,GD POLARIS II,,2020-01-01,,propuesta heurística: nombre exacto
+GD POLARIS III,plant,GD POLARIS III,,2020-01-01,,propuesta heurística: nombre exacto
+GD POLARIS IV,plant,GD POLARIS IV,,2020-01-01,,propuesta heurística: nombre exacto
+GD PULOY,plant,GD PULOY,,2020-01-01,,propuesta heurística: nombre exacto
+GD PXV I,plant,GD PXV I,,2020-01-01,,propuesta heurística: nombre exacto
+GD PXV II,plant,GD PXV II,,2020-01-01,,propuesta heurística: nombre exacto
+GD PXV IV,plant,GD PXV IV,,2020-01-01,,propuesta heurística: nombre exacto
+GD RIGEL SOLAR,plant,GD RIGEL SOLAR,,2020-01-01,,propuesta heurística: nombre exacto
+GD ROCKY II,plant,GD ROCKY II,,2020-01-01,,propuesta heurística: nombre exacto
+GD SABANA DE TORRES,plant,GD SABANA DE TORRES,,2020-01-01,,propuesta heurística: nombre exacto
+GD SAN MARTIN,plant,GD SAN MARTIN,,2020-01-01,,propuesta heurística: nombre exacto
+GD SAN MARTIN I,plant,GD SAN MARTIN I,,2020-01-01,,propuesta heurística: nombre exacto
+GD SAN MARTIN II,plant,GD SAN MARTIN II,,2020-01-01,,propuesta heurística: nombre exacto
+GD SAN MARTIN III,plant,GD SAN MARTIN III,,2020-01-01,,propuesta heurística: nombre exacto
+GD SAN ONOFRE I,plant,GD SAN ONOFRE I,,2020-01-01,,propuesta heurística: nombre exacto
+GD SAN ONOFRE II,plant,GD SAN ONOFRE II,,2020-01-01,,propuesta heurística: nombre exacto
+GD SAN ONOFRE III,plant,GD SAN ONOFRE III,,2020-01-01,,propuesta heurística: nombre exacto
+GD SAN PELAYO,plant,GD SAN PELAYO,,2020-01-01,,propuesta heurística: nombre exacto
+GD SEMILLA DE EL PASO IIIA,plant,GD SEMILLA DE EL PASO IIIA,,2020-01-01,,propuesta heurística: nombre exacto
+GD SEMILLA DE EL PASO IVA,plant,GD SEMILLA DE EL PASO IVA,,2020-01-01,,propuesta heurística: nombre exacto
+GD SEMILLA DE GUACAMAYAL II,plant,GD SEMILLA DE GUACAMAYAL II,,2020-01-01,,propuesta heurística: nombre exacto
+GD SEMILLA DEL PASO IA,plant,GD SEMILLA DEL PASO IA,,2020-01-01,,propuesta heurística: nombre exacto
+GD SEMILLA DEL PASO III,plant,GD SEMILLA DEL PASO III,,2020-01-01,,propuesta heurística: nombre exacto
+GD SEMILLAS DE CERETE II,plant,GD SEMILLAS DE CERETE II,,2020-01-01,,propuesta heurística: nombre exacto
+GD SEMILLAS MONTERIA I,plant,GD SEMILLAS MONTERIA I,,2020-01-01,,propuesta heurística: nombre exacto
+GD SEMILLAS MONTERIA II,plant,GD SEMILLAS MONTERIA II,,2020-01-01,,propuesta heurística: nombre exacto
+GD SEVILLANO RURAL I,plant,GD SEVILLANO RURAL I,,2020-01-01,,propuesta heurística: nombre exacto
+GD SEVILLANO RURAL II,plant,GD SEVILLANO RURAL II,,2020-01-01,,propuesta heurística: nombre exacto
+GD SINAI,plant,GD SINAI,,2020-01-01,,propuesta heurística: nombre exacto
+GD SOL Y CIELO X,plant,GD SOL Y CIELO X,,2020-01-01,,propuesta heurística: nombre exacto
+GD SOL Y CIELO XI,plant,GD SOL Y CIELO XI,,2020-01-01,,propuesta heurística: nombre exacto
+GD SOL Y CIELO XII,plant,GD SOL Y CIELO XII,,2020-01-01,,propuesta heurística: nombre exacto
+GD SOL Y CIELO XIII,plant,GD SOL Y CIELO XIII,,2020-01-01,,propuesta heurística: nombre exacto
+GD SOL Y CIELO XIV,plant,GD SOL Y CIELO XIV,,2020-01-01,,propuesta heurística: nombre exacto
+GD SOLYCIELO 9,plant,GD SOLYCIELO 9,,2020-01-01,,propuesta heurística: nombre exacto
+GD SUAMOX,plant,GD SUAMOX,,2020-01-01,,propuesta heurística: nombre exacto
+GD TAURAMENA I,plant,GD TAURAMENA I,,2020-01-01,,propuesta heurística: nombre exacto
+GD TAURUS IX,plant,GD TAURUS IX,,2020-01-01,,propuesta heurística: nombre exacto
+GD TAURUS VIII,plant,GD TAURUS VIII,,2020-01-01,,propuesta heurística: nombre exacto
+GD TAURUS X,plant,GD TAURUS X,,2020-01-01,,propuesta heurística: nombre exacto
+GD TITAN SOLAR,plant,GD TITAN SOLAR,,2020-01-01,,propuesta heurística: nombre exacto
+GD VEGA I,plant,GD VEGA I,,2020-01-01,,propuesta heurística: nombre exacto
+GD VEGA II,plant,GD VEGA II,,2020-01-01,,propuesta heurística: nombre exacto
+GD VITERBO I,plant,GD VITERBO I,,2020-01-01,,propuesta heurística: nombre exacto
+GD VITERBO II,plant,GD VITERBO II,,2020-01-01,,propuesta heurística: nombre exacto
+GD WE202,plant,GD WE202,,2020-01-01,,propuesta heurística: nombre exacto
+GD WE2021,plant,GD WE2021,,2020-01-01,,propuesta heurística: nombre exacto
+GD YUAN SOLAR,plant,GD YUAN SOLAR,,2020-01-01,,propuesta heurística: nombre exacto
+GD YURBAQUA,plant,GD YURBAQUA,,2020-01-01,,propuesta heurística: nombre exacto
+GECELCA 3,plant,GECELCA 3,,2020-01-01,,propuesta heurística: nombre exacto
+GECELCA 32,plant,GECELCA 32,,2020-01-01,,propuesta heurística: nombre exacto
+GR PARQUE SOLAR TUCANES,plant,GR PARQUE SOLAR TUCANES,,2020-01-01,,propuesta heurística: nombre exacto
+GRANJA SOLAR ASTURIAS,plant,GRANJA SOLAR ASTURIAS,,2020-01-01,,propuesta heurística: nombre exacto
+GRANJA SOLAR BELMONTE,plant,GRANJA SOLAR BELMONTE,,2020-01-01,,propuesta heurística: nombre exacto
+GRANJA SOLAR EL SALADO,plant,GRANJA SOLAR EL SALADO,,2020-01-01,,propuesta heurística: nombre exacto
+GRANJA SOLAR FLANDES,plant,GRANJA SOLAR FLANDES,,2020-01-01,,propuesta heurística: nombre exacto
+GRANJA SOLAR LA GARITA,plant,GRANJA SOLAR LA GARITA,,2020-01-01,,propuesta heurística: nombre exacto
+GRANJA SOLAR LANCEROS,plant,GRANJA SOLAR LANCEROS,,2020-01-01,,propuesta heurística: nombre exacto
+GRANJA SOLAR SAN FELIPE,plant,GRANJA SOLAR SAN FELIPE,,2020-01-01,,propuesta heurística: nombre exacto
+GUACAICA,plant,GUACAICA,,2020-01-01,,propuesta heurística: nombre exacto
+GUAJIRA 1,plant,GUAJIRA 1,,2020-01-01,,propuesta heurística: nombre exacto
+GUAJIRA 2,plant,GUAJIRA 2,,2020-01-01,,propuesta heurística: nombre exacto
+GUALANDAY,plant,GUALANDAY,,2020-01-01,,propuesta heurística: nombre exacto
+GUAMO,plant,GUAMO,,2020-01-01,,propuesta heurística: nombre exacto
+GUANAQUITAS,plant,GUANAQUITAS,,2020-01-01,,propuesta heurística: nombre exacto
+GUATAPE,plant,GUATAPE,,2020-01-01,,propuesta heurística: nombre exacto
+GUAVIO,plant,GUAVIO,,2020-01-01,,propuesta heurística: nombre exacto
+GUAVIO MENOR,plant,GUAVIO MENOR,,2020-01-01,,propuesta heurística: nombre exacto
+GUAYEPO,plant,GUAYEPO,,2020-01-01,,propuesta heurística: nombre exacto
+GUAYEPO III,plant,GUAYEPO III,,2020-01-01,,propuesta heurística: nombre exacto
+GY SOLAR AURORA,plant,GY SOLAR AURORA,,2020-01-01,,propuesta heurística: nombre exacto
+HELIOS I,plant,HELIOS I,,2020-01-01,,propuesta heurística: nombre exacto
+HIDROBARRANCAS,plant,HIDROBARRANCAS,,2020-01-01,,propuesta heurística: nombre exacto
+HIDROMONTAÑITAS,plant,HIDROMONTAÑITAS,,2020-01-01,,propuesta heurística: nombre exacto
+INCAUCA 1,plant,INCAUCA 1,,2020-01-01,,propuesta heurística: nombre exacto
+INGENIO PICHICHI 1,plant,INGENIO PICHICHI 1,,2020-01-01,,propuesta heurística: nombre exacto
+INGENIO PROVIDENCIA 2,plant,INGENIO PROVIDENCIA 2,,2020-01-01,,propuesta heurística: nombre exacto
+INGENIO RIOPAILA 1,plant,INGENIO RIOPAILA 1,,2020-01-01,,propuesta heurística: nombre exacto
+INGENIO RISARALDA 1,plant,INGENIO RISARALDA 1,,2020-01-01,,propuesta heurística: nombre exacto
+INGENIO SAN CARLOS 1,plant,INGENIO SAN CARLOS 1,,2020-01-01,,propuesta heurística: nombre exacto
+INSULA,plant,INSULA,,2020-01-01,,propuesta heurística: nombre exacto
+INTERMEDIA,plant,INTERMEDIA,,2020-01-01,,propuesta heurística: nombre exacto
+INZA,plant,INZA,,2020-01-01,,propuesta heurística: nombre exacto
+IQUIRA I,plant,IQUIRA I,,2020-01-01,,propuesta heurística: nombre exacto
+IQUIRA II,plant,IQUIRA II,,2020-01-01,,propuesta heurística: nombre exacto
+ITUANGO,plant,ITUANGO,,2020-01-01,,propuesta heurística: nombre exacto
+JAGUAS,plant,JAGUAS,,2020-01-01,,propuesta heurística: nombre exacto
+JEQUES,plant,JEQUES,,2020-01-01,,propuesta heurística: nombre exacto
+JUAN GARCIA,plant,JUAN GARCIA,,2020-01-01,,propuesta heurística: nombre exacto
+JUMI,plant,JUMI,,2020-01-01,,propuesta heurística: nombre exacto
+LA CASCADA ( ABEJORRAL),plant,LA CASCADA ( ABEJORRAL),,2020-01-01,,propuesta heurística: nombre exacto
+LA CASCADA (ANTIOQUIA),plant,LA CASCADA (ANTIOQUIA),,2020-01-01,,propuesta heurística: nombre exacto
+LA CASCADA DE GRANADA,plant,LA CASCADA DE GRANADA,,2020-01-01,,propuesta heurística: nombre exacto
+LA CHORRERA,plant,LA CHORRERA,,2020-01-01,,propuesta heurística: nombre exacto
+LA FRISOLERA,plant,LA FRISOLERA,,2020-01-01,,propuesta heurística: nombre exacto
+LA HERRADURA,plant,LA HERRADURA,,2020-01-01,,propuesta heurística: nombre exacto
+LA INGLESA,plant,LA INGLESA,,2020-01-01,,propuesta heurística: nombre exacto
+LA MARTINA,plant,LA MARTINA,,2020-01-01,,propuesta heurística: nombre exacto
+LA MATA,plant,LA MATA,,2020-01-01,,propuesta heurística: nombre exacto
+LA MEDINA,plant,LA MEDINA,,2020-01-01,,propuesta heurística: nombre exacto
+LA NAVETA,plant,LA NAVETA,,2020-01-01,,propuesta heurística: nombre exacto
+LA NENERA,plant,LA NENERA,,2020-01-01,,propuesta heurística: nombre exacto
+LA PAZ,plant,LA PAZ,,2020-01-01,,propuesta heurística: nombre exacto
+LA PITA,plant,LA PITA,,2020-01-01,,propuesta heurística: nombre exacto
+LA REBUSCA,plant,LA REBUSCA,,2020-01-01,,propuesta heurística: nombre exacto
+LA SIERPE,plant,LA SIERPE,,2020-01-01,,propuesta heurística: nombre exacto
+LA TASAJERA,plant,LA TASAJERA,,2020-01-01,,propuesta heurística: nombre exacto
+LA TOLUA,plant,LA TOLUA,,2020-01-01,,propuesta heurística: nombre exacto
+LA VUELTA,plant,LA VUELTA,,2020-01-01,,propuesta heurística: nombre exacto
+LAGUNETA,plant,LAGUNETA,,2020-01-01,,propuesta heurística: nombre exacto
+LAS PALMAS,plant,LAS PALMAS,,2020-01-01,,propuesta heurística: nombre exacto
+LAS VIOLETAS,plant,LAS VIOLETAS,,2020-01-01,,propuesta heurística: nombre exacto
+LATAM SOLAR LA LOMA,plant,LATAM SOLAR LA LOMA,,2020-01-01,,propuesta heurística: nombre exacto
+LOS CABALLEROS,plant,LOS CABALLEROS,,2020-01-01,,propuesta heurística: nombre exacto
+LOS GIRASOLES,plant,LOS GIRASOLES,,2020-01-01,,propuesta heurística: nombre exacto
+LUZMA I,plant,LUZMA I,,2020-01-01,,propuesta heurística: nombre exacto
+LUZMA II,plant,LUZMA II,,2020-01-01,,propuesta heurística: nombre exacto
+MAGALLO,plant,MAGALLO,,2020-01-01,,propuesta heurística: nombre exacto
+MANANTIALES,plant,MANANTIALES,,2020-01-01,,propuesta heurística: nombre exacto
+MAYAGUEZ 1,plant,MAYAGUEZ 1,,2020-01-01,,propuesta heurística: nombre exacto
+MERILECTRICA 1,plant,MERILECTRICA 1,,2020-01-01,,propuesta heurística: nombre exacto
+MIEL I,plant,MIEL I,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA EL COPEY OCCIDENTE,plant,MINIGRANJA EL COPEY OCCIDENTE,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA EL JOROPO,plant,MINIGRANJA EL JOROPO,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA EL MAPALE,plant,MINIGRANJA EL MAPALE,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA EL MERENGUE,plant,MINIGRANJA EL MERENGUE,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA EL MOLINO,plant,MINIGRANJA EL MOLINO,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA EL OLIMPO,plant,MINIGRANJA EL OLIMPO,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA EL SON,plant,MINIGRANJA EL SON,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA IBIRICO,plant,MINIGRANJA IBIRICO,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA LA CUMBIA,plant,MINIGRANJA LA CUMBIA,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA LA PAZ ESMERALDA,plant,MINIGRANJA LA PAZ ESMERALDA,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA LA PAZ LEYENDA,plant,MINIGRANJA LA PAZ LEYENDA,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA LA PAZ VALLENATA,plant,MINIGRANJA LA PAZ VALLENATA,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA LA PAZ VERSO,plant,MINIGRANJA LA PAZ VERSO,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA LA PUYA,plant,MINIGRANJA LA PUYA,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA LA RESERVA,plant,MINIGRANJA LA RESERVA,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA SAN DIEGO SUR,plant,MINIGRANJA SAN DIEGO SUR,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA SAN PEDRO,plant,MINIGRANJA SAN PEDRO,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA VALENCIA ORIENTE I,plant,MINIGRANJA VALENCIA ORIENTE I,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA VALENCIA ORIENTE II,plant,MINIGRANJA VALENCIA ORIENTE II,,2020-01-01,,propuesta heurística: nombre exacto
+MINIGRANJA VILLANUEVA,plant,MINIGRANJA VILLANUEVA,,2020-01-01,,propuesta heurística: nombre exacto
+MIROLINDO,plant,MIROLINDO,,2020-01-01,,propuesta heurística: nombre exacto
+MONDOMO,plant,MONDOMO,,2020-01-01,,propuesta heurística: nombre exacto
+MONTELIBANO,plant,MONTELIBANO,,2020-01-01,,propuesta heurística: nombre exacto
+MORRO AZUL,plant,MORRO AZUL,,2020-01-01,,propuesta heurística: nombre exacto
+MULATOS II,plant,MULATOS II,,2020-01-01,,propuesta heurística: nombre exacto
+MUNICIPAL,plant,MUNICIPAL,,2020-01-01,,propuesta heurística: nombre exacto
+NIMA,plant,NIMA,,2020-01-01,,propuesta heurística: nombre exacto
+NIQUIA,plant,NIQUIA,,2020-01-01,,propuesta heurística: nombre exacto
+NUEVO LIBARE,plant,NUEVO LIBARE,,2020-01-01,,propuesta heurística: nombre exacto
+NUMBANA,plant,NUMBANA,,2020-01-01,,propuesta heurística: nombre exacto
+NUTIBARA,plant,NUTIBARA,,2020-01-01,,propuesta heurística: nombre exacto
+OIBITA,plant,OIBITA,,2020-01-01,,propuesta heurística: nombre exacto
+OVEJAS,plant,OVEJAS,,2020-01-01,,propuesta heurística: nombre exacto
+PAIPA 1,plant,PAIPA 1,,2020-01-01,,propuesta heurística: nombre exacto
+PAIPA 2,plant,PAIPA 2,,2020-01-01,,propuesta heurística: nombre exacto
+PAIPA 3,plant,PAIPA 3,,2020-01-01,,propuesta heurística: nombre exacto
+PAIPA 4,plant,PAIPA 4,,2020-01-01,,propuesta heurística: nombre exacto
+PAJARITO,plant,PAJARITO,,2020-01-01,,propuesta heurística: nombre exacto
+PALMAS SAN GIL,plant,PALMAS SAN GIL,,2020-01-01,,propuesta heurística: nombre exacto
+PAPELES NACIONALES,plant,PAPELES NACIONALES,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE EOLICO CARRETO,plant,PARQUE EOLICO CARRETO,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE EOLICO GUAJIRA I,plant,PARQUE EOLICO GUAJIRA I,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE EOLICO WESP01,plant,PARQUE EOLICO WESP01,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE SOLAR ARENAL,plant,PARQUE SOLAR ARENAL,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE SOLAR BARANOA,plant,PARQUE SOLAR BARANOA,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE SOLAR BUGAMBILES,plant,PARQUE SOLAR BUGAMBILES,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE SOLAR CRLI,plant,PARQUE SOLAR CRLI,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE SOLAR DINAMARCA,plant,PARQUE SOLAR DINAMARCA,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE SOLAR EL JARDIN,plant,PARQUE SOLAR EL JARDIN,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE SOLAR HATO GRANDE,plant,PARQUE SOLAR HATO GRANDE,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE SOLAR HONDA I,plant,PARQUE SOLAR HONDA I,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE SOLAR HONDA II,plant,PARQUE SOLAR HONDA II,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE SOLAR INTI I,plant,PARQUE SOLAR INTI I,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE SOLAR INTI II,plant,PARQUE SOLAR INTI II,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE SOLAR LA MENA,plant,PARQUE SOLAR LA MENA,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE SOLAR LA UNION,plant,PARQUE SOLAR LA UNION,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE SOLAR NISPEROS,plant,PARQUE SOLAR NISPEROS,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE SOLAR PUERTA DE ORO,plant,PARQUE SOLAR PUERTA DE ORO,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE SOLAR SABANA,plant,PARQUE SOLAR SABANA,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE SOLAR TEPUY,plant,PARQUE SOLAR TEPUY,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE SOLAR URRA,plant,PARQUE SOLAR URRA,,2020-01-01,,propuesta heurística: nombre exacto
+PARQUE SOLAR VERSALLES,plant,PARQUE SOLAR VERSALLES,,2020-01-01,,propuesta heurística: nombre exacto
+PASTALES,plant,PASTALES,,2020-01-01,,propuesta heurística: nombre exacto
+PATICO - LA CABRERA,plant,PATICO - LA CABRERA,,2020-01-01,,propuesta heurística: nombre exacto
+PCH LA LIBERTAD,plant,PCH LA LIBERTAD,,2020-01-01,,propuesta heurística: nombre exacto
+PCH LA NOQUE,plant,PCH LA NOQUE,,2020-01-01,,propuesta heurística: nombre exacto
+PETALO DE CORDOBA II,plant,PETALO DE CORDOBA II,,2020-01-01,,propuesta heurística: nombre exacto
+PETALO DEL MAGDALENA,plant,PETALO DEL MAGDALENA,,2020-01-01,,propuesta heurística: nombre exacto
+PETALO DEL NORTE DE SANTANDER I,plant,PETALO DEL NORTE DE SANTANDER I,,2020-01-01,,propuesta heurística: nombre exacto
+PLANTA FV DONA JUANA,plant,PLANTA FV DONA JUANA,,2020-01-01,,propuesta heurística: nombre exacto
+PLANTA SOLAR BAYUNCA I,plant,PLANTA SOLAR BAYUNCA I,,2020-01-01,,propuesta heurística: nombre exacto
+PLANTA SOLAR SAN FRANCISCO,plant,PLANTA SOLAR SAN FRANCISCO,,2020-01-01,,propuesta heurística: nombre exacto
+PLANTA SOLAR SGDE,plant,PLANTA SOLAR SGDE,,2020-01-01,,propuesta heurística: nombre exacto
+PLAYAS,plant,PLAYAS,,2020-01-01,,propuesta heurística: nombre exacto
+POCUNE,plant,POCUNE,,2020-01-01,,propuesta heurística: nombre exacto
+POLARIS I,plant,POLARIS I,,2020-01-01,,propuesta heurística: nombre exacto
+PORCE II,plant,PORCE II,,2020-01-01,,propuesta heurística: nombre exacto
+PORCE III,plant,PORCE III,,2020-01-01,,propuesta heurística: nombre exacto
+PORCE III MENOR,plant,PORCE III MENOR,,2020-01-01,,propuesta heurística: nombre exacto
+PORTON DEL SOL,plant,PORTON DEL SOL,,2020-01-01,,propuesta heurística: nombre exacto
+PRADO,plant,PRADO,,2020-01-01,,propuesta heurística: nombre exacto
+PRADO IV,plant,PRADO IV,,2020-01-01,,propuesta heurística: nombre exacto
+PROELECTRICA 1,plant,PROELECTRICA 1,,2020-01-01,,propuesta heurística: nombre exacto
+PROELECTRICA 2,plant,PROELECTRICA 2,,2020-01-01,,propuesta heurística: nombre exacto
+PROENCA II,plant,PROENCA II,,2020-01-01,,propuesta heurística: nombre exacto
+PROVIDENCIA,plant,PROVIDENCIA,,2020-01-01,,propuesta heurística: nombre exacto
+PUENTE GUILLERMO,plant,PUENTE GUILLERMO,,2020-01-01,,propuesta heurística: nombre exacto
+REMEDIOS,plant,REMEDIOS,,2020-01-01,,propuesta heurística: nombre exacto
+RIO BOBO,plant,RIO BOBO,,2020-01-01,,propuesta heurística: nombre exacto
+RIO CALI,plant,RIO CALI,,2020-01-01,,propuesta heurística: nombre exacto
+RIO FRIO I,plant,RIO FRIO I,,2020-01-01,,propuesta heurística: nombre exacto
+RIO FRIO II,plant,RIO FRIO II,,2020-01-01,,propuesta heurística: nombre exacto
+RIO GRANDE,plant,RIO GRANDE,,2020-01-01,,propuesta heurística: nombre exacto
+RIO MAYO,plant,RIO MAYO,,2020-01-01,,propuesta heurística: nombre exacto
+RIO PALO,plant,RIO PALO,,2020-01-01,,propuesta heurística: nombre exacto
+RIO PIEDRAS,plant,RIO PIEDRAS,,2020-01-01,,propuesta heurística: nombre exacto
+RIO RECIO,plant,RIO RECIO,,2020-01-01,,propuesta heurística: nombre exacto
+RIO SAPUYES,plant,RIO SAPUYES,,2020-01-01,,propuesta heurística: nombre exacto
+RIOFRIO (TAMESIS),plant,RIOFRIO (TAMESIS),,2020-01-01,,propuesta heurística: nombre exacto
+RIOGRANDE I,plant,RIOGRANDE I,,2020-01-01,,propuesta heurística: nombre exacto
+RIONEGRO,plant,RIONEGRO,,2020-01-01,,propuesta heurística: nombre exacto
+ROKRA,plant,ROKRA,,2020-01-01,,propuesta heurística: nombre exacto
+ROVIRA,plant,ROVIRA,,2020-01-01,,propuesta heurística: nombre exacto
+RUMOR,plant,RUMOR,,2020-01-01,,propuesta heurística: nombre exacto
+SAJANDI,plant,SAJANDI,,2020-01-01,,propuesta heurística: nombre exacto
+SALTO II,plant,SALTO II,,2020-01-01,,propuesta heurística: nombre exacto
+SALVAJINA,plant,SALVAJINA,,2020-01-01,,propuesta heurística: nombre exacto
+SAN ANDRES DE CUERQUIA,plant,SAN ANDRES DE CUERQUIA,,2020-01-01,,propuesta heurística: nombre exacto
+SAN BARTOLOME,plant,SAN BARTOLOME,,2020-01-01,,propuesta heurística: nombre exacto
+SAN CANCIO,plant,SAN CANCIO,,2020-01-01,,propuesta heurística: nombre exacto
+SAN CARLOS,plant,SAN CARLOS,,2020-01-01,,propuesta heurística: nombre exacto
+SAN FRANCISCO,plant,SAN FRANCISCO,,2020-01-01,,propuesta heurística: nombre exacto
+SAN FRANCISCO (PUTUMAYO),plant,SAN FRANCISCO (PUTUMAYO),,2020-01-01,,propuesta heurística: nombre exacto
+SAN JOSE,plant,SAN JOSE,,2020-01-01,,propuesta heurística: nombre exacto
+SAN JOSE DE LA MONTAÑA,plant,SAN JOSE DE LA MONTAÑA,,2020-01-01,,propuesta heurística: nombre exacto
+SAN JOSE DE LA MONTAÑA II,plant,SAN JOSE DE LA MONTAÑA II,,2020-01-01,,propuesta heurística: nombre exacto
+SAN MATIAS,plant,SAN MATIAS,,2020-01-01,,propuesta heurística: nombre exacto
+SAN MIGUEL,plant,SAN MIGUEL,,2020-01-01,,propuesta heurística: nombre exacto
+SAN ONOFRE,plant,SAN ONOFRE,,2020-01-01,,propuesta heurística: nombre exacto
+SANTA ANA,plant,SANTA ANA,,2020-01-01,,propuesta heurística: nombre exacto
+SANTA RITA,plant,SANTA RITA,,2020-01-01,,propuesta heurística: nombre exacto
+SANTIAGO,plant,SANTIAGO,,2020-01-01,,propuesta heurística: nombre exacto
+SHANGRI LA,plant,SHANGRI LA,,2020-01-01,,propuesta heurística: nombre exacto
+SILVIA,plant,SILVIA,,2020-01-01,,propuesta heurística: nombre exacto
+SINCE,plant,SINCE,,2020-01-01,,propuesta heurística: nombre exacto
+SOGAMOSO,plant,SOGAMOSO,,2020-01-01,,propuesta heurística: nombre exacto
+SOL DE ZAWADY,plant,SOL DE ZAWADY,,2020-01-01,,propuesta heurística: nombre exacto
+SOL DEL MAR II,plant,SOL DEL MAR II,,2020-01-01,,propuesta heurística: nombre exacto
+SOL Y CIELO I,plant,SOL Y CIELO I,,2020-01-01,,propuesta heurística: nombre exacto
+SOL Y CIELO II,plant,SOL Y CIELO II,,2020-01-01,,propuesta heurística: nombre exacto
+SOL Y CIELO III,plant,SOL Y CIELO III,,2020-01-01,,propuesta heurística: nombre exacto
+SOL Y CIELO IV,plant,SOL Y CIELO IV,,2020-01-01,,propuesta heurística: nombre exacto
+SOL Y CIELO V,plant,SOL Y CIELO V,,2020-01-01,,propuesta heurística: nombre exacto
+SOL Y CIELO VI,plant,SOL Y CIELO VI,,2020-01-01,,propuesta heurística: nombre exacto
+SOL Y CIELO VII,plant,SOL Y CIELO VII,,2020-01-01,,propuesta heurística: nombre exacto
+SOLAR ALEJANDRIA,plant,SOLAR ALEJANDRIA,,2020-01-01,,propuesta heurística: nombre exacto
+SOLAR ARDOBELA I,plant,SOLAR ARDOBELA I,,2020-01-01,,propuesta heurística: nombre exacto
+SOLAR ARDOBELA II,plant,SOLAR ARDOBELA II,,2020-01-01,,propuesta heurística: nombre exacto
+SOLAR OLD T,plant,SOLAR OLD T,,2020-01-01,,propuesta heurística: nombre exacto
+SOLAR PALMASECA I,plant,SOLAR PALMASECA I,,2020-01-01,,propuesta heurística: nombre exacto
+SOLAR PALMASECA II,plant,SOLAR PALMASECA II,,2020-01-01,,propuesta heurística: nombre exacto
+SOLAR PLANETA RICA,plant,SOLAR PLANETA RICA,,2020-01-01,,propuesta heurística: nombre exacto
+SOLAR PN I,plant,SOLAR PN I,,2020-01-01,,propuesta heurística: nombre exacto
+SONSON,plant,SONSON,,2020-01-01,,propuesta heurística: nombre exacto
+SUAREZ,plant,SUAREZ,,2020-01-01,,propuesta heurística: nombre exacto
+SUBA,plant,SUBA,,2020-01-01,,propuesta heurística: nombre exacto
+SUEVA 2,plant,SUEVA 2,,2020-01-01,,propuesta heurística: nombre exacto
+SUNNORTE,plant,SUNNORTE,,2020-01-01,,propuesta heurística: nombre exacto
+TASAJERO 1,plant,TASAJERO 1,,2020-01-01,,propuesta heurística: nombre exacto
+TASAJERO 2,plant,TASAJERO 2,,2020-01-01,,propuesta heurística: nombre exacto
+TEBSAB CC,plant,TEBSAB CC,,2020-01-01,,propuesta heurística: nombre exacto
+TEQUENDAMA 1,plant,TEQUENDAMA 1,,2020-01-01,,propuesta heurística: nombre exacto
+TEQUENDAMA 2,plant,TEQUENDAMA 2,,2020-01-01,,propuesta heurística: nombre exacto
+TEQUENDAMA 3,plant,TEQUENDAMA 3,,2020-01-01,,propuesta heurística: nombre exacto
+TEQUENDAMA 4,plant,TEQUENDAMA 4,,2020-01-01,,propuesta heurística: nombre exacto
+TEQUENDAMA BIOGAS,plant,TEQUENDAMA BIOGAS,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOBOLIVAR,plant,TERMOBOLIVAR,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOCANDELARIA CC,plant,TERMOCANDELARIA CC,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOCAPACHOS,plant,TERMOCAPACHOS,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOCARIBE III,plant,TERMOCARIBE III,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOCENTRO CC,plant,TERMOCENTRO CC,,2020-01-01,,propuesta heurística: nombre exacto
+TERMODORADA 1,plant,TERMODORADA 1,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOEMCALI CC,plant,TERMOEMCALI CC,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOFENIX I,plant,TERMOFENIX I,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOMECHERO 4,plant,TERMOMECHERO 4,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOMECHERO 5,plant,TERMOMECHERO 5,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOMECHERO 6,plant,TERMOMECHERO 6,,2020-01-01,,propuesta heurística: nombre exacto
+TERMONORTE,plant,TERMONORTE,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOPIEDRAS,plant,TERMOPIEDRAS,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOSARAVENA,plant,TERMOSARAVENA,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOSIERRA CC,plant,TERMOSIERRA CC,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOTASAJERO DOS SOLAR,plant,TERMOTASAJERO DOS SOLAR,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOVALLE CC,plant,TERMOVALLE CC,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOYOPAL 1,plant,TERMOYOPAL 1,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOYOPAL 2,plant,TERMOYOPAL 2,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOYOPAL G3,plant,TERMOYOPAL G3,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOYOPAL G4,plant,TERMOYOPAL G4,,2020-01-01,,propuesta heurística: nombre exacto
+TERMOYOPAL G5,plant,TERMOYOPAL G5,,2020-01-01,,propuesta heurística: nombre exacto
+TESORITO,plant,TESORITO,,2020-01-01,,propuesta heurística: nombre exacto
+TIERRA LINDA,plant,TIERRA LINDA,,2020-01-01,,propuesta heurística: nombre exacto
+TOLU SOLAR,plant,TOLU SOLAR,,2020-01-01,,propuesta heurística: nombre exacto
+TRINA-VATIA BSLI,plant,TRINA-VATIA BSLI,,2020-01-01,,propuesta heurística: nombre exacto
+TRINA-VATIA BSLII,plant,TRINA-VATIA BSLII,,2020-01-01,,propuesta heurística: nombre exacto
+TRINA-VATIA BSLIII,plant,TRINA-VATIA BSLIII,,2020-01-01,,propuesta heurística: nombre exacto
+TUNJITA,plant,TUNJITA,,2020-01-01,,propuesta heurística: nombre exacto
+TZ II,plant,TZ II,,2020-01-01,,propuesta heurística: nombre exacto
+UNION,plant,UNION,,2020-01-01,,propuesta heurística: nombre exacto
+URRA,plant,URRA,,2020-01-01,,propuesta heurística: nombre exacto
+URRAO,plant,URRAO,,2020-01-01,,propuesta heurística: nombre exacto
+URUACO,plant,URUACO,,2020-01-01,,propuesta heurística: nombre exacto
+USAQUEN,plant,USAQUEN,,2020-01-01,,propuesta heurística: nombre exacto
+VALLEDUPAR I,plant,VALLEDUPAR I,,2020-01-01,,propuesta heurística: nombre exacto
+VALLEDUPAR II,plant,VALLEDUPAR II,,2020-01-01,,propuesta heurística: nombre exacto
+VALLEDUPAR III,plant,VALLEDUPAR III,,2020-01-01,,propuesta heurística: nombre exacto
+VENTANA A,plant,VENTANA A,,2020-01-01,,propuesta heurística: nombre exacto
+VENTANA B,plant,VENTANA B,,2020-01-01,,propuesta heurística: nombre exacto
+VILLANUEVA,plant,VILLANUEVA,,2020-01-01,,propuesta heurística: nombre exacto
+ZAMBRANO II,plant,ZAMBRANO II,,2020-01-01,,propuesta heurística: nombre exacto
+ZEUS,plant,ZEUS,,2020-01-01,,propuesta heurística: nombre exacto
+ZIPAEMG 2,plant,ZIPAEMG 2,,2020-01-01,,propuesta heurística: nombre exacto
+ZIPAEMG 3,plant,ZIPAEMG 3,,2020-01-01,,propuesta heurística: nombre exacto
+ZIPAEMG 4,plant,ZIPAEMG 4,,2020-01-01,,propuesta heurística: nombre exacto
+ZIPAEMG 5,plant,ZIPAEMG 5,,2020-01-01,,propuesta heurística: nombre exacto
+GUATRON,plant,GUADALUPE III;TRONERAS,,2020-01-01,,"propuesta: cadena Guadalupe III–Troneras (EPM) — NO CURADA, REVISAR"
+ALBAN,plant,ALTO ANCHICAYA;BAJO ANCHICAYA,,2020-01-01,,"propuesta: cadena Albán = Alto y Bajo Anchicayá (CELSIA) — NO CURADA, REVISAR"
+PAGUA,plant,PARAISO;LA GUACA,,2020-01-01,,"propuesta: cadena Paraíso–La Guaca (EMGESA): XM la despacha como un recurso; PARATEC publica las plantas por separado — NO CURADA, REVISAR"

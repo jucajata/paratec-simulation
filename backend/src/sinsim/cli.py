@@ -1,0 +1,310 @@
+"""CLI `sinsim` (contracts/cli.md). Mensajes en español; códigos de salida 0–4 (constitución V)."""
+
+from __future__ import annotations
+
+import json
+import logging
+import sys
+from datetime import date
+from pathlib import Path
+from typing import Annotated, Any
+
+import pandapower as pp
+import typer
+
+from sinsim.adapters.storage.export import write_export
+from sinsim.bootstrap import AppContext, build_context
+from sinsim.domain.entities import Run, StudyCase
+from sinsim.domain.errors import DomainError, ExitCode
+from sinsim.observability import log_event, new_trace_id
+from sinsim.services import snapshots as snapshot_service
+from sinsim.services.build_case import build_case
+from sinsim.services.run_flow import run_flow
+
+log = logging.getLogger("sinsim.cli")
+app = typer.Typer(
+    help="Flujo de potencia del SIN sobre el despacho programado de XM.",
+    no_args_is_help=True,
+    rich_markup_mode=None,
+)
+snapshots_app = typer.Typer(help="Snapshots de datos disponibles.")
+app.add_typer(snapshots_app, name="snapshots")
+
+
+# --- utilidades --------------------------------------------------------------------
+
+
+def _fail(exc: DomainError) -> None:
+    typer.echo(f"Error ({exc.code}): {exc.user_message}", err=True)
+    if exc.detail:
+        typer.echo(f"  detalle: {exc.detail}", err=True)
+    raise typer.Exit(code=int(exc.exit_code))
+
+
+def parse_date(text: str) -> date:
+    """Convierte `YYYY-MM-DD`; rechaza formatos inválidos y fechas futuras (`INVALID_DATE`)."""
+    try:
+        value = date.fromisoformat(text)
+    except ValueError as exc:
+        raise DomainError("INVALID_DATE", f"fecha {text!r}") from exc
+    if value > date.today():
+        raise DomainError("INVALID_DATE", f"fecha futura {text!r}")
+    return value
+
+
+def _context() -> AppContext:
+    new_trace_id()
+    return build_context()
+
+
+def _dump(obj: Any) -> str:
+    return json.dumps(obj, ensure_ascii=False, indent=2, default=str)
+
+
+# --- snapshots list ------------------------------------------------------------------
+
+
+@snapshots_app.command("list")
+def snapshots_list(
+    json_output: Annotated[bool, typer.Option("--json", help="Salida en JSON.")] = False,
+) -> None:
+    """Lista las fechas disponibles y qué datos tiene cada una (FR-002)."""
+    try:
+        ctx = _context()
+        rows = snapshot_service.list_snapshots(ctx.snapshots)
+    except DomainError as exc:
+        _fail(exc)
+        return
+    if json_output:
+        typer.echo(_dump([r.model_dump(mode="json") for r in rows]))
+        return
+    if not rows:
+        typer.echo("No hay snapshots en data/paratec/. Ejecuta `sinsim scrape --fecha YYYY-MM-DD`.")
+        return
+    typer.echo(f"{'fecha':<12}| {'paratec':<8}| {'despacho':<9}| {'demanda':<8}| íntegro")
+    for r in rows:
+        typer.echo(
+            f"{r.date.isoformat():<12}| {_si(r.has_paratec):<8}| {_si(r.has_dispatch):<9}| "
+            f"{_si(r.has_demand):<8}| {_si(r.intact)}"
+        )
+
+
+def _si(value: bool) -> str:
+    return "sí" if value else "no"
+
+
+# --- run ------------------------------------------------------------------------------
+
+
+def _print_case(case: StudyCase) -> None:
+    q, b = case.quality, case.quality.balance
+    typer.echo("── Reporte de calidad del caso ──")
+    typer.echo(
+        f"Generación programada: {b.p_scheduled_total_mw:,.1f} MW | ubicada: "
+        f"{b.p_located_mw:,.1f} MW ({b.coverage_pct:.1f} %) | no ubicada: "
+        f"{b.p_unlocated_mw:,.1f} MW"
+    )
+    typer.echo(
+        f"Demanda asignada: {b.p_demand_mw:,.1f} MW | no ubicada: {b.p_demand_unlocated_mw:,.1f} MW"
+        f" | diferencia generación − demanda: {b.difference_mw:,.1f} MW"
+    )
+    typer.echo(
+        f"Recursos no ubicados: {len(q.unlocated_resources)} | nodos de demanda no ubicados: "
+        f"{len(q.unlocated_demand)} | traslados a frontera: {len(q.transfers)} | excluidos: "
+        f"{len(q.excluded)} | imputados: {len(q.imputed)} | no modelados: {len(q.not_modeled)}"
+    )
+    lost = sum(i.p_gen_lost_mw for i in q.islands[1:])
+    typer.echo(
+        f"Islas: {len(q.islands)} (energizada: {q.islands[0].n_buses if q.islands else 0} barras; "
+        f"{lost:,.1f} MW de generación fuera)"
+    )
+    for issue in q.physical_issues[:5]:
+        typer.echo(f"  validación física: {issue}")
+    for w in case.warnings:
+        typer.echo(f"  ⚠ {w}")
+
+
+def _print_run(run: Run) -> None:
+    t = run.trace
+    typer.echo(f"── {run.label} ──")
+    typer.echo(
+        f"Snapshot PARATEC: {t.snapshot_date} | despacho: {t.dispatch_date} periodo {t.period} | "
+        f"flujo: {t.flow_type} | pandapower {t.pandapower_version} | sinsim {t.sinsim_version}"
+    )
+    typer.echo(f"Solver: {t.solver.model_dump()} | caso: {t.case_id}")
+    typer.echo(f"Estado: {run.status}")
+    if run.result is None:
+        d = run.diagnostics
+        if d is not None:
+            typer.echo(
+                f"Diagnóstico: {d.iterations} iteraciones, desbalance máximo "
+                f"{d.max_mismatch_mva:,.2f} MVA ({d.basis})"
+            )
+            for w in d.worst_buses:
+                typer.echo(f"  {w.bus}: {w.mismatch_mva:,.2f} MVA")
+        return
+    s = run.result.summary
+    typer.echo(
+        f"Generación {s.p_gen_mw:,.1f} MW | carga {s.p_load_mw:,.1f} MW | pérdidas "
+        f"{s.p_losses_mw:,.1f} MW | ajuste de la referencia {s.slack_adjust_total_mw:,.1f} MW"
+    )
+    typer.echo(f"Violaciones de tensión: {s.n_voltage_violations} | sobrecargas: {s.n_overloads}")
+    worst_v = sorted(run.result.buses, key=lambda b: abs(b.vm_pu - 1.0), reverse=True)[:10]
+    typer.echo("Peores tensiones (pu / kV):")
+    for b in worst_v:
+        flag = f" [{b.violation}]" if b.violation else ""
+        typer.echo(f"  {b.bus_id}: {b.vm_pu:.3f} pu / {b.vm_kv:.1f} kV{flag}")
+    branches = sorted(
+        run.result.lines + run.result.trafos, key=lambda x: x.loading_percent, reverse=True
+    )[:10]
+    typer.echo("Mayores cargabilidades (%):")
+    for br in branches:
+        flag = " [sobrecarga]" if br.overload else ""
+        typer.echo(f"  {br.element_id}: {br.loading_percent:.1f} %{flag}")
+
+
+@app.command()
+def run(
+    fecha: Annotated[
+        str, typer.Option("--fecha", help="Fecha del snapshot de PARATEC (YYYY-MM-DD).")
+    ],
+    periodo: Annotated[int, typer.Option("--periodo", help="Periodo horario 1–24.")],
+    fecha_despacho: Annotated[
+        str | None, typer.Option("--fecha-despacho", help="Snapshot del despacho y la demanda.")
+    ] = None,
+    tipo: Annotated[str, typer.Option("--tipo", help="ac o dc.")] = "ac",
+    exportar: Annotated[
+        Path | None, typer.Option("--exportar", help="Directorio donde escribir la exportación.")
+    ] = None,
+    json_output: Annotated[bool, typer.Option("--json", help="Salida en JSON.")] = False,
+) -> None:
+    """Construye el caso, imprime el reporte de calidad y corre el flujo (HU-1, HU-2, HU-4)."""
+    try:
+        if tipo not in ("ac", "dc"):
+            raise DomainError(
+                "INVALID_DATE", f"tipo {tipo!r}", user_message="El tipo debe ser ac o dc."
+            )
+        if not 1 <= periodo <= 24:
+            raise DomainError("PERIOD_OUT_OF_RANGE", f"periodo {periodo}")
+        snapshot_date = parse_date(fecha)
+        dispatch_date = parse_date(fecha_despacho) if fecha_despacho else snapshot_date
+        ctx = _context()
+        snapshot = snapshot_service.load_verified(ctx.snapshots, snapshot_date)
+        dispatch_snapshot = (
+            snapshot
+            if dispatch_date == snapshot_date
+            else snapshot_service.load_verified(ctx.snapshots, dispatch_date)
+        )
+        built = build_case(
+            snapshot=snapshot,
+            dispatch_snapshot=dispatch_snapshot,
+            period=periodo,
+            equivalences=ctx.equivalences,
+            cfg=ctx.cfg,
+            sinsim_version=ctx.version,
+            cases=ctx.cases,
+        )
+        result = run_flow(built.case, built.net, tipo, ctx.cfg, ctx.version)  # type: ignore[arg-type]
+        ctx.cases.save_run(result)
+        if exportar is not None:
+            written = write_export(built.case, result, ctx.cfg.config.attribution.text, exportar)
+            typer.echo(f"Exportación escrita en {exportar} ({len(written)} archivos)", err=True)
+        log_event(
+            log,
+            "run terminado",
+            case_id=built.case.case_id,
+            run_id=result.run_id,
+            status=result.status,
+        )
+    except DomainError as exc:
+        _fail(exc)
+        return
+    if json_output:
+        typer.echo(
+            _dump(
+                {"case": built.case.model_dump(mode="json"), "run": result.model_dump(mode="json")}
+            )
+        )
+    else:
+        _print_case(built.case)
+        _print_run(result)
+    raise typer.Exit(code=int(ExitCode.OK))
+
+
+# --- scrape -------------------------------------------------------------------------
+
+
+@app.command()
+def scrape(
+    fecha: Annotated[str, typer.Option("--fecha", help="Fecha de operación (YYYY-MM-DD).")],
+    out: Annotated[Path | None, typer.Option("--out", help="Directorio de snapshots.")] = None,
+) -> None:
+    """Descarga PARATEC, el despacho programado y el pronóstico de demanda (HU-3)."""
+    from sinsim.scraper import paratec as paratec_client
+    from sinsim.scraper import xm_files
+    from sinsim.scraper.http import RateLimitedClient
+    from sinsim.scraper.writer import RawSnapshot, write_snapshot
+
+    try:
+        day = parse_date(fecha)
+        ctx = _context()
+        out_dir = out or ctx.snapshots.root
+        if (out_dir / day.isoformat()).exists():
+            raise DomainError("SNAPSHOT_EXISTS", f"ya existe {out_dir / day.isoformat()}")
+        s = ctx.cfg.config.scraper
+        with RateLimitedClient(
+            user_agent=ctx.cfg.config.user_agent(),
+            min_interval_s=s.min_interval_s,
+            timeout_s=s.timeout_s,
+        ) as client:
+            typer.echo(
+                f"Descargando PARATEC ({len(paratec_client.ENDPOINTS)} entidades)…", err=True
+            )
+            par, par_sources = paratec_client.fetch_all(client)
+            typer.echo(f"Descargando despacho y pronóstico de demanda del {day}…", err=True)
+            xm, xm_sources = xm_files.fetch_for_date(client, day)
+        raw = RawSnapshot(paratec=par, xm=xm, sources=par_sources + xm_sources)
+        final = write_snapshot(
+            raw,
+            out_dir,
+            day,
+            scraper_version=ctx.version,
+            attribution=ctx.cfg.config.attribution.text,
+        )
+        manifest = json.loads((final / "manifest.json").read_text(encoding="utf-8"))
+    except DomainError as exc:
+        _fail(exc)
+        return
+    counts = manifest["record_counts"]
+    typer.echo(f"Snapshot creado en {final}")
+    typer.echo(
+        f"Entidades PARATEC: {sum(1 for k in counts if k.startswith('paratec.'))} | líneas "
+        f"{counts.get('paratec.lines')} | transformadores {counts.get('paratec.transformers')} | "
+        f"recursos del despacho {counts.get('xm.dispatch.resources')} | nodos de demanda "
+        f"{counts.get('xm.demand.nodes')}"
+    )
+    dv = manifest.get("dispatch_version") or {}
+    available = ", ".join(dv.get("available", []))
+    typer.echo(
+        f"Versión del despacho usada: {dv.get('used')} (disponibles: {available}) "
+        f"| estándar: XM-CND-2014-045 ed. 2025"
+    )
+    raise typer.Exit(code=int(ExitCode.OK))
+
+
+def main() -> None:
+    """Punto de entrada con manejo de errores no previstos (constitución V)."""
+    try:
+        app(standalone_mode=True)
+    except DomainError as exc:  # pragma: no cover - los comandos ya los convierten
+        _fail(exc)
+    except typer.Exit:
+        raise
+    except Exception as exc:  # último recurso: nunca un stack trace al usuario
+        trace_id = new_trace_id()
+        log.exception("error no previsto", extra={"extra_fields": {"trace_id": trace_id}})
+        typer.echo(f"Error no previsto (trace_id {trace_id}): {type(exc).__name__}", err=True)
+        sys.exit(int(ExitCode.GENERAL))
+
+
+_ = (pp, Path)  # pandapower se usa en services; Path queda para --exportar (historia 4)
