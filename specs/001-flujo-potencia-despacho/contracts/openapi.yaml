@@ -1,0 +1,208 @@
+openapi: 3.1.0
+info:
+  title: sinsim API local
+  version: 0.1.0
+  description: >
+    API REST local y monousuario (constitución II y V). Sirve solo en 127.0.0.1 y no tiene
+    autenticación (NG-08). Todos los errores usan Problem Details (RFC 9457) extendido. Esta API
+    no expone ningún endpoint de scraping: la actualización de datos se hace solo por CLI
+    (NG-09).
+servers:
+  - url: http://127.0.0.1:8000/api
+paths:
+  /snapshots:
+    get:
+      summary: Lista las fechas disponibles y qué datos tiene cada una (FR-002)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: "#/components/schemas/SnapshotSummary"}
+  /cases:
+    post:
+      summary: Construye un caso para una fecha y un periodo (FR-010 a FR-019)
+      description: >
+        Es idempotente. Si ya existe un caso con el mismo case_id (hash de las entradas),
+        responde 200 con ese caso; si no, responde 201.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: "#/components/schemas/CaseRequest"}
+      responses:
+        "200": {description: Caso existente, content: {application/json: {schema: {$ref: "#/components/schemas/StudyCase"}}}}
+        "201": {description: Caso creado, content: {application/json: {schema: {$ref: "#/components/schemas/StudyCase"}}}}
+        "400": {$ref: "#/components/responses/Problem"}
+        "404": {$ref: "#/components/responses/Problem"}
+        "409": {$ref: "#/components/responses/Problem"}
+        "422": {$ref: "#/components/responses/Problem"}
+  /cases/{case_id}:
+    get:
+      summary: Devuelve un caso con su reporte de calidad (HU-2)
+      parameters: [{$ref: "#/components/parameters/CaseId"}]
+      responses:
+        "200": {description: OK, content: {application/json: {schema: {$ref: "#/components/schemas/StudyCase"}}}}
+        "404": {$ref: "#/components/responses/Problem"}
+  /cases/{case_id}/runs:
+    post:
+      summary: Ejecuta un flujo AC o DC sobre el caso (FR-020 a FR-026)
+      description: >
+        Responde 200 incluso si el flujo no converge. En ese caso, status es "no_convergio",
+        trae diagnostics y no trae result (FR-022, constitución V).
+      parameters: [{$ref: "#/components/parameters/CaseId"}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [flow_type]
+              properties:
+                flow_type: {type: string, enum: [ac, dc]}
+      responses:
+        "200": {description: Ejecución terminada, content: {application/json: {schema: {$ref: "#/components/schemas/Run"}}}}
+        "404": {$ref: "#/components/responses/Problem"}
+        "422": {$ref: "#/components/responses/Problem"}
+  /runs/{run_id}:
+    get:
+      summary: Devuelve una ejecución con sus resultados (FR-030, FR-031)
+      parameters: [{$ref: "#/components/parameters/RunId"}]
+      responses:
+        "200": {description: OK, content: {application/json: {schema: {$ref: "#/components/schemas/Run"}}}}
+        "404": {$ref: "#/components/responses/Problem"}
+  /runs/{run_id}/topology:
+    get:
+      summary: Devuelve los nodos y aristas de la topología lógica, con valores para colorear (FR-033)
+      parameters: [{$ref: "#/components/parameters/RunId"}]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nodes:
+                    type: array
+                    items:
+                      type: object
+                      properties: {id: {type: string}, label: {type: string}, vn_kv: {type: number}, vm_pu: {type: [number, "null"]}, violation: {type: [string, "null"]}}
+                  edges:
+                    type: array
+                    items:
+                      type: object
+                      properties: {id: {type: string}, source: {type: string}, target: {type: string}, kind: {type: string, enum: [line, trafo2w, trafo3w]}, loading_percent: {type: [number, "null"]}, overload: {type: boolean}}
+        "404": {$ref: "#/components/responses/Problem"}
+  /runs/{run_id}/export:
+    get:
+      summary: Descarga el .zip de exportación (FR-032; ver export-format.md)
+      parameters: [{$ref: "#/components/parameters/RunId"}]
+      responses:
+        "200": {description: Archivo zip, content: {application/zip: {schema: {type: string, format: binary}}}}
+        "404": {$ref: "#/components/responses/Problem"}
+components:
+  parameters:
+    CaseId: {name: case_id, in: path, required: true, schema: {type: string, pattern: "^[0-9a-f]{64}$"}}
+    RunId: {name: run_id, in: path, required: true, schema: {type: string, format: uuid}}
+  responses:
+    Problem:
+      description: Error en formato Problem Details extendido
+      content:
+        application/problem+json:
+          schema: {$ref: "#/components/schemas/Problem"}
+  schemas:
+    Problem:
+      type: object
+      required: [type, title, status, code, user_message, trace_id]
+      properties:
+        type: {type: string, format: uri}
+        title: {type: string}
+        status: {type: integer}
+        detail: {type: string}
+        code:
+          type: string
+          description: Código del catálogo de domain/errors.py
+          examples: [SNAPSHOT_NOT_FOUND, OPERATING_POINT_MISSING, SNAPSHOT_CORRUPTED, PERIOD_OUT_OF_RANGE]
+        user_message: {type: string}
+        trace_id: {type: string}
+    SnapshotSummary:
+      type: object
+      required: [date, has_paratec, has_dispatch, has_demand, intact]
+      properties:
+        date: {type: string, format: date}
+        has_paratec: {type: boolean}
+        has_dispatch: {type: boolean}
+        has_demand: {type: boolean}
+        intact: {type: boolean, description: Los checksums coinciden con el manifiesto (FR-006)}
+    CaseRequest:
+      type: object
+      required: [snapshot_date, period]
+      properties:
+        snapshot_date: {type: string, format: date}
+        dispatch_date: {type: string, format: date, description: Si se omite, es igual a snapshot_date}
+        period: {type: integer, minimum: 1, maximum: 24}
+    StudyCase:
+      type: object
+      required: [case_id, inputs, quality, assumptions, warnings]
+      properties:
+        case_id: {type: string}
+        inputs: {type: object, description: CaseInputs (data-model.md §4)}
+        quality: {$ref: "#/components/schemas/QualityReport"}
+        assumptions: {type: object, description: Supuestos visibles (FR-018)}
+        warnings: {type: array, items: {type: string}}
+    QualityReport:
+      type: object
+      description: data-model.md §5
+      required: [unlocated_resources, unlocated_demand, transfers, excluded, imputed, not_modeled, islands, balance]
+      properties:
+        unlocated_resources: {type: array, items: {type: object}}
+        unlocated_demand: {type: array, items: {type: object}}
+        transfers: {type: array, items: {type: object}}
+        excluded: {type: array, items: {type: object}}
+        imputed: {type: array, items: {type: object}}
+        not_modeled: {type: array, items: {type: object}}
+        islands: {type: array, items: {type: object}}
+        balance:
+          type: object
+          properties:
+            p_scheduled_total_mw: {type: number}
+            p_located_mw: {type: number}
+            p_unlocated_mw: {type: number}
+            coverage_pct: {type: number}
+            p_demand_mw: {type: number}
+            p_demand_unlocated_mw: {type: number}
+            difference_mw: {type: number}
+    Run:
+      type: object
+      required: [run_id, case_id, flow_type, status, solver, trace]
+      properties:
+        run_id: {type: string, format: uuid}
+        case_id: {type: string}
+        flow_type: {type: string, enum: [ac, dc]}
+        status: {type: string, enum: [convergio, no_convergio]}
+        label: {type: string, description: '"Flujo sobre despacho programado" o "Aproximación DC sobre despacho programado"'}
+        solver: {type: object}
+        trace:
+          type: object
+          required: [snapshot_date, dispatch_date, period, flow_type, pandapower_version, sinsim_version, solver, case_id]
+          properties:
+            snapshot_date: {type: string, format: date}
+            dispatch_date: {type: string, format: date}
+            period: {type: integer}
+            flow_type: {type: string}
+            pandapower_version: {type: string}
+            sinsim_version: {type: string}
+            solver: {type: object}
+            case_id: {type: string}
+        diagnostics:
+          type: [object, "null"]
+          properties:
+            iterations: {type: integer}
+            max_mismatch_mva: {type: number}
+            worst_buses: {type: array, items: {type: object, properties: {bus: {type: string}, mismatch_mva: {type: number}}}}
+        result:
+          type: [object, "null"]
+          description: RunResult (data-model.md §7); es null si status = no_convergio

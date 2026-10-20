@@ -1,31 +1,35 @@
 <!--
 Sync Impact Report
-- Versión: 0.0.0 (plantilla sin rellenar) → 1.0.0 (ratificación inicial)
-- Principios definidos (reemplazan los marcadores PRINCIPLE_1..5 de la plantilla):
-  - I. Naturaleza del proyecto
-  - II. Stack tecnológico
-  - III. Reglas de dominio (límites inmutables)
-  - IV. Estructura y estilo de código
-  - V. Manejo de errores y validaciones
-  - VI. Comportamiento del agente (fuente de verdad / cero código sombra)
-- Secciones añadidas: Gobernanza (completa)
-- Secciones eliminadas: SECTION_2 y SECTION_3 de la plantilla (su contenido quedó dentro de
-  los principios II, IV y V; no hacen falta secciones adicionales)
-- Valores inferidos del repositorio:
-  - Licencia del código: MIT (archivo LICENSE)
-  - URI base de los errores: github.com/jucajata/paratec-simulation (git remote origin)
-- Correcciones respecto al borrador:
-  - Las specs de Spec Kit viven en `specs/` en la raíz del repo (create-new-feature.sh usa
-    `$REPO_ROOT/specs`), no en `.specify/specs/`. Se ajustó el árbol de carpetas.
-- Plantillas a revisar (no se modificaron en este comando):
-  - ⚠ .specify/templates/plan-template.md: la "Constitution Check" debe verificar III, IV y VI
-  - ⚠ .specify/templates/spec-template.md: el punto de operación (III.6) y la imputación (III.5)
-  - ⚠ .specify/templates/tasks-template.md: las pruebas como condición de cierre (VI.6) y la
-    cobertura del 85 % (IV)
+- Versión: 1.0.0 → 1.1.0 (MINOR). Se amplía materialmente la guía: nuevas fuentes de datos,
+  nuevos directorios, un comando público y un uso adicional de HTTP 409. No se elimina ni se
+  redefine ningún principio.
+- Origen: decisiones del usuario del 2026-10-20 y la tabla "Complejidad y desviaciones" de
+  specs/001-flujo-potencia-despacho/plan.md.
+- Principios modificados (sin cambio de título):
+  - I. Naturaleza del proyecto: se añaden como fuentes los archivos públicos de XM (despacho
+    programado y pronóstico oficial de demanda por barra) y se aclara que usarlos como entrada
+    no es despacho económico.
+  - III. Reglas de dominio:
+    - III.1: `adapters/paratec_to_pandapower/` pasa a llamarse `adapters/sources_to_pandapower/`
+      y cubre todas las fuentes.
+    - III.4: el snapshot incluye los archivos de XM.
+    - III.6: se nombran las fuentes del punto de operación.
+    - III.10: se cierra TODO(TERMINOS_XM) con la regla de atribución.
+  - IV. Estructura y estilo: el árbol suma `data/equivalencias/` y `config/` y refleja el
+    renombre; se añade el comando público `sinsim run`.
+  - V. Errores: el código 409 también cubre `SNAPSHOT_CORRUPTED`, que entra al catálogo de
+    ejemplo.
+- Secciones añadidas o eliminadas: ninguna.
+- Plantillas (.specify/templates/): revisadas; ninguna menciona rutas ni reglas cambiadas, así
+  que no requieren cambios.
+- Documentos de la feature que deben alinearse (fuera de este comando):
+  - ⚠ specs/001-flujo-potencia-despacho/plan.md y research.md: renombrar
+    `paratec_to_pandapower` a `sources_to_pandapower` y quitar de "Complejidad y
+    desviaciones" las desviaciones que esta enmienda absorbe.
 - TODO pendientes:
-  - TODO(NOMBRE_PROYECTO): nombre público del proyecto (identificador técnico: `sinsim`)
-  - TODO(TERMINOS_XM): confirmar los términos de uso y redistribución de los datos de PARATEC/XM
+  - TODO(NOMBRE_PROYECTO): nombre público del proyecto (identificador técnico: `sinsim`).
 -->
+
 
 # Constitución del proyecto (sinsim)
 
@@ -42,21 +46,25 @@ DEBERÍA y PUEDE se usan en el sentido de RFC 2119.
 
 **Propósito**: herramienta open-source (licencia MIT) para construir, simular y analizar
 modelos de red del Sistema Interconectado Nacional (SIN) de Colombia con **pandapower**,
-alimentada por los parámetros técnicos publicados en **PARATEC** (XM).
+alimentada por los parámetros técnicos publicados en **PARATEC** (XM) y por los archivos
+públicos de XM que definen el punto de operación: el **despacho programado** (`dDEC`) y el
+**pronóstico oficial de demanda por barra** (`PRON_BARRA`).
 
 **Capacidades en alcance**
-- Obtención de parámetros técnicos de PARATEC mediante un comando CLI (scraper).
-- Snapshots versionados de esos parámetros incluidos en el repositorio, para trabajar sin
+- Obtención de parámetros técnicos de PARATEC y de los archivos públicos de despacho y
+  demanda de XM mediante un comando CLI (scraper).
+- Snapshots versionados de esos datos incluidos en el repositorio, para trabajar sin
   internet.
-- Conversión de parámetros PARATEC → modelo pandapower (líneas, transformadores,
-  generadores, barras).
+- Conversión de los datos de las fuentes → modelo pandapower (líneas, transformadores,
+  generadores, compensación, barras, cargas).
 - Flujo de carga AC/DC, cortocircuito y análisis de contingencias N-1.
 - Interfaz web local para seleccionar snapshot, construir/editar el caso, ejecutar
   simulaciones y visualizar resultados.
 
 **Fuera de alcance** (requiere enmienda para incluirse)
 - Estabilidad dinámica, transitorios electromagnéticos o electromecánicos.
-- Despacho económico, precios de bolsa u optimización de mercado.
+- Despacho económico, precios de bolsa u optimización de mercado. Usar como dato de entrada
+  el despacho programado que publica XM no es despacho económico.
 - Operación en tiempo real o conexión a sistemas SCADA.
 - Uso multiusuario en la nube con autenticación.
 
@@ -98,23 +106,26 @@ evita que cada feature introduzca herramientas paralelas.
 ### III. Reglas de dominio (límites inmutables)
 
 1. **Unidades**: dentro del modelo se usan las convenciones de pandapower
-   (kV, MW, Mvar, MVA, km, Ω/km, nF/km, kA, %). Toda conversión desde unidades de
-   PARATEC DEBE ocurrir únicamente en `adapters/paratec_to_pandapower/`, con la fórmula
-   documentada en el docstring y al menos una prueba con valor conocido.
+   (kV, MW, Mvar, MVA, km, Ω/km, nF/km, kA, %). Toda conversión desde unidades de las
+   fuentes (PARATEC y archivos de XM) DEBE ocurrir únicamente en
+   `adapters/sources_to_pandapower/`, con la fórmula documentada en el docstring y al menos
+   una prueba con valor conocido.
 2. **Base del sistema**: f = 60 Hz y S_base = 100 MVA, declarados como constantes en un
    único módulo. Ningún otro archivo los redefine.
 3. **Datos crudos inmutables**: el flujo es `raw → normalized → modelo`. Los archivos en
    `raw/` NUNCA se modifican después de descargados.
-4. **Snapshots inmutables**: cada snapshot vive en `data/paratec/<YYYY-MM-DD>/` y no se
-   edita tras su commit. Un dato nuevo implica un snapshot nuevo. Cada snapshot DEBE tener
+4. **Snapshots inmutables**: cada snapshot vive en `data/paratec/<YYYY-MM-DD>/`, incluye los
+   datos de PARATEC y los archivos de XM de esa fecha, y no se edita tras su commit. Un dato
+   nuevo implica un snapshot nuevo. Cada snapshot DEBE tener
    `manifest.json` con: fecha de extracción, URL/endpoint de origen, versión del scraper,
    número de registros por entidad y checksum SHA-256 de cada archivo.
 5. **Cero parámetros inventados**: si falta un parámetro técnico, el elemento se excluye
    o se imputa de forma explícita, con la columna `imputado = true`, el método de
    imputación y un reporte visible en la UI. Nunca se completa en silencio.
 6. **Punto de operación explícito**: PARATEC aporta parámetros de equipos, no demanda ni
-   despacho. Cargas y generación provienen de entrada del usuario o de una fuente
-   documentada en la spec; nunca de valores por defecto ocultos.
+   despacho. La generación y las cargas provienen de los archivos públicos de XM (despacho
+   programado `dDEC` y pronóstico oficial de demanda por barra `PRON_BARRA`), de entrada del
+   usuario o de otra fuente documentada en la spec; nunca de valores por defecto ocultos.
 7. **Trazabilidad**: todo resultado de simulación DEBE registrar la fecha del snapshot, la
    versión de pandapower, el solver usado y el hash del caso.
 8. **Convergencia**: un flujo de carga que no converge NUNCA se presenta como resultado
@@ -125,9 +136,14 @@ evita que cada feature introduzca herramientas paralelas.
    que proviene.
 10. **Scraping responsable**: el scraper DEBE limitar la tasa de peticiones, identificarse
     con un User-Agent descriptivo, no paralelizar de forma agresiva y respetar los términos
-    de uso de XM. Los datos redistribuidos DEBEN citar a XM como fuente.
-    TODO(TERMINOS_XM): confirmar los términos de uso y redistribución de PARATEC antes de
-    publicar el primer snapshot.
+    de uso de XM. Los datos de XM (PARATEC, despacho programado y pronóstico de demanda) son
+    información pública y PUEDEN redistribuirse en el repositorio. Toda redistribución DEBE
+    llevar la atribución "Información proporcionada por XM S.A. E.S.P. – PARATEC y archivos
+    públicos de despacho" en:
+    - el manifiesto de cada snapshot,
+    - cada exportación de resultados,
+    - la interfaz,
+    - el README.
 
 **Justificación**: un resultado eléctrico solo es útil si se puede rastrear hasta datos de
 origen verificables; cualquier valor silencioso o inventado invalida el análisis.
@@ -147,14 +163,17 @@ origen verificables; cualquier valor silencioso o inventado invalida el análisi
 │   │   ├── domain/                # Entidades, constantes, unidades, reglas puras
 │   │   ├── services/              # Casos de uso: construir red, simular, N-1
 │   │   ├── adapters/
-│   │   │   ├── paratec_to_pandapower/
+│   │   │   ├── sources_to_pandapower/  # Conversión PARATEC y archivos de XM → modelo
 │   │   │   └── storage/           # Lectura/escritura Parquet, DuckDB, JSON de casos
-│   │   ├── scraper/               # Cliente PARATEC, validación y escritura de snapshot
+│   │   ├── scraper/               # Clientes PARATEC y XM, validación y escritura de snapshot
 │   │   └── cli.py                 # Comandos Typer
 │   └── tests/{unit,integration,contract}/
 ├── frontend/
 │   └── src/{features,components,api,lib}/
-├── data/paratec/<YYYY-MM-DD>/{raw/,normalized/,manifest.json}
+├── data/
+│   ├── paratec/<YYYY-MM-DD>/{raw/,normalized/,manifest.json}
+│   └── equivalencias/             # Tablas de equivalencias versionadas, con vigencia
+├── config/                        # Configuración (límites con su fuente, reglas, consignas)
 ├── cases/                         # Casos de ejemplo en JSON pandapower
 ├── docs/
 └── Makefile
@@ -165,6 +184,8 @@ origen verificables; cualquier valor silencioso o inventado invalida el análisi
 - `uv run sinsim scrape [--fecha YYYY-MM-DD] [--out data/paratec/]` — genera un snapshot
   nuevo.
 - `uv run sinsim snapshots list` — lista snapshots disponibles.
+- `uv run sinsim run --fecha YYYY-MM-DD --periodo N` — construye el caso y ejecuta el flujo
+  para una fecha y un periodo.
 - `make dev` — levanta backend y frontend en local.
 - `make demo` — ejecuta un caso de ejemplo con el snapshot incluido.
 - `make test` — corre todas las pruebas.
@@ -225,7 +246,7 @@ resuelva a una página.
 | 201 | Caso de estudio creado |
 | 400 | Petición mal formada o parámetros semánticamente inválidos (p. ej. fecha futura) |
 | 404 | Snapshot, caso o elemento inexistente |
-| 409 | Conflicto: el snapshot de esa fecha ya existe, o el caso fue modificado en paralelo |
+| 409 | Conflicto: el snapshot de esa fecha ya existe, el caso fue modificado en paralelo, o el snapshot no coincide con su manifiesto (`SNAPSHOT_CORRUPTED`) |
 | 422 | Cuerpo que no cumple el esquema Pydantic |
 | 502 / 503 | PARATEC no responde o devuelve una estructura inesperada durante un scrape vía API |
 | 500 | Error no previsto; siempre con `trace_id`, nunca con stack trace al usuario |
@@ -237,7 +258,7 @@ monousuario).
 
 - Catálogo único de códigos de error de dominio en `domain/errors.py`
   (p. ej. `PP_NOT_CONVERGED`, `PARAM_MISSING`, `SNAPSHOT_NOT_FOUND`,
-  `PARATEC_SCHEMA_CHANGED`).
+  `PARATEC_SCHEMA_CHANGED`, `SNAPSHOT_CORRUPTED`).
 - La UI muestra `user_message` en español, accionable y sin jerga interna; nunca stack
   traces.
 - Validación en tres puntos: esquema Pydantic en la API, validación de registros PARATEC
@@ -289,4 +310,4 @@ decisión documentada; el código no especificado es deuda que nadie revisó.
   `.specify/templates/`.
 - El "Constitution Check" de cada `plan.md` DEBE verificar los principios III, IV y VI.
 
-**Versión**: 1.0.0 | **Ratificada**: 2026-10-19 | **Última enmienda**: 2026-10-19
+**Versión**: 1.1.0 | **Ratificada**: 2026-10-19 | **Última enmienda**: 2026-10-20

@@ -11,7 +11,7 @@ técnicos de PARATEC y el despacho programado publicado por XM, con datos inclui
 repositorio y un comando para actualizarlos."
 
 > Esta spec describe **qué** y **por qué**. El **cómo** (librerías, endpoints, estructura de
-> código) va en `plan.md` y debe cumplir `.specify/memory/constitution.md` v1.0.0.
+> código) va en `plan.md` y debe cumplir `.specify/memory/constitution.md` v1.1.0.
 
 ## Intención
 
@@ -193,8 +193,12 @@ vista de red, y la exportación produce archivos que coinciden valor a valor con
 - Fechas de snapshot de PARATEC y de despacho distintas → se permite, pero el resultado lo
   advierte de forma visible.
 - Snapshot cuyo checksum no coincide con su manifiesto → no se usa y se informa la corrupción.
-- Isla sin generador despachado que pueda actuar como referencia → sus barras quedan sin energizar y se reportan; no bloquean
-  el resto del cálculo.
+- Isla en el modelo → el SIN real no tiene islas, así que una isla solo puede venir de datos
+  faltantes o del corte de alcance. Solo se energiza la componente que contiene la barra de
+  referencia de ángulo; las demás se reportan como hallazgo de calidad de datos, con los MW
+  que quedaron fuera, y no bloquean el resto del cálculo.
+- Existen varias versiones del despacho del día (`dDEC<MMDD>.txt` y `dDEC<MMDD>_V<n>.txt`) →
+  prevalece la de mayor versión; el caso lo advierte y el manifiesto registra cuál se usó.
 - Generación ubicada muy distinta de la demanda asignada → se ejecuta, pero la diferencia queda
   explícita en el balance (la absorbe la referencia distribuida entre los generadores
   despachados).
@@ -385,9 +389,9 @@ Supuestos a validar en `/speckit-clarify`:
   (R-13).
 - **A-05**: El umbral de cobertura de SC-003 (95 %) es provisional; el borrador lo dejaba sin
   definir y debe confirmarse en clarify.
-- **A-06**: Los términos de uso de XM permiten redistribuir en el repositorio tanto los
-  parámetros de PARATEC como el despacho programado (depende de TODO(TERMINOS_XM) de la
-  constitución).
+- **A-06**: Los datos de XM (PARATEC, despacho programado y pronóstico de demanda) se
+  redistribuyen en el repositorio con la atribución exigida por la constitución III.10
+  (v1.1.0).
 - **A-07**: La aplicación es local y monousuario; no hay requisitos de autenticación (ver
   NG-08).
 - **A-08**: El pronóstico por barra se publica como archivo de texto diario `PRON_BARRA<MMDD>`
