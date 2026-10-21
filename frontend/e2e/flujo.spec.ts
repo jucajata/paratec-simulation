@@ -32,6 +32,44 @@ test("flujo completo desde la interfaz", async ({ page }) => {
   await page.getByTestId("color-by").selectOption("loading");
   await expect(page.locator(".legend")).toContainText("100 %");
 
+  // FR-034: colorear y filtrar por subárea, con enlace al unifilar oficial de XM.
+  // Espera a que llegue la topología: el selector pasa de "todas" a tener las subáreas.
+  await expect(page.getByTestId("subarea-filter").locator("option")).not.toHaveCount(1, { timeout: 60_000 });
+  await page.getByTestId("color-by").selectOption("subarea");
+  await expect(page.getByTestId("subarea-legend")).toContainText("Antioquia");
+  await page.getByTestId("subarea-filter").selectOption("Antioquia");
+  await expect(page.getByTestId("unifilar-link")).toHaveAttribute(
+    "href",
+    /paratec\.xm\.com\.co\/unifilares\/.*category=76fd5d96-3e30-44a5-13e2-08dd52a72d2b/,
+  );
+  await page.getByTestId("subarea-filter").selectOption("");
+
+  // FR-035: la disposición geográfica es la predeterminada, sobre el mapa base del repositorio.
+  await expect(page.getByTestId("layout")).toHaveValue("geo");
+  await expect(page.getByTestId("basemap")).toBeVisible();
+  await expect(page.getByTestId("basemap").locator("path.department")).toHaveCount(33, { timeout: 30_000 });
+  await expect(page.locator(".attribution")).toContainText("Natural Earth");
+
+  // FR-036: buscar una barra la selecciona, centra el mapa y abre su detalle con el balance.
+  const firstBus = await page.locator("#bus-ids option").first().getAttribute("value");
+  await page.getByTestId("bus-search").fill(firstBus ?? "");
+  await expect(page.getByTestId("bus-detail")).toBeVisible();
+  await expect(page.getByTestId("bus-balance")).toContainText("MW");
+  await page.getByTestId("bus-detail-close").click();
+  await expect(page.getByTestId("bus-detail")).toBeHidden();
+
+  // FR-036: etiquetas seleccionables; FR-037: reporte de violaciones con sus tres grupos.
+  await page.getByTestId("bus-label-vm_pu").check();
+  await expect(page.getByTestId("bus-label-vm_pu")).toBeChecked();
+  await expect(page.getByTestId("violations")).toBeVisible();
+  await expect(page.getByTestId("violations-low").locator("tbody tr").first()).toBeVisible();
+  await expect(page.getByTestId("violations-overload").locator("tbody tr").first()).toBeVisible();
+
+  // La disposición lógica sigue disponible y oculta el mapa.
+  await page.getByTestId("layout").selectOption("logical");
+  await expect(page.getByTestId("basemap")).toBeHidden();
+  await page.getByTestId("layout").selectOption("geo");
+
   const [download] = await Promise.all([
     page.waitForEvent("download"),
     page.getByTestId("export-link").click(),
@@ -56,7 +94,7 @@ test("flujo completo desde la interfaz", async ({ page }) => {
   };
   const files = readZip(readFileSync(path as string));
   expect([...files.keys()].sort()).toEqual(
-    ["barras.csv", "generadores.csv", "lineas.csv", "metadatos.json", "transformadores.csv"].sort(),
+    ["barras.csv", "generadores.csv", "lineas.csv", "metadatos.json", "transformadores.csv", "violaciones.csv"].sort(),
   );
   const meta = JSON.parse(must(files.get("metadatos.json"), "metadatos.json").toString("utf8")) as Record<string, unknown>;
   expect(meta.case_id).toBe(run.case_id);

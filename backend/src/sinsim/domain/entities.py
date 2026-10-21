@@ -205,6 +205,10 @@ class QualityReport(Frozen):
     not_modeled: list[NotModeled]
     islands: list[Island]
     physical_issues: list[str] = []
+    buses_without_coordinates: list[str] = []
+    """Barras del modelo cuya subestación no tiene coordenadas en PARATEC (FR-035)."""
+    buses_without_subarea: list[str] = []
+    """Barras del modelo cuya subestación no tiene subárea en PARATEC (FR-034)."""
     balance: Balance
 
 
@@ -272,6 +276,7 @@ class BusResult(Frozen):
     vm_kv: float
     va_degree: float
     violation: Literal["low", "high"] | None = None
+    subarea: str | None = None
 
 
 class BranchResult(Frozen):
@@ -290,6 +295,8 @@ class BranchResult(Frozen):
     pl_mw: float
     ql_mvar: float
     overload: bool
+    subarea_from: str | None = None
+    subarea_to: str | None = None
 
 
 class GeneratorResult(Frozen):
@@ -312,6 +319,19 @@ class LimitInfo(Frozen):
     source: str
 
 
+class Violation(Frozen):
+    """Una violación de límite en el resultado (FR-037)."""
+
+    kind: Literal["tension_baja", "tension_alta", "sobrecarga"]
+    element: str
+    subarea: str | None
+    value: float
+    limit: float
+    deviation: float
+    unit: Literal["pu", "%"]
+    source: str
+
+
 class ResultSummary(Frozen):
     """Resumen de una ejecución convergida."""
 
@@ -323,6 +343,8 @@ class ResultSummary(Frozen):
     n_overloads: int
     limits: list[LimitInfo]
     warnings: list[str]
+    violations: list[Violation] = []
+    """Reporte de violaciones (FR-037); vacío en ejecuciones anteriores a la regla."""
 
 
 class RunResult(Frozen):

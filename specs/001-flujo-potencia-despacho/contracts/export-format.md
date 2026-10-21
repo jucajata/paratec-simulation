@@ -5,10 +5,11 @@ API) con estos archivos:
 
 | Archivo | Contenido | Columnas |
 |---|---|---|
-| `barras.csv` | Una fila por barra | Las de `RunResult.buses` ([data-model.md §7](../data-model.md)) |
-| `lineas.csv` | Una fila por línea | `RunResult.lines` |
+| `barras.csv` | Una fila por barra | Las de `RunResult.buses` ([data-model.md §7](../data-model.md)), incluida `subarea` (FR-034) |
+| `lineas.csv` | Una fila por línea | `RunResult.lines`, incluidas `subarea_from` y `subarea_to` |
 | `transformadores.csv` | Una fila por transformador; incluye la columna `tipo` (`2w` o `3w`) | `RunResult.trafos` |
 | `generadores.csv` | Una fila por generador | `RunResult.generators` |
+| `violaciones.csv` | Una fila por violación (FR-037): `tipo` ∈ {tension_baja, tension_alta, sobrecarga}, `elemento`, `subarea`, `valor`, `limite`, `desviacion`, `fuente` | Derivado de `RunResult` |
 | `metadatos.json` | Trazabilidad y contexto | Ver abajo |
 
 ## Formato de los CSV

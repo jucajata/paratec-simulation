@@ -47,7 +47,7 @@ las columnas de calidad `imputed: bool`, `imputation_method: str | null` y
 
 | Tabla | Columnas principales (unidad) | Origen |
 |---|---|---|
-| `buses` | `bus_id` = "<SUBESTACIÓN>\|<kV>", `substation`, `vn_kv`, `level` ∈ {STN, STR, SDL} | `SubstationInfo.voltageLevel[]` |
+| `buses` | `bus_id` = "<SUBESTACIÓN>\|<kV>", `substation`, `vn_kv`, `level` ∈ {STN, STR, SDL}, `subarea` (str o nulo; FR-034), `lat`, `lon` (grados WGS84 o nulo; FR-035) | `SubstationInfo.voltageLevel[]`, `SubstationInfo.subAreaName` (sin el prefijo "SubArea "), `SubstationInfo.latitude`/`longitude`; en snapshots anteriores a FR-034/FR-035 se derivan de `raw/` al cargar |
 | `lines` | `line_id`, `name`, `from_bus`, `to_bus`, `length_km`, `r_ohm_per_km`, `x_ohm_per_km`, `c_nf_per_km`, `max_i_ka`, `parallel` | `Line/getAll` (+ `getLines` para extremos) |
 | `trafos2w` | `trafo_id`, `hv_bus`, `lv_bus`, `sn_mva`, `vn_hv_kv`, `vn_lv_kv`, `vk_percent`, `vkr_percent`, `pfe_kw`, `i0_percent`, datos de tap | `PowerTransformerInfo` (Bidevanado) |
 | `trafos3w` | análogo, con hv/mv/lv | `PowerTransformerInfo` (Tridevanado) |
@@ -130,6 +130,8 @@ ordenadas y floats con `repr`):
 | `excluded[]` | `{element, kind, missing_params[]}` (FR-013) |
 | `imputed[]` | `{element, param, method, value}` (FR-013, III.5) |
 | `not_modeled[]` | `{element, kind, reason}`: enlaces internacionales o compensadores sin barra resoluble |
+| `buses_without_coordinates[]` | Barras del modelo cuya subestación no tiene coordenadas en PARATEC (FR-035); nunca se infieren |
+| `buses_without_subarea[]` | Barras del modelo cuya subestación no tiene `subAreaName` en PARATEC (FR-034); nunca se infiere |
 | `islands[]` | `{island_id, n_buses, buses[], p_gen_lost_mw, p_demand_lost_mw, energized}` (FR-016). Solo la componente con la barra de ángulo tiene `energized = true`; cualquier otra isla es un hallazgo de calidad de datos, porque el SIN real no tiene islas (D-5) |
 | `balance` | `{p_scheduled_total_mw, p_located_mw, p_unlocated_mw, coverage_pct, p_demand_mw, p_demand_unlocated_mw, difference_mw}` (FR-024, HU-2.4) |
 
@@ -160,8 +162,8 @@ Solo existe si `status = convergio` (FR-022).
 
 | Tabla | Columnas |
 |---|---|
-| `buses` | `bus_id`, `vm_pu`, `vm_kv`, `va_degree`, `violation` ∈ {null, low, high} |
-| `lines` | `line_id`, `p_from_mw`, `q_from_mvar`, `p_to_mw`, `q_to_mvar`, `i_ka`, `loading_percent`, `pl_mw`, `ql_mvar`, `overload: bool` |
+| `buses` | `bus_id`, `vm_pu`, `vm_kv`, `va_degree`, `violation` ∈ {null, low, high}, `subarea` (str o nulo) |
+| `lines` | `line_id`, `subarea_from`, `subarea_to`, `p_from_mw`, `q_from_mvar`, `p_to_mw`, `q_to_mvar`, `i_ka`, `loading_percent`, `pl_mw`, `ql_mvar`, `overload: bool` |
 | `trafos` | análogo a `lines` (2w y 3w) |
 | `generators` | `gen_id`, `resource`, `p_scheduled_mw`, `p_mw`, `q_mvar`, `slack_adjust_mw` |
 | `summary` | `{p_gen_mw, p_load_mw, p_losses_mw, slack_adjust_total_mw, n_voltage_violations, n_overloads, warnings[]}` |

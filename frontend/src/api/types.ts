@@ -98,6 +98,10 @@ export interface QualityReport {
   not_modeled: NotModeled[];
   islands: Island[];
   physical_issues: string[];
+  /** Barras del modelo sin subárea en PARATEC (FR-034); ausente en casos anteriores. */
+  buses_without_subarea?: string[];
+  /** Barras del modelo sin coordenadas en PARATEC (FR-035); ausente en casos anteriores. */
+  buses_without_coordinates?: string[];
   balance: Balance;
 }
 
@@ -159,6 +163,8 @@ export interface BusResult {
   vm_kv: number;
   va_degree: number;
   violation: "low" | "high" | null;
+  /** Subárea de PARATEC (FR-034); nula si la subestación no la tiene. */
+  subarea?: string | null;
 }
 
 export interface BranchResult {
@@ -175,6 +181,8 @@ export interface BranchResult {
   pl_mw: number;
   ql_mvar: number;
   overload: boolean;
+  subarea_from?: string | null;
+  subarea_to?: string | null;
 }
 
 export interface GeneratorResult {
@@ -202,6 +210,20 @@ export interface ResultSummary {
   n_overloads: number;
   limits: LimitInfo[];
   warnings: string[];
+  /** Reporte de violaciones (FR-037); ausente en ejecuciones anteriores. */
+  violations?: Violation[];
+}
+
+/** Violación de límite en el resultado (FR-037). */
+export interface Violation {
+  kind: "tension_baja" | "tension_alta" | "sobrecarga";
+  element: string;
+  subarea: string | null;
+  value: number;
+  limit: number;
+  deviation: number;
+  unit: "pu" | "%";
+  source: string;
 }
 
 export interface RunResult {
@@ -232,6 +254,21 @@ export interface TopologyNode {
   vm_pu: number | null;
   violation: "low" | "high" | null;
   in_service: boolean;
+  subarea: string | null;
+  /** Latitud y longitud WGS84 de la subestación en PARATEC (FR-035); nulas si faltan. */
+  lat?: number | null;
+  lon?: number | null;
+  /** Generación y carga resultantes en la barra (FR-036); 0 si no hay. */
+  p_gen_mw?: number;
+  q_gen_mvar?: number;
+  p_load_mw?: number;
+  q_load_mvar?: number;
+  /** Componentes de la carga activa (FR-014); nulos en casos anteriores. */
+  p_load_act_mw?: number | null;
+  p_load_pstr_mw?: number | null;
+  vm_kv?: number | null;
+  va_degree?: number | null;
+  slack_adjust_mw?: number;
 }
 
 export interface TopologyEdge {
@@ -241,11 +278,26 @@ export interface TopologyEdge {
   kind: "line" | "trafo2w" | "trafo3w";
   loading_percent: number | null;
   overload: boolean;
+  /** Flujo con el signo de pandapower: positivo sale de `source` (FR-036); nulo sin resultado. */
+  p_from_mw?: number | null;
+  q_from_mvar?: number | null;
+  p_to_mw?: number | null;
+  q_to_mvar?: number | null;
+  i_ka?: number | null;
+  pl_mw?: number | null;
+  ql_mvar?: number | null;
+}
+
+/** Subárea presente en la red, con el enlace al unifilar oficial de XM si existe (FR-034). */
+export interface SubareaLink {
+  name: string;
+  unifilar_url: string | null;
 }
 
 export interface Topology {
   nodes: TopologyNode[];
   edges: TopologyEdge[];
+  subareas: SubareaLink[];
 }
 
 /** Supuesto por generador (FR-018): consigna y límites de reactiva asignados, con su fuente. */
@@ -265,4 +317,17 @@ export interface DemandByBus {
   p_act_mw: number;
   p_pstr_mw: number;
   q_mvar: number;
+}
+
+/** Mapa base vectorial (FR-035): GeoJSON de departamentos de Colombia y países vecinos. */
+export interface BasemapFeature {
+  type: "Feature";
+  properties: { kind: "departamento" | "pais_vecino"; name: string };
+  geometry: { type: "Polygon" | "MultiPolygon"; coordinates: number[][][] | number[][][][] };
+}
+
+export interface Basemap {
+  type: "FeatureCollection";
+  attribution: string;
+  features: BasemapFeature[];
 }

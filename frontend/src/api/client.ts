@@ -1,4 +1,4 @@
-import type { CaseRequest, FlowType, Problem, Run, SnapshotSummary, StudyCase, Topology } from "./types";
+import type { Basemap, CaseRequest, FlowType, Problem, Run, SnapshotSummary, StudyCase, Topology } from "./types";
 
 /** Error de la API en formato Problem Details (constitución V). */
 export class ProblemError extends Error {
@@ -48,5 +48,6 @@ export const api = {
     }),
   getRun: (runId: string) => request<Run>(`/runs/${runId}`),
   topology: (runId: string) => request<Topology>(`/runs/${runId}/topology`),
+  basemap: () => request<Basemap>(`/geo/basemap`),
   exportUrl: (runId: string) => `/api/runs/${runId}/export`,
 };

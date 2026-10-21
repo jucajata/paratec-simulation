@@ -20,7 +20,13 @@ from pydantic import BaseModel
 
 from sinsim.domain.entities import Run, StudyCase
 
-CSV_FILES = ("barras.csv", "lineas.csv", "transformadores.csv", "generadores.csv")
+CSV_FILES = (
+    "barras.csv",
+    "lineas.csv",
+    "transformadores.csv",
+    "generadores.csv",
+    "violaciones.csv",
+)
 METADATA_FILE = "metadatos.json"
 
 
@@ -109,6 +115,12 @@ def export_files(case: StudyCase, run: Run, attribution: str) -> dict[str, bytes
     files["lineas.csv"] = _csv(r.lines)
     files["transformadores.csv"] = _trafos_csv(r.trafos)
     files["generadores.csv"] = _csv(r.generators)
+    # FR-037: una fila por violación, con límite y fuente; vacío si no hay ninguna.
+    files["violaciones.csv"] = (
+        _csv(r.summary.violations)
+        if r.summary.violations
+        else (b"kind,element,subarea,value,limit,deviation,unit,source\n")
+    )
     return files
 
 

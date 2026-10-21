@@ -17,6 +17,9 @@ SUBSTATION: Final[dict[str, str]] = {
     "elementName": "substation",
     "voltageLevel": "voltage_levels_kv",
     "elementStateName": "state",
+    "subAreaName": "subarea",
+    "latitude": "lat",
+    "longitude": "lon",
 }
 
 LINE: Final[dict[str, str]] = {

@@ -1,3 +1,5 @@
+import pandas as pd
+
 from sinsim.adapters.sources_to_pandapower import buses
 
 DECLARED = {"GUATAPE": (115.0, 230.0), "AGUACHICA": (115.0,)}
@@ -76,3 +78,51 @@ def test_build_table_includes_used_sdl_buses_and_nominal():
         "AGUABLANCA|13.8": 13.8,
     }
     assert (~table.imputed).all()
+
+
+def test_parse_subareas_strips_prefix_and_never_infers():
+    data = [
+        {"elementName": "AGUABLANCA", "subAreaName": "SubArea Valle"},
+        {"elementName": "ENVIGADO", "subAreaName": "SubArea Antioquia"},
+        {"elementName": "SIN AREA", "subAreaName": None},
+        {"elementName": "VACIA", "subAreaName": "   "},
+        {"elementName": "", "subAreaName": "SubArea Meta"},
+    ]
+    assert buses.parse_subareas(data) == {"AGUABLANCA": "Valle", "ENVIGADO": "Antioquia"}
+
+
+def test_build_table_carries_subarea_to_every_level_of_the_substation():
+    table = buses.build_buses_table(
+        {"AGUABLANCA": (115.0,), "OTRA": (230.0,)},
+        ["AGUABLANCA|13.8"],
+        None,
+        {"AGUABLANCA": "Valle"},
+    )
+    by_id = table.set_index("bus_id").subarea.to_dict()
+    assert by_id["AGUABLANCA|115"] == "Valle" and by_id["AGUABLANCA|13.8"] == "Valle"
+    assert by_id["OTRA|230"] is None
+
+
+def test_parse_substation_coords_keeps_valid_colombian_points_only():
+    data = [
+        {"elementName": "AGUABLANCA", "latitude": 3.4098, "longitude": -76.48537},
+        {"elementName": "SIN COORDENADAS", "latitude": None, "longitude": None},
+        {"elementName": "FUERA", "latitude": 40.4, "longitude": -3.7},
+        {"elementName": "TEXTO", "latitude": "6,25", "longitude": "-75,56"},
+    ]
+    assert buses.parse_substation_coords(data) == {
+        "AGUABLANCA": (3.4098, -76.48537),
+        "TEXTO": (6.25, -75.56),
+    }
+    table = buses.build_buses_table(
+        {"AGUABLANCA": (115.0,), "FUERA": (230.0,)},
+        [],
+        None,
+        None,
+        buses.parse_substation_coords(data),
+    )
+    row = table.set_index("bus_id")
+    assert (
+        row.at["AGUABLANCA|115", "lat"] == 3.4098 and row.at["AGUABLANCA|115", "lon"] == -76.48537
+    )
+    assert pd.isna(row.at["FUERA|230", "lat"]) and pd.isna(row.at["FUERA|230", "lon"])

@@ -19,6 +19,7 @@ Extremos: primero el mapa de PARATEC (`sub1`/`sub2` por nombre de línea), luego
 from __future__ import annotations
 
 import math
+import re
 from collections.abc import Iterable, Mapping
 from typing import Any
 
@@ -106,6 +107,28 @@ def parse_line_map(data: Iterable[Mapping[str, Any]]) -> dict[str, tuple[str, st
     return out
 
 
+_NAME_TAIL = re.compile(r"\s+\d+\s+\d+(?:[.,]\d+)?\s*KV\s*$", re.IGNORECASE)
+
+
+def far_end_from_name(name: str, near_end: str, known_substations: set[str]) -> str | None:
+    """Extremo lejano de una línea cuyos dos extremos PARATEC publica iguales.
+
+    PARATEC registra `sub1 = sub2` cuando el otro extremo está fuera de su listado (una planta,
+    un cliente industrial) o en el extranjero. El nombre de la línea, `"A - B <circuito> <kV>"`,
+    sí nombra los dos extremos: si uno de ellos es distinto de `near_end` y es una subestación
+    declarada (por ejemplo PIMAMPIRO para "JAMONDINO - PIMAMPIRO 1 230 KV"), se usa. Si no, la
+    línea queda como lazo y el servicio la excluye y la reporta. No se infiere nada más.
+    """
+    base = _NAME_TAIL.sub("", name.strip())
+    parts = [normalize_substation(p) for p in base.split(" - ")]
+    if len(parts) != 2:
+        return None
+    for part in parts:
+        if part and part != near_end and part in known_substations:
+            return part
+    return None
+
+
 def resolve_endpoints(
     rec: Mapping[str, Any],
     line_map: Mapping[str, tuple[str, str]],
@@ -113,14 +136,22 @@ def resolve_endpoints(
 ) -> tuple[str, str] | None:
     """Resuelve las dos subestaciones de una línea; `None` si no se puede."""
     name = to_text(rec.get("name")) or ""
+    ends: tuple[str, str] | None = None
     if name in line_map:
         s1, s2 = (normalize_substation(s) for s in line_map[name])
         if s1 in known_substations and s2 in known_substations:
-            return s1, s2
-    parts = [normalize_substation(p) for p in (to_text(rec.get("subStation")) or "").split(" - ")]
-    if len(parts) == 2 and all(p in known_substations for p in parts):
-        return parts[0], parts[1]
-    return None
+            ends = (s1, s2)
+    if ends is None:
+        parts = [
+            normalize_substation(p) for p in (to_text(rec.get("subStation")) or "").split(" - ")
+        ]
+        if len(parts) == 2 and all(p in known_substations for p in parts):
+            ends = (parts[0], parts[1])
+    if ends is not None and ends[0] == ends[1]:
+        far = far_end_from_name(name, ends[0], known_substations)
+        if far is not None:
+            ends = (ends[0], far)
+    return ends
 
 
 def parse_lines(
@@ -183,6 +214,7 @@ def parse_lines(
 __all__ = [
     "COLUMNS",
     "aggregate_segments",
+    "far_end_from_name",
     "parse_line_map",
     "parse_lines",
     "resolve_endpoints",

@@ -27,6 +27,7 @@ from typing import Any
 import pandas as pd
 
 from sinsim.adapters.sources_to_pandapower._common import fmt_kv, quality_fields, to_float
+from sinsim.adapters.sources_to_pandapower.field_mapping import SUBSTATION
 from sinsim.domain.constants import MIN_VN_KV_DEFAULT
 from sinsim.domain.entities import VoltageLevel
 
@@ -146,6 +147,66 @@ def parse_nominal_levels(data: Iterable[Mapping[str, Any]]) -> dict[str, dict[fl
     return out
 
 
+SUBAREA_PREFIX = "SubArea "
+
+
+def parse_subareas(data: Iterable[Mapping[str, Any]]) -> dict[str, str]:
+    """Subárea operativa de cada subestación según PARATEC (FR-034).
+
+    Usa `SubstationInfo.subAreaName` sin el prefijo "SubArea " ("SubArea Antioquia" →
+    "Antioquia"). Una subestación sin ese campo no aparece en el resultado: nunca se infiere.
+
+    Args:
+        data: Registros de `Substation/SubstationInfo`.
+
+    Returns:
+        Diccionario nombre de subestación normalizado → subárea.
+    """
+    source_field = next(k for k, v in SUBSTATION.items() if v == "subarea")
+    out: dict[str, str] = {}
+    for rec in data:
+        name = normalize_substation(str(rec.get("elementName", "")))
+        raw = rec.get(source_field)
+        if not name or not isinstance(raw, str) or not raw.strip():
+            continue
+        label = raw.strip()
+        if label.startswith(SUBAREA_PREFIX):
+            label = label[len(SUBAREA_PREFIX) :].strip()
+        out.setdefault(name, label)
+    return out
+
+
+# Rectángulo que contiene a Colombia continental e insular; una coordenada fuera de él es un
+# dato inválido de la fuente y se descarta (no se corrige).
+_LAT_RANGE = (-5.0, 14.0)
+_LON_RANGE = (-82.5, -66.0)
+
+
+def parse_substation_coords(data: Iterable[Mapping[str, Any]]) -> dict[str, tuple[float, float]]:
+    """Latitud y longitud (WGS84) de cada subestación según PARATEC (FR-035).
+
+    Una subestación sin coordenadas, o con coordenadas fuera de Colombia, no aparece en el
+    resultado: nunca se infiere una ubicación.
+
+    Args:
+        data: Registros de `Substation/SubstationInfo`.
+
+    Returns:
+        Diccionario nombre de subestación normalizado → `(lat, lon)`.
+    """
+    lat_field = next(k for k, v in SUBSTATION.items() if v == "lat")
+    lon_field = next(k for k, v in SUBSTATION.items() if v == "lon")
+    out: dict[str, tuple[float, float]] = {}
+    for rec in data:
+        name = normalize_substation(str(rec.get("elementName", "")))
+        lat, lon = to_float(rec.get(lat_field)), to_float(rec.get(lon_field))
+        if not name or lat is None or lon is None:
+            continue
+        if _LAT_RANGE[0] <= lat <= _LAT_RANGE[1] and _LON_RANGE[0] <= lon <= _LON_RANGE[1]:
+            out.setdefault(name, (lat, lon))
+    return out
+
+
 def canonical_kv(substation: str, kv: float, declared: Declared) -> float:
     """Base de clase de `kv` (la subestación no altera el resultado; se mantiene por contrato)."""
     _ = substation, declared
@@ -183,7 +244,11 @@ def parse_connection_point(text: str | None) -> tuple[str, float] | None:
 
 
 def build_buses_table(
-    declared: Declared, used_bus_ids: Iterable[str], nominals: Nominals | None = None
+    declared: Declared,
+    used_bus_ids: Iterable[str],
+    nominals: Nominals | None = None,
+    subareas: Mapping[str, str] | None = None,
+    coords: Mapping[str, tuple[float, float]] | None = None,
 ) -> pd.DataFrame:
     """Construye la tabla `buses` con las clases declaradas y las usadas por otros elementos.
 
@@ -192,12 +257,17 @@ def build_buses_table(
         used_bus_ids: Identificadores de barra que referencian líneas, transformadores,
             generadores y compensación (pueden incluir clases SDL no declaradas).
         nominals: Nominal declarado por (subestación, clase) (`parse_nominal_levels`).
+        subareas: Subárea por subestación (`parse_subareas`); nula si no está (FR-034).
+        coords: `(lat, lon)` por subestación (`parse_substation_coords`); nulas si no están
+            (FR-035).
 
     Returns:
-        DataFrame con `bus_id`, `substation`, `vn_kv` (base de clase), `nominal_kv`, `level`
-        y columnas de calidad.
+        DataFrame con `bus_id`, `substation`, `vn_kv` (base de clase), `nominal_kv`, `level`,
+        `subarea`, `lat`, `lon` y columnas de calidad.
     """
     nominals = nominals or {}
+    subareas = subareas or {}
+    coords = coords or {}
     ids: dict[str, tuple[str, float]] = {}
     for sub, levels in declared.items():
         for kv in levels:
@@ -216,6 +286,9 @@ def build_buses_table(
             "vn_kv": kv,
             "nominal_kv": nominals.get(sub, {}).get(kv, nominal_kv(kv)),
             "level": level_for(kv),
+            "subarea": subareas.get(sub),
+            "lat": coords[sub][0] if sub in coords else None,
+            "lon": coords[sub][1] if sub in coords else None,
             **quality_fields(f"substation:{sub}", []),
         }
         for bid, (sub, kv) in sorted(ids.items())
@@ -229,6 +302,9 @@ _COLUMNS = [
     "vn_kv",
     "nominal_kv",
     "level",
+    "subarea",
+    "lat",
+    "lon",
     "source_id",
     "imputed",
     "imputation_method",
@@ -248,5 +324,7 @@ __all__ = [
     "normalize_substation",
     "parse_connection_point",
     "parse_nominal_levels",
+    "parse_subareas",
+    "parse_substation_coords",
     "parse_substations",
 ]

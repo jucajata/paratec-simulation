@@ -127,3 +127,23 @@ def test_altered_byte_is_detected_as_corruption(tmp_path: Path):
     assert exc.value.code == "SNAPSHOT_CORRUPTED"
     assert "raw/xm/PRON_BARRA1020.txt" in exc.value.detail
     assert "PRON_BARRA1020.txt" in exc.value.user_message
+
+
+def test_new_snapshots_store_subarea_and_old_ones_derive_it_from_raw(snapshot_root: Path):
+    """FR-034: la subárea viene de PARATEC; un snapshot sin la columna la toma de `raw/`."""
+    repo = ParquetSnapshotRepository(snapshot_root)
+    buses = repo.load(SNAPSHOT_DATE).tables.buses
+    assert "subarea" in buses.columns
+    with_subarea = buses[buses.subarea.notna()]
+    assert len(with_subarea) > 0.9 * len(buses)
+    assert not with_subarea.subarea.str.startswith("SubArea").any()
+    before = tree_hash(snapshot_root)
+    derived = repo._with_substation_attrs_from_raw(
+        buses.drop(columns=["subarea", "lat", "lon"]), SNAPSHOT_DATE
+    )
+    assert derived.subarea.fillna("").tolist() == buses.subarea.fillna("").tolist()
+    # FR-035: coordenadas de PARATEC, idénticas guardadas o derivadas de raw/.
+    assert buses.lat.notna().sum() > 0.9 * len(buses)
+    assert derived.lat.fillna(0).tolist() == buses.lat.fillna(0).tolist()
+    assert derived.lon.fillna(0).tolist() == buses.lon.fillna(0).tolist()
+    assert tree_hash(snapshot_root) == before  # no escribe nada en el snapshot

@@ -28,9 +28,9 @@ function makeRun(): Run {
     diagnostics: null,
     result: {
       buses: [
-        { bus_id: "GUAVIO|230", vn_kv: 230, vm_pu: 1.01, vm_kv: 232.3, va_degree: 0, violation: null },
-        { bus_id: "MOMPOX|115", vn_kv: 110, vm_pu: 0.85, vm_kv: 93.5, va_degree: -20, violation: "low" },
-        { bus_id: "EL BANCO|115", vn_kv: 110, vm_pu: 1.18, vm_kv: 129.8, va_degree: -5, violation: "high" },
+        { bus_id: "GUAVIO|230", vn_kv: 230, vm_pu: 1.01, vm_kv: 232.3, va_degree: 0, violation: null, subarea: "Bogota" },
+        { bus_id: "MOMPOX|115", vn_kv: 110, vm_pu: 0.85, vm_kv: 93.5, va_degree: -20, violation: "low", subarea: "Bolivar" },
+        { bus_id: "EL BANCO|115", vn_kv: 110, vm_pu: 1.18, vm_kv: 129.8, va_degree: -5, violation: "high", subarea: null },
       ],
       lines: [
         {
@@ -98,6 +98,18 @@ describe("ResultsTables", () => {
     fireEvent.change(screen.getByTestId("filter"), { target: { value: "banco" } });
     expect(within(screen.getByTestId("table-buses")).getAllByRole("row")).toHaveLength(2);
     expect(screen.getByText("EL BANCO|115")).toBeInTheDocument();
+  });
+
+  it("filtra por subárea y marca las barras sin subárea (FR-034)", () => {
+    render(<ResultsTables run={makeRun()} />);
+    const table = screen.getByTestId("table-buses");
+    expect(within(table).getByText("EL BANCO|115").closest("tr")).toHaveTextContent("sin subárea");
+    fireEvent.change(screen.getByTestId("table-subarea"), { target: { value: "Bolivar" } });
+    const rows = within(screen.getByTestId("table-buses")).getAllByRole("row");
+    expect(rows).toHaveLength(2);
+    expect(rows[1]).toHaveTextContent("MOMPOX|115");
+    fireEvent.click(screen.getByRole("button", { name: "Generadores" }));
+    expect(within(screen.getByTestId("table-generators")).getAllByRole("row")).toHaveLength(1);
   });
 
   it("muestra las líneas sobrecargadas resaltadas", () => {

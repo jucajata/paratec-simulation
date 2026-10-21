@@ -74,3 +74,26 @@ def test_parse_line_map_reads_sub1_sub2():
         {"properties": {"nameLine": "L2", "sub1": "A", "sub2": None}},
     ]
     assert lines.parse_line_map(feats) == {"L1": ("A", "B")}
+
+
+def test_far_end_from_name_uses_declared_substation_only():
+    known = {"JAMONDINO", "PIMAMPIRO", "TESALIA", "JUANCHITO"}
+    assert (
+        lines.far_end_from_name("JAMONDINO - PIMAMPIRO 1 230 KV", "JAMONDINO", known) == "PIMAMPIRO"
+    )
+    # El Quimbo no está en el listado de PARATEC: no se inventa un extremo.
+    assert lines.far_end_from_name("EL QUIMBO - TESALIA 1 230 kV", "TESALIA", known) is None
+    # Dos nombres del mismo patio normalizan igual: sigue siendo un lazo.
+    assert (
+        lines.far_end_from_name("JUANCHITO - JUANCHITO (EPSA) 1 115 kV", "JUANCHITO", known) is None
+    )
+
+
+def test_resolve_endpoints_repairs_self_loop_with_declared_far_end():
+    rec = {"name": "JAMONDINO - PIMAMPIRO 1 230 KV", "subStation": "JAMONDINO - JAMONDINO"}
+    line_map = {"JAMONDINO - PIMAMPIRO 1 230 KV": ("JAMONDINO", "JAMONDINO")}
+    assert lines.resolve_endpoints(rec, line_map, {"JAMONDINO", "PIMAMPIRO"}) == (
+        "JAMONDINO",
+        "PIMAMPIRO",
+    )
+    assert lines.resolve_endpoints(rec, line_map, {"JAMONDINO"}) == ("JAMONDINO", "JAMONDINO")

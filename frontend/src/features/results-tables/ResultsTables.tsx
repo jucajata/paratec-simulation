@@ -23,26 +23,49 @@ function matches(text: string, filter: string): boolean {
   return filter === "" || text.toLowerCase().includes(filter.toLowerCase());
 }
 
+/** Filtro por subárea (FR-034): "" = todas; una rama pasa si alguno de sus extremos está. */
+function inSubarea(subarea: string, ...values: (string | null | undefined)[]): boolean {
+  return subarea === "" || values.some((v) => v === subarea);
+}
+
 export function ResultsTables({ run }: Props): JSX.Element {
   const [tab, setTab] = useState<Tab>("buses");
   const [filter, setFilter] = useState("");
   const [onlyViolations, setOnlyViolations] = useState(false);
+  const [subarea, setSubarea] = useState("");
   // Los hooks van antes de cualquier retorno temprano (reglas de hooks). Con `result` nulo
   // las listas quedan vacías y no se usan.
   const r = run.result;
+  const subareaOfBus = useMemo(() => new Map((r?.buses ?? []).map((b) => [b.bus_id, b.subarea ?? null])), [r]);
+  const subareaOptions = useMemo(
+    () => [...new Set((r?.buses ?? []).map((b) => b.subarea).filter((s): s is string => !!s))].sort((a, b) => a.localeCompare(b, "es")),
+    [r],
+  );
   const buses = useMemo(
-    () => (r?.buses ?? []).filter((b) => matches(b.bus_id, filter) && (!onlyViolations || b.violation !== null)),
-    [r, filter, onlyViolations],
+    () =>
+      (r?.buses ?? []).filter(
+        (b) => matches(b.bus_id, filter) && inSubarea(subarea, b.subarea) && (!onlyViolations || b.violation !== null),
+      ),
+    [r, filter, subarea, onlyViolations],
   );
   const lines = useMemo(
-    () => (r?.lines ?? []).filter((b) => matches(b.element_id, filter) && (!onlyViolations || b.overload)),
-    [r, filter, onlyViolations],
+    () =>
+      (r?.lines ?? []).filter(
+        (b) => matches(b.element_id, filter) && inSubarea(subarea, b.subarea_from, b.subarea_to) && (!onlyViolations || b.overload),
+      ),
+    [r, filter, subarea, onlyViolations],
   );
   const trafos = useMemo(
-    () => (r?.trafos ?? []).filter((b) => matches(b.element_id, filter) && (!onlyViolations || b.overload)),
-    [r, filter, onlyViolations],
+    () =>
+      (r?.trafos ?? []).filter(
+        (b) => matches(b.element_id, filter) && inSubarea(subarea, b.subarea_from, b.subarea_to) && (!onlyViolations || b.overload),
+      ),
+    [r, filter, subarea, onlyViolations],
   );
-  const gens = useMemo(() => (r?.generators ?? []).filter((g) => matches(g.gen_id, filter)), [r, filter]);
+  const gens = useMemo(
+    () => (r?.generators ?? []).filter((g) => matches(g.gen_id, filter) && inSubarea(subarea, subareaOfBus.get(g.bus))),
+    [r, filter, subarea, subareaOfBus],
+  );
 
   if (r === null) {
     const d = run.diagnostics;
@@ -105,6 +128,14 @@ export function ResultsTables({ run }: Props): JSX.Element {
           </button>
         ))}
         <input placeholder="Filtrar por nombre" value={filter} onChange={(e) => setFilter(e.target.value)} data-testid="filter" />
+        <select value={subarea} onChange={(e) => setSubarea(e.target.value)} data-testid="table-subarea">
+          <option value="">Todas las subáreas</option>
+          {subareaOptions.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
         <label>
           <input type="checkbox" checked={onlyViolations} onChange={(e) => setOnlyViolations(e.target.checked)} data-testid="only-violations" /> Solo
           fuera de límite
@@ -113,7 +144,7 @@ export function ResultsTables({ run }: Props): JSX.Element {
       {tab === "buses" && <BusTable rows={buses} />}
       {tab === "lines" && <BranchTable rows={lines} />}
       {tab === "trafos" && <BranchTable rows={trafos} />}
-      {tab === "generators" && <GenTable rows={gens} />}
+      {tab === "generators" && <GenTable rows={gens} subareaOfBus={subareaOfBus} />}
     </section>
   );
 }

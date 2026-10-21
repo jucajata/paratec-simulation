@@ -87,3 +87,30 @@ user_agent = "sinsim/{version} (+https://github.com/jucajata/paratec-simulation)
 
 [attribution]
 text = "Información proporcionada por XM S.A. E.S.P. – PARATEC y archivos públicos de despacho"
+
+[unifilares]
+# Diagramas unifilares oficiales de XM por subárea (FR-034). La interfaz solo enlaza a PARATEC;
+# no descarga los PDF. Las claves son la subárea de PARATEC (`subAreaName` sin "SubArea ").
+# Caquetá, Ecuador y Venezuela no tienen unifilar publicado en este tema.
+page_url = "https://paratec.xm.com.co/unifilares/graficos-y-unifilares"
+type_report = "36a11605-0cc7-497e-b7d9-08dd52a72d29"
+source = "API pública de PARATEC unifilares/api/Diagrama/getAll, tema 'Diagrama unifilar por subárea', consultada el 2026-10-20"
+
+[unifilares.categories]
+"Antioquia" = "76fd5d96-3e30-44a5-13e2-08dd52a72d2b"
+"Arauca" = "4e0fe5df-1731-479f-13e4-08dd52a72d2b"
+"Atlantico" = "a55d650c-3599-445b-13e5-08dd52a72d2b"
+"Bogota" = "c0fdc842-84f3-4d8c-13e3-08dd52a72d2b"
+"Bolivar" = "2bd34bc4-0b6b-4ce6-13e6-08dd52a72d2b"
+"Boyaca-Casanare" = "58f4d0f8-3d26-45fb-13e7-08dd52a72d2b"
+"CQR" = "409df8ab-1083-49d9-13eb-08dd52a72d2b"
+"Cauca-Narino" = "1b46b9c7-13a3-42d7-13e8-08dd52a72d2b"
+"Cerromatoso" = "5e6ba023-0a8d-43d9-13e9-08dd52a72d2b"
+"Cordoba_Sucre" = "cae2b1dd-5049-4893-13ea-08dd52a72d2b"
+"GCM" = "3b74aca1-0ee8-4dd0-13ec-08dd52a72d2b"
+"Huila-Tolima" = "55112934-233f-4edf-13ed-08dd52a72d2b"
+"Meta" = "154fcd0a-a082-4553-13ee-08dd52a72d2b"
+"Norte de Santander" = "022763e2-bc36-4b1b-13ef-08dd52a72d2b"
+"Putumayo" = "7f692023-e30f-4319-13f0-08dd52a72d2b"
+"Santander" = "face3ebe-6745-44dd-13f1-08dd52a72d2b"
+"Valle" = "cb17cdf0-ccaf-464e-13f2-08dd52a72d2b"

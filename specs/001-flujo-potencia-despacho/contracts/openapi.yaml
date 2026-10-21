@@ -89,12 +89,25 @@ paths:
                     type: array
                     items:
                       type: object
-                      properties: {id: {type: string}, label: {type: string}, vn_kv: {type: number}, vm_pu: {type: [number, "null"]}, violation: {type: [string, "null"]}}
+                      properties: {id: {type: string}, label: {type: string}, vn_kv: {type: number}, vm_pu: {type: [number, "null"]}, violation: {type: [string, "null"]}, subarea: {type: [string, "null"], description: "subAreaName de PARATEC sin el prefijo 'SubArea ' (FR-034)"}, lat: {type: [number, "null"], description: "Latitud WGS84 de la subestación en PARATEC (FR-035)"}, lon: {type: [number, "null"]}, p_gen_mw: {type: number, description: "Generación activa resultante en la barra (FR-036)"}, q_gen_mvar: {type: number}, p_load_mw: {type: number, description: "Carga activa (Ener.Act. + Perd.PSTR) en la barra"}, q_load_mvar: {type: number}, p_load_act_mw: {type: [number, "null"]}, p_load_pstr_mw: {type: [number, "null"]}, vm_kv: {type: [number, "null"]}, va_degree: {type: [number, "null"]}, slack_adjust_mw: {type: number}}
                   edges:
                     type: array
                     items:
                       type: object
-                      properties: {id: {type: string}, source: {type: string}, target: {type: string}, kind: {type: string, enum: [line, trafo2w, trafo3w]}, loading_percent: {type: [number, "null"]}, overload: {type: boolean}}
+                      properties: {id: {type: string}, source: {type: string}, target: {type: string}, kind: {type: string, enum: [line, trafo2w, trafo3w]}, loading_percent: {type: [number, "null"]}, overload: {type: boolean}, p_from_mw: {type: [number, "null"], description: "P que sale de source hacia target (FR-036); negativa si entra"}, q_from_mvar: {type: [number, "null"]}, p_to_mw: {type: [number, "null"]}, q_to_mvar: {type: [number, "null"]}, i_ka: {type: [number, "null"]}, pl_mw: {type: [number, "null"]}, ql_mvar: {type: [number, "null"]}}
+                  subareas:
+                    type: array
+                    description: Subáreas presentes, ordenadas, con el enlace al unifilar oficial de XM si existe (FR-034)
+                    items:
+                      type: object
+                      properties: {name: {type: string}, unifilar_url: {type: [string, "null"]}}
+        "404": {$ref: "#/components/responses/Problem"}
+  /geo/basemap:
+    get:
+      summary: Mapa base vectorial de los departamentos de Colombia (FR-035)
+      description: GeoJSON FeatureCollection (WGS84) de `data/geo/`, derivado de Natural Earth (dominio público). Funciona sin internet.
+      responses:
+        "200": {description: GeoJSON, content: {application/geo+json: {schema: {type: object}}}}
         "404": {$ref: "#/components/responses/Problem"}
   /runs/{run_id}/export:
     get:
@@ -165,6 +178,8 @@ components:
         imputed: {type: array, items: {type: object}}
         not_modeled: {type: array, items: {type: object}}
         islands: {type: array, items: {type: object}}
+        buses_without_coordinates: {type: array, items: {type: string}, description: "Barras del modelo sin coordenadas en PARATEC (FR-035)"}
+        buses_without_subarea: {type: array, items: {type: string}, description: "Barras del modelo cuya subestación no tiene subárea en PARATEC (FR-034)"}
         balance:
           type: object
           properties:

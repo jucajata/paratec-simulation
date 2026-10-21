@@ -13,6 +13,9 @@ def tiny_model() -> ModelTables:
             "bus_id": ["A|230", "B|230", "B|115"],
             "vn_kv": [230.0, 230.0, 115.0],
             "nominal_kv": [220.0, 230.0, 110.0],
+            "subarea": ["Antioquia", "Valle", None],
+            "lat": [6.25, 3.45, None],
+            "lon": [-75.56, -76.53, None],
         }
     )
     lines = pd.DataFrame(
@@ -117,6 +120,12 @@ def test_build_net_maps_every_element_with_domain_ids_and_conventions():
     assert net.f_hz == 60.0 and net.sn_mva == 100.0
     assert net.bus.name.tolist() == ["A|230", "B|230", "B|115"]
     assert net.bus.nominal_kv.tolist() == [220.0, 230.0, 110.0]
+    # FR-034: la subárea de PARATEC viaja en la red; la que falta queda vacía, sin inferir.
+    assert (
+        net.bus.subarea.tolist()[:2] == ["Antioquia", "Valle"] and net.bus.subarea.iloc[2] is None
+    )
+    # FR-035: coordenadas de PARATEC en la red; las que faltan quedan vacías.
+    assert net.bus.lat.tolist()[:2] == [6.25, 3.45] and math.isnan(net.bus.lat.iloc[2])
     assert net.line.name.iloc[0] == "line:A - B 1 230 kV" and net.line.max_i_ka.iloc[0] == 1.0
     t = net.trafo.iloc[0]
     assert (

@@ -69,6 +69,17 @@ Los resultados son trazables y no esconden supuestos.
   en proporción a su potencia programada; una barra fija configurada sirve como referencia de
   ángulo.
 
+### Session 2026-10-20 (ampliación de HU-4)
+
+- Q: ¿Cómo se clasifica la red por zonas para revisarla contra los unifilares de XM? → A: Por la
+  subárea operativa que PARATEC publica para cada subestación (`subAreaName`), la misma división
+  de los "Diagramas unifilares por subárea" de PARATEC; la topología se colorea y filtra por
+  subárea y enlaza al PDF oficial (FR-034).
+- Q: ¿Se puede ver la red sobre un mapa? → A: Sí. El usuario retiró NG-12 y aprobó una
+  disposición geográfica con mapa base de fondo descargado al repositorio (FR-035). Se usa un
+  mapa vectorial de dominio público (Natural Earth) en lugar de teselas raster de OpenStreetMap,
+  cuya política prohíbe la descarga masiva.
+
 ## Escenarios de usuario y pruebas *(obligatorio)*
 
 ### Historia de usuario 1 - Correr un flujo de potencia con datos incluidos (Prioridad: P1, MVP)
@@ -177,6 +188,20 @@ vista de red, y la exportación produce archivos que coinciden valor a valor con
    resumen.
 3. **Given** un resultado, **When** el usuario lo exporta, **Then** obtiene un archivo por tipo
    de elemento más un archivo de metadatos de trazabilidad.
+4. **Given** un resultado convergido, **When** el usuario colorea o filtra la topología por
+   subárea, **Then** ve cada barra con el color de su subárea de PARATEC, puede quedarse solo con
+   una subárea y sus enlaces de frontera, y tiene un enlace al unifilar oficial de XM de esa
+   subárea cuando existe (FR-034).
+5. **Given** un resultado convergido, **When** el usuario elige la disposición geográfica,
+   **Then** ve las barras en la ubicación de su subestación sobre el mapa de departamentos de
+   Colombia, sin conexión a internet, y las barras sin coordenadas aparecen aparte y en el
+   reporte de calidad (FR-035).
+6. **Given** un resultado convergido en la vista de topología, **When** el usuario se acerca
+   y selecciona una barra, **Then** ve la generación, la carga y los flujos de cada rama con su
+   sentido, y el balance de la barra (FR-036).
+7. **Given** un resultado convergido, **When** el usuario abre el reporte de violaciones,
+   **Then** ve las barras bajo tensión, las barras sobre tensión y las ramas sobrecargadas por
+   encima del 100 %, ordenadas por desviación y con su subárea (FR-037).
 
 ---
 
@@ -308,6 +333,41 @@ Tipos de patrón EARS: **[U]** Ubicuo · **[E]** Por evento (Cuando) · **[S]** 
   tabular por tipo de elemento y un archivo de metadatos con la trazabilidad de FR-023.
 - **FR-033 [U]**: El sistema DEBE ofrecer una vista de topología lógica de la red coloreable por
   tensión o por cargabilidad.
+- **FR-034 [U]**: El sistema DEBE asociar cada barra a la subárea operativa que PARATEC publica
+  para su subestación (`subAreaName`), mostrarla en los resultados de barras, líneas y
+  transformadores y en la exportación, y permitir colorear y filtrar por subárea la vista de
+  topología y las tablas. Cuando XM publique el diagrama unifilar oficial de esa subárea en
+  PARATEC, la interfaz DEBE ofrecer un enlace a él. Una barra cuya subestación no tenga subárea
+  en PARATEC queda como "sin subárea" y se lista en el reporte de calidad; nunca se le asigna
+  una por inferencia.
+- **FR-035 [U]**: La vista de topología DEBE abrirse en disposición geográfica y ubicar cada
+  barra en la latitud y longitud que PARATEC publica para su subestación, sobre un mapa base
+  vectorial de los departamentos de Colombia incluido en el repositorio, sin requerir conexión
+  a internet (R-01). Las barras de una misma subestación se separan ligeramente para que no se
+  superpongan. Una barra cuya subestación no tenga coordenadas en PARATEC se dibuja aparte,
+  marcada, y se lista en el reporte de calidad; nunca se ubica por inferencia. La disposición
+  lógica sigue disponible y el coloreado y el filtro por subárea funcionan en ambas.
+- **FR-036 [U]**: En la vista de topología, el sistema DEBE mostrar en cada barra su
+  generación y su carga (P en MW) y en cada línea y transformador el flujo de potencia activa
+  con su sentido, cuando el acercamiento lo permita sin saturar la vista; el tamaño de los
+  nodos y el grosor de las ramas DEBEN crecer más despacio que el acercamiento para que las
+  barras se separen al acercarse. Al seleccionar una barra, el sistema DEBE mostrar su tensión,
+  ángulo y subárea, sus generadores (P programada, P y Q), su carga (P y Q, con los componentes
+  `Ener.Act.` y `Perd.PSTR`), cada rama conectada con el flujo que sale o entra y su
+  cargabilidad, y el balance de potencia de la barra. Solo para resultados convergidos.
+  Nivel de detalle: con poco acercamiento la vista DEBE mostrar solo el STN (barras y ramas
+  de 220 kV o más) y revelar el STR al acercarse, sin recargar datos; la topología completa se
+  carga una sola vez y comprimida. En la disposición geográfica las barras DEBEN quedar fijas
+  en su ubicación (no se arrastran); en la lógica se pueden mover. El usuario DEBE poder
+  elegir qué datos se etiquetan en barras (nombre, tensión en pu y kV, ángulo, generación P y
+  Q, carga P y Q, ajuste de la referencia) y en ramas (P, Q, corriente, cargabilidad,
+  pérdidas), con nombre, generación, carga y P como valores por defecto; la elección se
+  recuerda en el navegador. "Colorear por" DEBE ofrecer también el ángulo.
+- **FR-037 [U]**: El sistema DEBE presentar un reporte de violaciones del resultado: barras
+  con tensión por debajo del límite inferior, barras por encima del límite superior, y líneas
+  y transformadores con cargabilidad mayor al 100 %, cada grupo ordenado de mayor a menor
+  desviación, con subárea, valor, límite aplicado y su fuente, y exportable junto con el
+  resto de archivos (`violaciones.csv`).
 
 ### Restricciones
 
@@ -427,7 +487,9 @@ código para ello.
 - **NG-10**: Comparación o validación contra resultados operativos publicados por XM.
 - **NG-11**: Representación de interconexiones internacionales como algo distinto de
   inyecciones fijas.
-- **NG-12**: Mapas georreferenciados. La vista de topología es lógica, no geográfica.
+- **NG-12**: *(Retirado el 2026-10-20 por decisión del usuario; ver FR-035.)* Antes excluía los
+  mapas georreferenciados. Siguen fuera de alcance las teselas raster y cualquier mapa que
+  requiera conexión a internet.
 - **NG-13**: Soporte para fuentes de datos distintas de PARATEC, del despacho programado y del
   pronóstico oficial de demanda definitivo de XM.
 - **NG-14**: Aceleración por GPU. Si se evalúa, será una feature aparte.
