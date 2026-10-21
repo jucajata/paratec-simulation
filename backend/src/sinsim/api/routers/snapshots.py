@@ -1,12 +1,20 @@
-"""`GET /api/snapshots` (FR-002)."""
+"""`GET /api/snapshots` (FR-002) y descarga de una fecha desde la interfaz (FR-038).
+
+La descarga corre en el servidor local con la misma lógica que `sinsim scrape`; se acepta con
+202 y se sigue por `GET /api/snapshots/descargas/{job_id}`. Nunca es automática (NG-09).
+"""
 
 from __future__ import annotations
 
-from fastapi import APIRouter, Request
+from datetime import date
+
+from fastapi import APIRouter, Request, status
 
 from sinsim.bootstrap import AppContext
-from sinsim.domain.entities import SnapshotSummary
+from sinsim.domain.dates import ensure_allowed
+from sinsim.domain.entities import ScrapeJob, SnapshotSummary
 from sinsim.services import snapshots as snapshot_service
+from sinsim.services.scrape import scrape_snapshot
 
 router = APIRouter(tags=["snapshots"])
 
@@ -21,3 +29,22 @@ def ctx_of(request: Request) -> AppContext:
 def list_snapshots(request: Request) -> list[SnapshotSummary]:
     """Lista las fechas disponibles y qué datos tiene cada una."""
     return snapshot_service.list_snapshots(ctx_of(request).snapshots)
+
+
+@router.post(
+    "/snapshots/{fecha}/descarga",
+    response_model=ScrapeJob,
+    status_code=status.HTTP_202_ACCEPTED,
+)
+def start_scrape(fecha: date, request: Request) -> ScrapeJob:
+    """Inicia la descarga de PARATEC, despacho y demanda de una fecha (FR-038, hasta D+1)."""
+    ctx = ctx_of(request)
+    day = ensure_allowed(fecha)
+    snapshot_service.require_absent(ctx.snapshots, day)
+    return ctx.scrape_runner.start(day, lambda on_step: scrape_snapshot(ctx, day, on_step=on_step))
+
+
+@router.get("/snapshots/descargas/{job_id}", response_model=ScrapeJob)
+def get_scrape(job_id: str, request: Request) -> ScrapeJob:
+    """Estado de una descarga iniciada desde la interfaz (FR-038)."""
+    return ctx_of(request).scrape_runner.get(job_id)

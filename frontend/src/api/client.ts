@@ -1,4 +1,14 @@
-import type { Basemap, CaseRequest, FlowType, Problem, Run, SnapshotSummary, StudyCase, Topology } from "./types";
+import type {
+  Basemap,
+  CaseRequest,
+  FlowType,
+  Problem,
+  Run,
+  ScrapeJob,
+  SnapshotSummary,
+  StudyCase,
+  Topology,
+} from "./types";
 
 /** Error de la API en formato Problem Details (constitución V). */
 export class ProblemError extends Error {
@@ -38,6 +48,8 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 
 export const api = {
   snapshots: () => request<SnapshotSummary[]>("/snapshots"),
+  startScrape: (date: string) => request<ScrapeJob>(`/snapshots/${date}/descarga`, { method: "POST" }),
+  scrapeJob: (jobId: string) => request<ScrapeJob>(`/snapshots/descargas/${jobId}`),
   createCase: (body: CaseRequest) =>
     request<StudyCase>("/cases", { method: "POST", body: JSON.stringify(body) }),
   getCase: (caseId: string) => request<StudyCase>(`/cases/${caseId}`),

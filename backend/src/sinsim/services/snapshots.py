@@ -17,6 +17,16 @@ def list_snapshots(repo: SnapshotRepository) -> list[SnapshotSummary]:
     return repo.list_summaries()
 
 
+def require_absent(repo: SnapshotRepository, snapshot_date: date) -> None:
+    """Exige que no exista snapshot para la fecha (FR-004): los snapshots son inmutables.
+
+    Raises:
+        DomainError: `SNAPSHOT_EXISTS`.
+    """
+    if any(row.date == snapshot_date for row in repo.list_summaries()):
+        raise DomainError("SNAPSHOT_EXISTS", f"ya existe el snapshot {snapshot_date}")
+
+
 def load_verified(repo: SnapshotRepository, snapshot_date: date) -> LoadedSnapshot:
     """Carga un snapshot verificado; lanza `SNAPSHOT_NOT_FOUND` o `SNAPSHOT_CORRUPTED`."""
     return repo.load(snapshot_date)

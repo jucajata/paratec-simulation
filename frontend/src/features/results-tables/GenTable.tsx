@@ -16,10 +16,10 @@ export function GenTable({
           <th>Generador</th>
           <th>Barra</th>
           <th>Subárea</th>
-          <th>P programada</th>
-          <th>P</th>
-          <th>Q</th>
-          <th>Ajuste referencia</th>
+          <th className="num">P programada</th>
+          <th className="num">P</th>
+          <th className="num">Q</th>
+          <th className="num">Ajuste referencia</th>
         </tr>
       </thead>
       <tbody>
@@ -28,10 +28,10 @@ export function GenTable({
             <td>{g.gen_id}</td>
             <td>{g.bus}</td>
             <td>{subareaOfBus.get(g.bus) ?? "sin subárea"}</td>
-            <td>{fmtMw(g.p_scheduled_mw)}</td>
-            <td>{fmtMw(g.p_mw)}</td>
-            <td>{fmtMvar(g.q_mvar)}</td>
-            <td>{fmtMw(g.slack_adjust_mw)}</td>
+            <td className="num">{fmtMw(g.p_scheduled_mw)}</td>
+            <td className="num">{fmtMw(g.p_mw)}</td>
+            <td className="num">{fmtMvar(g.q_mvar)}</td>
+            <td className="num">{fmtMw(g.slack_adjust_mw)}</td>
           </tr>
         ))}
       </tbody>

@@ -97,7 +97,7 @@ IV y VI; se revisan todos los principios.*
 | Regla | Estado | Evidencia |
 |---|---|---|
 | Problem Details + `user_message` + `trace_id` | ✅ | |
-| Códigos HTTP | ✅ | `SNAPSHOT_NOT_FOUND`/`OPERATING_POINT_MISSING` → 404; `PERIOD_OUT_OF_RANGE` → 422 (esquema); fecha futura → 400; `SNAPSHOT_CORRUPTED` → 409 (constitución 1.1.0) |
+| Códigos HTTP | ✅ | `SNAPSHOT_NOT_FOUND`/`OPERATING_POINT_MISSING` → 404; `PERIOD_OUT_OF_RANGE` → 422 (esquema); fecha posterior a mañana → 400 (FR-039); `SCRAPE_IN_PROGRESS` → 409; `SNAPSHOT_CORRUPTED` → 409 (constitución 1.1.0) |
 | Códigos de salida del CLI 0–4 | ✅ | [contracts/cli.md](./contracts/cli.md) |
 | Scraper atómico | ✅ | Directorio temporal + rename |
 | Validación en tres puntos | ✅ | Pydantic (API), scraper ([data-model.md §2](./data-model.md)) y `domain/physical_checks.py` antes de simular (tasks T038): comprobaciones estructurales sin rangos numéricos inventados |
@@ -129,6 +129,8 @@ IV y VI; se revisan todos los principios.*
 | **D-7** | Clasificación por subárea (ampliación del 2026-10-20) | La subárea de cada barra es el `subAreaName` de su subestación en PARATEC (presente en las 509 subestaciones del snapshot incluido). Snapshots ya existentes sin la columna la toman de `raw/` al cargarse, sin reescribir archivos (III.3, III.4). Los enlaces a los unifilares usan los identificadores públicos de PARATEC (`typeReport` y `category`), configurados en `config/defaults.toml` con su fuente. La interfaz no descarga los PDF: los abre en PARATEC | FR-034; data-model §2 y §7; contracts/openapi.yaml; contracts/export-format.md |
 
 | **D-8** | Disposición geográfica (ampliación del 2026-10-20) | El usuario retira NG-12. Cada barra toma `latitude`/`longitude` de `SubstationInfo` (503 de 509 subestaciones en el snapshot incluido). Mapa base: límites departamentales de Natural Earth 1:10m (dominio público), filtrados a Colombia y simplificados, versionados en `data/geo/` y servidos por `GET /api/geo/basemap`. Proyección equirectangular centrada en Colombia, calculada en el frontend; el fondo es un SVG sincronizado con el zoom de Cytoscape, sin dependencias nuevas. No se descargan teselas raster (política de OpenStreetMap) | FR-035; data-model §2 y §5; contracts/openapi.yaml |
+
+| **D-9** | Descarga desde la interfaz (2026-10-21) | La orquestación de `sinsim scrape` pasa a `services/scrape.py` y la comparten CLI y API. `POST /api/snapshots/{fecha}/descarga` acepta con 202 y corre la descarga en un hilo del proceso de la API, con un único cupo (`threading.Lock`): una segunda petición recibe `SCRAPE_IN_PROGRESS`. El estado (`ScrapeJob`) vive en memoria y se consulta por `GET /api/snapshots/descargas/{job_id}`; la interfaz lo sondea cada segundo. No hay cola ni persistencia de tareas (NG-09: nada automático). Se admite hasta D+1 (FR-039) en CLI y API. Sin dependencias nuevas | FR-038, FR-039; data-model §1.2; contracts/openapi.yaml y cli.md |
 
 **Pendiente fuera de este plan**: la opción `--force` de FR-004 sigue en "Decisiones
 pendientes" de la spec. Este plan la excluye, de acuerdo con la constitución III.4.

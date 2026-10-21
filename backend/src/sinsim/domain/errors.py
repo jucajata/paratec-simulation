@@ -52,6 +52,21 @@ CATALOG: dict[str, ErrorSpec] = {
             "No se modificó nada.",
         ),
         ErrorSpec(
+            "SCRAPE_IN_PROGRESS",
+            "Ya hay una descarga en curso",
+            409,
+            ExitCode.GENERAL,
+            "Ya se está descargando otra fecha. Espera a que termine e inténtalo de nuevo.",
+        ),
+        ErrorSpec(
+            "SCRAPE_JOB_NOT_FOUND",
+            "Descarga no encontrada",
+            404,
+            ExitCode.GENERAL,
+            "No hay ninguna descarga con ese identificador. Las descargas solo se recuerdan "
+            "mientras la API sigue encendida.",
+        ),
+        ErrorSpec(
             "SNAPSHOT_CORRUPTED",
             "Snapshot alterado",
             409,
@@ -101,7 +116,8 @@ CATALOG: dict[str, ErrorSpec] = {
             "Fecha inválida",
             400,
             ExitCode.USAGE,
-            "La fecha debe tener el formato YYYY-MM-DD y no puede ser futura.",
+            "La fecha debe tener el formato YYYY-MM-DD y no puede ser posterior a mañana: XM "
+            "publica el despacho programado la víspera.",
         ),
         ErrorSpec(
             "PARAM_MISSING",
@@ -182,6 +198,15 @@ CATALOG: dict[str, ErrorSpec] = {
         ),
     )
 }
+
+
+ERROR_TYPE_BASE = "https://github.com/jucajata/paratec-simulation/errors/"
+"""Prefijo del campo `type` de Problem Details (constitución V)."""
+
+
+def problem_type_url(code: str) -> str:
+    """URL `type` de un código del catálogo."""
+    return ERROR_TYPE_BASE + code.lower().replace("_", "-")
 
 
 class DomainError(Exception):

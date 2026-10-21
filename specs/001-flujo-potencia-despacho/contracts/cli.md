@@ -10,7 +10,7 @@ mensajes de progreso van a stderr.
 |---|---|---|
 | 0 | Éxito; incluye un flujo `no_convergio`, que es un resultado y no un error | — |
 | 1 | Error general | `SNAPSHOT_EXISTS`, `SNAPSHOT_CORRUPTED`, `OPERATING_POINT_MISSING` |
-| 2 | Uso incorrecto | Fecha mal formada o futura, `--periodo` fuera de 1–24 |
+| 2 | Uso incorrecto | Fecha mal formada o posterior a mañana (FR-039), `--periodo` fuera de 1–24 |
 | 3 | Error de red | PARATEC o el portal de XM no responden |
 | 4 | Validación fallida o cambio de estructura en la fuente | `PARATEC_SCHEMA_CHANGED`, `XM_FILE_SCHEMA_CHANGED`, `DISPATCH_TOTAL_MISMATCH` |
 
@@ -27,6 +27,9 @@ mensajes de progreso van a stderr.
 - Si `<out>/<fecha>/` ya existe, sale con código 1 y `SNAPSHOT_EXISTS` sin tocar nada (FR-004).
   No hay opción `--force`, por la constitución III.4 (ver "Decisiones pendientes" en la spec).
 - Al terminar imprime la ruta, los conteos por entidad y la versión del estándar de XM.
+- Admite hasta mañana (D+1), porque XM publica el despacho la víspera (FR-039). Advierte que
+  PARATEC no tiene histórico: los parámetros son los vigentes al descargar (FR-038).
+- La interfaz usa la misma lógica a través de `POST /api/snapshots/{fecha}/descarga` (FR-038).
 
 ## `sinsim snapshots list [--json]` (FR-002)
 

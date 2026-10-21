@@ -4,9 +4,9 @@ info:
   version: 0.1.0
   description: >
     API REST local y monousuario (constitución II y V). Sirve solo en 127.0.0.1 y no tiene
-    autenticación (NG-08). Todos los errores usan Problem Details (RFC 9457) extendido. Esta API
-    no expone ningún endpoint de scraping: la actualización de datos se hace solo por CLI
-    (NG-09).
+    autenticación (NG-08). Todos los errores usan Problem Details (RFC 9457) extendido. La
+    descarga de datos de una fecha (FR-038) se pide con POST /snapshots/{fecha}/descarga y se
+    sigue con GET /snapshots/descargas/{job_id}; nunca es automática ni programada (NG-09).
 servers:
   - url: http://127.0.0.1:8000/api
 paths:
@@ -21,6 +21,25 @@ paths:
               schema:
                 type: array
                 items: {$ref: "#/components/schemas/SnapshotSummary"}
+  /snapshots/{fecha}/descarga:
+    post:
+      summary: Inicia la descarga de PARATEC, despacho y demanda de una fecha (FR-038)
+      description: >
+        Misma lógica que `sinsim scrape` (FR-003 a FR-007). Responde 202 con la tarea; el
+        trabajo corre en el servidor local y se consulta por GET /snapshots/descargas/{job_id}.
+        Solo hay una descarga a la vez. La fecha admite hasta mañana (FR-039).
+      parameters: [{$ref: "#/components/parameters/Fecha"}]
+      responses:
+        "202": {description: Descarga iniciada, content: {application/json: {schema: {$ref: "#/components/schemas/ScrapeJob"}}}}
+        "400": {description: "INVALID_DATE: fecha mal formada o posterior a mañana", content: {application/problem+json: {schema: {$ref: "#/components/schemas/Problem"}}}}
+        "409": {description: "SNAPSHOT_EXISTS (ya hay snapshot) o SCRAPE_IN_PROGRESS (otra descarga en curso)", content: {application/problem+json: {schema: {$ref: "#/components/schemas/Problem"}}}}
+  /snapshots/descargas/{job_id}:
+    get:
+      summary: Estado de una descarga iniciada desde la interfaz (FR-038)
+      parameters: [{$ref: "#/components/parameters/JobId"}]
+      responses:
+        "200": {description: OK, content: {application/json: {schema: {$ref: "#/components/schemas/ScrapeJob"}}}}
+        "404": {description: SCRAPE_JOB_NOT_FOUND, content: {application/problem+json: {schema: {$ref: "#/components/schemas/Problem"}}}}
   /cases:
     post:
       summary: Construye un caso para una fecha y un periodo (FR-010 a FR-019)
@@ -120,6 +139,8 @@ components:
   parameters:
     CaseId: {name: case_id, in: path, required: true, schema: {type: string, pattern: "^[0-9a-f]{64}$"}}
     RunId: {name: run_id, in: path, required: true, schema: {type: string, format: uuid}}
+    Fecha: {name: fecha, in: path, required: true, schema: {type: string, format: date}}
+    JobId: {name: job_id, in: path, required: true, schema: {type: string, format: uuid}}
   responses:
     Problem:
       description: Error en formato Problem Details extendido
@@ -150,6 +171,25 @@ components:
         has_dispatch: {type: boolean}
         has_demand: {type: boolean}
         intact: {type: boolean, description: Los checksums coinciden con el manifiesto (FR-006)}
+    ScrapeJob:
+      type: object
+      description: Descarga de una fecha pedida desde la interfaz (FR-038). Vive en memoria mientras corre la API; no se persiste.
+      required: [job_id, date, status, step, started_at]
+      properties:
+        job_id: {type: string, format: uuid}
+        date: {type: string, format: date}
+        status: {type: string, enum: [en_cola, descargando, listo, error]}
+        step:
+          type: string
+          enum: [en_cola, paratec, despacho_y_demanda, normalizacion, listo, error]
+          description: Paso en curso, para mostrarlo en la interfaz
+        started_at: {type: string, format: date-time}
+        finished_at: {type: string, format: date-time, nullable: true}
+        snapshot: {$ref: "#/components/schemas/SnapshotSummary", nullable: true, description: Solo cuando status = listo}
+        error: {$ref: "#/components/schemas/Problem", nullable: true, description: Solo cuando status = error; mismo código y mensaje que daría el comando}
+        notice:
+          type: string
+          description: Advertencia fija de FR-038 (PARATEC sin histórico)
     CaseRequest:
       type: object
       required: [snapshot_date, period]

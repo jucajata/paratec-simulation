@@ -1,5 +1,6 @@
 import type { GeneratorAssumption, StudyCase } from "../../api/types";
 import { fmtMvar, fmtMw, fmtPct, fmtPu } from "../../lib/format";
+import { Collaborate } from "./Collaborate";
 import { Section } from "./Section";
 
 interface Props {
@@ -15,8 +16,9 @@ export function CaseQuality({ studyCase }: Props): JSX.Element {
     ? (studyCase.assumptions.generadores as GeneratorAssumption[])
     : [];
   return (
-    <section className="quality" data-testid="case-quality">
+    <section className="quality card card--padded stack" data-testid="case-quality">
       <h2>Reporte de calidad del caso</h2>
+      <Collaborate quality={q} />
       <dl className="balance">
         <dt>Generación programada</dt>
         <dd>{fmtMw(b.p_scheduled_total_mw)}</dd>
@@ -34,16 +36,17 @@ export function CaseQuality({ studyCase }: Props): JSX.Element {
         <dd>{fmtMw(b.difference_mw)}</dd>
       </dl>
       {studyCase.warnings.map((w) => (
-        <p className="warning" key={w}>
+        <p className="notice notice--warn" key={w}>
           ⚠ {w}
         </p>
       ))}
+      <div>
       <Section title="Recursos del despacho no ubicados" count={q.unlocated_resources.length}>
         <table>
           <thead>
             <tr>
               <th>Recurso</th>
-              <th>P programada</th>
+              <th className="num">P programada</th>
               <th>Motivo</th>
             </tr>
           </thead>
@@ -51,7 +54,7 @@ export function CaseQuality({ studyCase }: Props): JSX.Element {
             {q.unlocated_resources.map((u) => (
               <tr key={u.resource}>
                 <td>{u.resource}</td>
-                <td>{fmtMw(u.p_mw)}</td>
+                <td className="num">{fmtMw(u.p_mw)}</td>
                 <td>{u.reason}</td>
               </tr>
             ))}
@@ -63,8 +66,8 @@ export function CaseQuality({ studyCase }: Props): JSX.Element {
           <thead>
             <tr>
               <th>Nodo</th>
-              <th>kV</th>
-              <th>P</th>
+              <th className="num">kV</th>
+              <th className="num">P</th>
               <th>Motivo</th>
             </tr>
           </thead>
@@ -72,8 +75,8 @@ export function CaseQuality({ studyCase }: Props): JSX.Element {
             {q.unlocated_demand.map((u) => (
               <tr key={`${u.node}-${u.vn_kv}`}>
                 <td>{u.node}</td>
-                <td>{u.vn_kv}</td>
-                <td>{fmtMw(u.p_mw)}</td>
+                <td className="num">{u.vn_kv}</td>
+                <td className="num">{fmtMw(u.p_mw)}</td>
                 <td>{u.reason}</td>
               </tr>
             ))}
@@ -88,7 +91,7 @@ export function CaseQuality({ studyCase }: Props): JSX.Element {
               <th>Tipo</th>
               <th>Desde</th>
               <th>Hacia</th>
-              <th>P</th>
+              <th className="num">P</th>
             </tr>
           </thead>
           <tbody>
@@ -98,7 +101,7 @@ export function CaseQuality({ studyCase }: Props): JSX.Element {
                 <td>{t.kind === "gen" ? "generación" : "demanda"}</td>
                 <td>{t.from_bus}</td>
                 <td>{t.to_bus}</td>
-                <td>{fmtMw(t.p_mw)}</td>
+                <td className="num">{fmtMw(t.p_mw)}</td>
               </tr>
             ))}
           </tbody>
@@ -131,7 +134,7 @@ export function CaseQuality({ studyCase }: Props): JSX.Element {
           ))}
         </ul>
       </Section>
-      <Section title={`Islas (${lostGen.toFixed(1)} MW de generación fuera)`} count={q.islands.length}>
+      <Section title={`Islas (${lostGen.toFixed(1)} MW de generación fuera)`} count={q.islands.length} alert={islandsOut.length > 0}>
         <ul>
           {q.islands.map((i) => (
             <li key={i.island_id}>
@@ -167,15 +170,15 @@ export function CaseQuality({ studyCase }: Props): JSX.Element {
           ))}
         </ul>
       </Section>
-      <Section title="Supuestos por generador (consigna y reactiva)" count={generators.length}>
+      <Section title="Supuestos por generador (consigna y reactiva)" count={generators.length} alert={false}>
         <table data-testid="generator-assumptions">
           <thead>
             <tr>
               <th>Generador</th>
               <th>Barra</th>
-              <th>Consigna</th>
-              <th>Q mín</th>
-              <th>Q máx</th>
+              <th className="num">Consigna</th>
+              <th className="num">Q mín</th>
+              <th className="num">Q máx</th>
               <th>Fuente de Q</th>
             </tr>
           </thead>
@@ -184,9 +187,9 @@ export function CaseQuality({ studyCase }: Props): JSX.Element {
               <tr key={g.gen_id}>
                 <td>{g.gen_id}</td>
                 <td>{g.barra}</td>
-                <td title={g.fuente_vm}>{fmtPu(g.vm_pu)}</td>
-                <td>{g.q_min_mvar === null ? "—" : fmtMvar(g.q_min_mvar)}</td>
-                <td>{g.q_max_mvar === null ? "—" : fmtMvar(g.q_max_mvar)}</td>
+                <td className="num" title={g.fuente_vm}>{fmtPu(g.vm_pu)}</td>
+                <td className="num">{g.q_min_mvar === null ? "—" : fmtMvar(g.q_min_mvar)}</td>
+                <td className="num">{g.q_max_mvar === null ? "—" : fmtMvar(g.q_max_mvar)}</td>
                 <td>{g.fuente_q}</td>
               </tr>
             ))}
@@ -197,6 +200,7 @@ export function CaseQuality({ studyCase }: Props): JSX.Element {
         <summary>Supuestos del caso</summary>
         <pre>{JSON.stringify(studyCase.assumptions, null, 2)}</pre>
       </details>
+      </div>
     </section>
   );
 }

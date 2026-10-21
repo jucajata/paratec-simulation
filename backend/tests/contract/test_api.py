@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from datetime import date, timedelta
 from pathlib import Path
 
 import pytest
@@ -109,7 +110,9 @@ def test_case_creation_is_idempotent_and_runs_converge(client: TestClient):
     # FR-037: el reporte de violaciones coincide con los contadores del resumen.
     viol = summary["violations"]
     kinds = [v["kind"] for v in viol]
-    assert kinds.count("tension_baja") + kinds.count("tension_alta") == summary["n_voltage_violations"]
+    assert (
+        kinds.count("tension_baja") + kinds.count("tension_alta") == summary["n_voltage_violations"]
+    )
     assert kinds.count("sobrecarga") == summary["n_overloads"]
     assert all(v["deviation"] > 0 and v["source"] for v in viol)
 
@@ -139,6 +142,9 @@ def test_errors_are_problem_details(client: TestClient):
     )
     r = client.post("/api/cases", json={"snapshot_date": "2099-01-01", "period": 1})
     assert r.status_code == 400 and r.json()["code"] == "INVALID_DATE"
+    tomorrow = (date.today() + timedelta(days=1)).isoformat()
+    r = client.post("/api/cases", json={"snapshot_date": tomorrow, "period": 1})
+    assert r.status_code == 404 and r.json()["code"] == "SNAPSHOT_NOT_FOUND"  # D+1 pasa la fecha
     r = client.get("/api/runs/00000000-0000-0000-0000-000000000000")
     assert r.status_code == 404 and r.json()["code"] == "RUN_NOT_FOUND"
 

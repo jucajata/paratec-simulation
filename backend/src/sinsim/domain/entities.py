@@ -27,6 +27,38 @@ class Frozen(BaseModel):
 
 # --- Snapshot y manifiesto -----------------------------------------------------
 
+ScrapeStatus = Literal["en_cola", "descargando", "listo", "error"]
+ScrapeStep = Literal["en_cola", "paratec", "despacho_y_demanda", "normalizacion", "listo", "error"]
+
+
+class ProblemInfo(Frozen):
+    """Problem Details (RFC 9457) extendido, tal como lo devuelve la API (constitución V)."""
+
+    type: str
+    title: str
+    status: int
+    detail: str
+    code: str
+    user_message: str
+    trace_id: str
+
+
+class ScrapeJob(Frozen):
+    """Descarga de una fecha pedida desde la interfaz (data-model.md §1.2, FR-038).
+
+    Vive en memoria mientras la API está encendida; no se persiste.
+    """
+
+    job_id: str
+    date: date
+    status: ScrapeStatus
+    step: ScrapeStep
+    started_at: datetime
+    finished_at: datetime | None = None
+    snapshot: SnapshotSummary | None = None
+    error: ProblemInfo | None = None
+    notice: str
+
 
 class SourceFile(Frozen):
     """Origen de una entidad del snapshot."""

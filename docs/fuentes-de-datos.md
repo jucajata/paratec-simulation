@@ -145,9 +145,16 @@ del caso, así que cambiar una equivalencia produce un caso distinto.
 | Demanda | `PRON_BARRA1020` |
 | Ubicación | `data/paratec/2026-10-20/` (5,8 MB) |
 
-Para generar otro snapshot: `uv run --project backend sinsim scrape --fecha YYYY-MM-DD`. Los
-snapshots son inmutables; si la fecha ya existe el comando termina con `SNAPSHOT_EXISTS` sin
-tocar nada (R-02, FR-004).
+Para generar otro snapshot: `uv run --project backend sinsim scrape --fecha YYYY-MM-DD`, o
+desde la interfaz escribiendo la fecha y pulsando "Descargar datos de esta fecha" (FR-038; usa
+`POST /api/snapshots/{fecha}/descarga`, la misma lógica, en el servidor local). Se admite hasta
+mañana, porque XM publica el despacho programado la víspera (FR-039). Los snapshots son
+inmutables; si la fecha ya existe, el comando y la API terminan con `SNAPSHOT_EXISTS` sin tocar
+nada (R-02, FR-004).
+
+PARATEC no tiene histórico: cualquier snapshot trae el despacho y la demanda de su fecha, pero
+los parámetros técnicos vigentes en el momento de la descarga (`extracted_at` del manifiesto).
+El comando y la interfaz lo avisan.
 
 ## 6. Reglas para las pruebas
 

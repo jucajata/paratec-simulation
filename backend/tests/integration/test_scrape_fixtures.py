@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from datetime import date, timedelta
 from pathlib import Path
 
 import httpx
@@ -159,6 +160,27 @@ def test_missing_day_is_reported_as_not_published(fake):
     result = runner.invoke(cli.app, ["scrape", "--fecha", "2026-10-19"])
     assert result.exit_code == 1 and "XM_FILE_NOT_FOUND" in result.output
     assert list(data_dir.iterdir()) == []
+
+
+def test_tomorrow_is_allowed_but_two_days_ahead_is_not(fake):
+    """FR-039: el despacho de mañana ya está publicado; D+2 es uso incorrecto (exit 2)."""
+    _, data_dir = fake
+    tomorrow = (date.today() + timedelta(days=1)).isoformat()
+    result = runner.invoke(cli.app, ["scrape", "--fecha", tomorrow])
+    assert result.exit_code == 1 and "XM_FILE_NOT_FOUND" in result.output  # el fake no lo tiene
+    later = (date.today() + timedelta(days=2)).isoformat()
+    result = runner.invoke(cli.app, ["scrape", "--fecha", later])
+    assert result.exit_code == 2 and "INVALID_DATE" in result.output
+    assert list(data_dir.iterdir()) == []
+
+
+def test_scrape_prints_steps_and_paratec_notice(fake):
+    """FR-038: el comando avisa que PARATEC no tiene histórico."""
+    result = runner.invoke(cli.app, ["scrape", "--fecha", "2026-10-20"])
+    assert result.exit_code == 0
+    assert "Descargando PARATEC" in result.output
+    assert "Normalizando" in result.output
+    assert "PARATEC no tiene histórico" in result.output
 
 
 def test_parse_listing_is_tolerant_but_strict_on_shape():

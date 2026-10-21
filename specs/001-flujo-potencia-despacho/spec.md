@@ -80,6 +80,16 @@ Los resultados son trazables y no esconden supuestos.
   mapa vectorial de dominio público (Natural Earth) en lugar de teselas raster de OpenStreetMap,
   cuya política prohíbe la descarga masiva.
 
+### Session 2026-10-21 (descarga de datos desde la interfaz)
+
+- Q: ¿La interfaz puede descargar los datos de una fecha que no tiene snapshot, o la
+  actualización sigue siendo solo por comando? → A: La interfaz admite cualquier fecha y, si no
+  tiene snapshot, ofrece descargarla desde el servidor local con las mismas reglas que el comando
+  (FR-038). NG-09 se reescribe: siguen fuera las descargas programadas o automáticas; la
+  actualización es siempre a petición del usuario, por comando o por la interfaz.
+- Q: ¿Hasta qué fecha se admite? → A: Hasta el día siguiente a la fecha actual (D+1), porque XM
+  publica el despacho programado la víspera. Fechas posteriores se rechazan (FR-039).
+
 ## Escenarios de usuario y pruebas *(obligatorio)*
 
 ### Historia de usuario 1 - Correr un flujo de potencia con datos incluidos (Prioridad: P1, MVP)
@@ -164,6 +174,13 @@ completo y válido en un directorio temporal.
    con código de error de validación y el mensaje indica qué entidad falló.
 4. **Given** que no hay conexión, **When** se ejecuta el comando, **Then** sale con código de
    error de red y los snapshots existentes quedan intactos.
+5. **Given** la interfaz abierta, **When** el usuario escribe una fecha sin snapshot, **Then** la
+   interfaz indica que no está descargada y ofrece descargarla; al aceptar, muestra el paso en
+   curso y, al terminar, la fecha aparece como disponible y queda seleccionada para ejecutar.
+6. **Given** una descarga en curso desde la interfaz, **When** el usuario pide otra, **Then** la
+   segunda se rechaza informando qué fecha se está descargando, y los errores de la descarga
+   (fecha no publicada por XM, sin conexión, estructura inesperada) se muestran con el mismo
+   mensaje que daría el comando, sin dejar snapshot parcial.
 
 ---
 
@@ -241,8 +258,8 @@ Tipos de patrón EARS: **[U]** Ubicuo · **[E]** Por evento (Cuando) · **[S]** 
   PARATEC, el despacho programado y el pronóstico oficial de demanda de la misma fecha.
 - **FR-002 [U]**: El sistema DEBE listar las fechas disponibles e indicar, para cada una, si
   tiene parámetros PARATEC, despacho programado y pronóstico de demanda.
-- **FR-003 [E]**: Cuando el usuario ejecute el comando de actualización con una fecha, el
-  sistema DEBE descargar los parámetros técnicos de PARATEC, el despacho programado y el
+- **FR-003 [E]**: Cuando el usuario solicite la actualización de una fecha, por el comando o
+  desde la interfaz (FR-038), el sistema DEBE descargar los parámetros técnicos de PARATEC, el despacho programado y el
   pronóstico oficial de demanda definitivo por barra de esa fecha, y guardarlos como un
   snapshot nuevo con manifiesto. El manifiesto registra, para cada archivo de XM, su fecha de
   última modificación en la fuente, porque XM puede republicar un archivo después de creado.
@@ -256,6 +273,18 @@ Tipos de patrón EARS: **[U]** Ubicuo · **[E]** Por evento (Cuando) · **[S]** 
   sistema DEBE negarse a usar ese snapshot e informar cuál archivo está alterado.
 - **FR-007 [S]**: Mientras el comando de actualización esté descargando, el sistema DEBE limitar
   la tasa de peticiones a la fuente según el valor configurado.
+- **FR-038 [E]**: Cuando el usuario elija en la interfaz una fecha sin snapshot, el sistema DEBE
+  ofrecer descargarla. La descarga la ejecuta el servidor local con las mismas reglas de FR-003 a
+  FR-007 (misma tasa, mismo User-Agent, escritura atómica, sin sobrescribir), informa el paso en
+  curso (PARATEC, despacho y demanda, normalización) y, al terminar, la fecha queda disponible y
+  seleccionada. Solo puede haber una descarga a la vez; una segunda solicitud se rechaza indicando
+  cuál está en curso. Los errores se informan con el mismo código y mensaje que el comando. La
+  interfaz y el comando DEBEN advertir que PARATEC no tiene histórico: los parámetros técnicos
+  descargados son los vigentes en el momento de la descarga, no los de la fecha solicitada; el
+  manifiesto lo registra en `extracted_at`.
+- **FR-039 [U]**: El sistema DEBE admitir fechas hasta el día siguiente a la fecha actual (D+1),
+  porque XM publica el despacho programado la víspera, y DEBE rechazar como inválidas las
+  posteriores, tanto en la actualización como en la construcción de casos.
 
 **Construcción del caso**
 
@@ -362,12 +391,23 @@ Tipos de patrón EARS: **[U]** Ubicuo · **[E]** Por evento (Cuando) · **[S]** 
   elegir qué datos se etiquetan en barras (nombre, tensión en pu y kV, ángulo, generación P y
   Q, carga P y Q, ajuste de la referencia) y en ramas (P, Q, corriente, cargabilidad,
   pérdidas), con nombre, generación, carga y P como valores por defecto; la elección se
-  recuerda en el navegador. "Colorear por" DEBE ofrecer también el ángulo.
+  recuerda en el navegador. "Colorear por" DEBE ofrecer también el ángulo. Cambiar las
+  etiquetas o el coloreado NO DEBE reiniciar la vista (se conservan zoom, posición y
+  selección); un botón "Reiniciar mapa" DEBE devolver la vista a su estado inicial (ajuste
+  completo y, en la disposición lógica, posiciones recalculadas). Pedido el 2026-10-21.
 - **FR-037 [U]**: El sistema DEBE presentar un reporte de violaciones del resultado: barras
   con tensión por debajo del límite inferior, barras por encima del límite superior, y líneas
   y transformadores con cargabilidad mayor al 100 %, cada grupo ordenado de mayor a menor
   desviación, con subárea, valor, límite aplicado y su fuente, y exportable junto con el
   resto de archivos (`violaciones.csv`).
+- **FR-040 [U]**: El reporte de calidad del caso DEBE mostrar un aviso de colaboración que
+  indique cuántos recursos del despacho y nodos de demanda quedaron sin ubicar en el caso y
+  explique, en una ventana emergente, el paso a paso para que cualquier persona corrija las
+  tablas de equivalencias del repositorio: identificar lo que falta en el reporte, confirmar
+  el elemento en PARATEC, editar la tabla correspondiente de `data/equivalencias/` respetando
+  sus columnas y vigencias, verificar con las pruebas y la demo, y abrir un pull request con la
+  fuente de cada fila. El aviso DEBE permitir copiar la lista de pendientes. Pedido el
+  2026-10-21.
 
 ### Restricciones
 
@@ -433,8 +473,8 @@ Tipos de patrón EARS: **[U]** Ubicuo · **[E]** Por evento (Cuando) · **[S]** 
   fecha incluida, cada uno ejecutado por separado.
 - **SC-005**: El proceso de construcción y cálculo, aplicado a una red de referencia con
   solución conocida, reproduce las tensiones con un error máximo de 1e-6 pu.
-- **SC-006**: Una ejecución del comando de actualización interrumpida en cualquier punto deja el
-  directorio de datos idéntico al estado previo.
+- **SC-006**: Una actualización (por comando o desde la interfaz) interrumpida en cualquier
+  punto deja el directorio de datos idéntico al estado previo.
 - **SC-007**: Todo resultado exportado contiene completos los metadatos de trazabilidad de
   FR-023.
 
@@ -483,7 +523,8 @@ código para ello.
 - **NG-07**: Edición manual de la red desde la interfaz (agregar, quitar o modificar elementos).
 - **NG-08**: Autenticación, usuarios, roles o despliegue multiusuario en la nube.
 - **NG-09**: Descargas programadas o automáticas de datos (cron, schedulers). La actualización
-  es solo manual por comando.
+  es siempre a petición del usuario, por comando o desde la interfaz (FR-038; reescrito el
+  2026-10-21).
 - **NG-10**: Comparación o validación contra resultados operativos publicados por XM.
 - **NG-11**: Representación de interconexiones internacionales como algo distinto de
   inyecciones fijas.

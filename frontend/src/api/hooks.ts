@@ -1,10 +1,32 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { api } from "./client";
-import type { CaseRequest, FlowType } from "./types";
+import type { CaseRequest, FlowType, ScrapeJob } from "./types";
 
 export function useSnapshots() {
   return useQuery({ queryKey: ["snapshots"], queryFn: api.snapshots });
+}
+
+/** Inicia la descarga de una fecha (FR-038). */
+export function useStartScrape() {
+  return useMutation({ mutationFn: (date: string) => api.startScrape(date) });
+}
+
+const SCRAPE_POLL_MS = 1000;
+
+function isRunning(job: ScrapeJob | undefined): boolean {
+  return job !== undefined && job.status !== "listo" && job.status !== "error";
+}
+
+/** Estado de una descarga; sondea cada segundo mientras corre (FR-038). */
+export function useScrapeJob(jobId: string | null) {
+  return useQuery({
+    queryKey: ["scrape", jobId],
+    queryFn: () => api.scrapeJob(jobId as string),
+    enabled: jobId !== null,
+    staleTime: 0,
+    refetchInterval: (query) => (isRunning(query.state.data) || query.state.data === undefined ? SCRAPE_POLL_MS : false),
+  });
 }
 
 export function useCreateCase() {

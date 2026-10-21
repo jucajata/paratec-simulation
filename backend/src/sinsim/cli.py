@@ -14,12 +14,14 @@ import typer
 
 from sinsim.adapters.storage.export import write_export
 from sinsim.bootstrap import AppContext, build_context
+from sinsim.domain.dates import parse_allowed
 from sinsim.domain.entities import Run, StudyCase
 from sinsim.domain.errors import DomainError, ExitCode
 from sinsim.observability import log_event, new_trace_id
 from sinsim.services import snapshots as snapshot_service
 from sinsim.services.build_case import build_case
 from sinsim.services.run_flow import run_flow
+from sinsim.services.scrape import PARATEC_NOTICE, scrape_snapshot
 
 log = logging.getLogger("sinsim.cli")
 app = typer.Typer(
@@ -42,14 +44,8 @@ def _fail(exc: DomainError) -> None:
 
 
 def parse_date(text: str) -> date:
-    """Convierte `YYYY-MM-DD`; rechaza formatos inválidos y fechas futuras (`INVALID_DATE`)."""
-    try:
-        value = date.fromisoformat(text)
-    except ValueError as exc:
-        raise DomainError("INVALID_DATE", f"fecha {text!r}") from exc
-    if value > date.today():
-        raise DomainError("INVALID_DATE", f"fecha futura {text!r}")
-    return value
+    """Convierte `YYYY-MM-DD`; rechaza formatos inválidos y fechas posteriores a D+1 (FR-039)."""
+    return parse_allowed(text)
 
 
 def _context() -> AppContext:
@@ -240,43 +236,27 @@ def scrape(
     out: Annotated[Path | None, typer.Option("--out", help="Directorio de snapshots.")] = None,
 ) -> None:
     """Descarga PARATEC, el despacho programado y el pronóstico de demanda (HU-3)."""
-    from sinsim.scraper import paratec as paratec_client
-    from sinsim.scraper import xm_files
-    from sinsim.scraper.http import RateLimitedClient
-    from sinsim.scraper.writer import RawSnapshot, write_snapshot
-
+    steps = {
+        "paratec": "Descargando PARATEC…",
+        "despacho_y_demanda": f"Descargando despacho y pronóstico de demanda del {fecha}…",
+        "normalizacion": "Normalizando y escribiendo el snapshot…",
+    }
     try:
         day = parse_date(fecha)
         ctx = _context()
-        out_dir = out or ctx.snapshots.root
-        if (out_dir / day.isoformat()).exists():
-            raise DomainError("SNAPSHOT_EXISTS", f"ya existe {out_dir / day.isoformat()}")
-        s = ctx.cfg.config.scraper
-        with RateLimitedClient(
-            user_agent=ctx.cfg.config.user_agent(),
-            min_interval_s=s.min_interval_s,
-            timeout_s=s.timeout_s,
-        ) as client:
-            typer.echo(
-                f"Descargando PARATEC ({len(paratec_client.ENDPOINTS)} entidades)…", err=True
-            )
-            par, par_sources = paratec_client.fetch_all(client)
-            typer.echo(f"Descargando despacho y pronóstico de demanda del {day}…", err=True)
-            xm, xm_sources = xm_files.fetch_for_date(client, day)
-        raw = RawSnapshot(paratec=par, xm=xm, sources=par_sources + xm_sources)
-        final = write_snapshot(
-            raw,
-            out_dir,
+        outcome = scrape_snapshot(
+            ctx,
             day,
-            scraper_version=ctx.version,
-            attribution=ctx.cfg.config.attribution.text,
+            out_dir=out,
+            on_step=lambda step: typer.echo(steps[step], err=True) if step in steps else None,
         )
-        manifest = json.loads((final / "manifest.json").read_text(encoding="utf-8"))
     except DomainError as exc:
         _fail(exc)
         return
+    manifest = outcome.manifest
     counts = manifest["record_counts"]
-    typer.echo(f"Snapshot creado en {final}")
+    typer.echo(f"Snapshot creado en {outcome.path}")
+    typer.echo(f"Aviso: {PARATEC_NOTICE}", err=True)
     typer.echo(
         f"Entidades PARATEC: {sum(1 for k in counts if k.startswith('paratec.'))} | líneas "
         f"{counts.get('paratec.lines')} | transformadores {counts.get('paratec.transformers')} | "

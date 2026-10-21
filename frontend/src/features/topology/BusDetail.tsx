@@ -15,17 +15,23 @@ export function BusDetail({ detail, onClose }: Props): JSX.Element {
   return (
     <aside className="bus-detail" data-testid="bus-detail">
       <div className="toolbar">
-        <strong>{node.label}</strong>
-        <span className="muted">
-          {fmtKv(node.vn_kv)}
-          {node.vm_pu !== null && ` · ${fmtPu(node.vm_pu)}`}
-          {node.violation && ` · fuera de límite (${node.violation === "low" ? "baja" : "alta"})`}
-          {` · ${node.subarea ?? "sin subárea"}`}
-        </span>
+        <div className="stack" style={{ gap: 2 }}>
+          <strong>{node.label}</strong>
+          <span className="muted small">
+            {fmtKv(node.vn_kv)}
+            {node.vm_pu !== null && ` · ${fmtPu(node.vm_pu)}`}
+            {` · ${node.subarea ?? "sin subárea"}`}
+          </span>
+        </div>
         <button type="button" onClick={onClose} data-testid="bus-detail-close">
           Cerrar
         </button>
       </div>
+      {node.violation && (
+        <span className="chip chip--error chip--outline" style={{ alignSelf: "flex-start" }}>
+          {node.violation === "low" ? "Tensión baja" : "Tensión alta"}
+        </span>
+      )}
       <dl className="balance">
         <dt>Generación</dt>
         <dd data-testid="bus-gen">
@@ -42,54 +48,58 @@ export function BusDetail({ detail, onClose }: Props): JSX.Element {
         </dd>
       </dl>
       {generators.length > 0 && (
-        <table data-testid="bus-generators">
+        <div className="table-scroll">
+          <table data-testid="bus-generators">
+            <thead>
+              <tr>
+                <th>Generador</th>
+                <th className="num">P programada</th>
+                <th className="num">P</th>
+                <th className="num">Q</th>
+              </tr>
+            </thead>
+            <tbody>
+              {generators.map((g) => (
+                <tr key={g.gen_id}>
+                  <td>{g.gen_id}</td>
+                  <td className="num">{fmtMw(g.p_scheduled_mw)}</td>
+                  <td className="num">{fmtMw(g.p_mw)}</td>
+                  <td className="num">{fmtMvar(g.q_mvar)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      <div className="table-scroll">
+        <table data-testid="bus-branches">
           <thead>
             <tr>
-              <th>Generador</th>
-              <th>P programada</th>
-              <th>P</th>
-              <th>Q</th>
+              <th>Rama</th>
+              <th>Hacia</th>
+              <th className="num">P sale</th>
+              <th className="num">Q sale</th>
+              <th className="num">Cargabilidad</th>
+              <th className="num">Pérdidas</th>
             </tr>
           </thead>
           <tbody>
-            {generators.map((g) => (
-              <tr key={g.gen_id}>
-                <td>{g.gen_id}</td>
-                <td>{fmtMw(g.p_scheduled_mw)}</td>
-                <td>{fmtMw(g.p_mw)}</td>
-                <td>{fmtMvar(g.q_mvar)}</td>
+            {branches.map((b) => (
+              <tr key={b.id} className={b.overload ? "violation overload" : ""}>
+                <td>{b.id}</td>
+                <td>{b.other}</td>
+                <td className="num">{b.p_out_mw === null ? "—" : `${b.p_out_mw >= 0 ? "→" : "←"} ${fmtMw(Math.abs(b.p_out_mw))}`}</td>
+                <td className="num">{b.q_out_mvar === null ? "—" : fmtMvar(b.q_out_mvar)}</td>
+                <td className="num">
+                  {b.loading_percent === null ? "—" : b.overload ? <strong>{fmtNum(b.loading_percent, 1)} %</strong> : `${fmtNum(b.loading_percent, 1)} %`}
+                </td>
+                <td className="num">{b.pl_mw === null ? "—" : `${fmtMw(b.pl_mw)} · ${fmtMvar(b.ql_mvar ?? 0)}`}</td>
               </tr>
             ))}
           </tbody>
         </table>
-      )}
-      <table data-testid="bus-branches">
-        <thead>
-          <tr>
-            <th>Rama</th>
-            <th>Hacia</th>
-            <th>P sale</th>
-            <th>Q sale</th>
-            <th>Cargabilidad</th>
-            <th>Pérdidas</th>
-          </tr>
-        </thead>
-        <tbody>
-          {branches.map((b) => (
-            <tr key={b.id} className={b.overload ? "violation overload" : ""}>
-              <td>{b.id}</td>
-              <td>{b.other}</td>
-              <td>{b.p_out_mw === null ? "—" : `${b.p_out_mw >= 0 ? "→" : "←"} ${fmtMw(Math.abs(b.p_out_mw))}`}</td>
-              <td>{b.q_out_mvar === null ? "—" : fmtMvar(b.q_out_mvar)}</td>
-              <td>{b.loading_percent === null ? "—" : `${fmtNum(b.loading_percent, 1)} %`}</td>
-              <td>{b.pl_mw === null ? "—" : `${fmtMw(b.pl_mw)} · ${fmtMvar(b.ql_mvar ?? 0)}`}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <p className="muted">
-        Flecha hacia la derecha: la potencia sale de esta barra; hacia la izquierda: entra.
-      </p>
+      </div>
+      <p className="muted small">Flecha hacia la derecha: la potencia sale de esta barra; hacia la izquierda: entra.</p>
     </aside>
   );
 }

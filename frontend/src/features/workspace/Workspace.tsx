@@ -10,6 +10,7 @@ import { TopologyView } from "../topology/TopologyView";
 import { ViolationsReport } from "../violations/ViolationsReport";
 
 const ATTRIBUTION = "Información proporcionada por XM S.A. E.S.P. – PARATEC y archivos públicos de despacho";
+const SCOPE = "Flujo sobre despacho programado (no es el estado real del SIN)";
 
 /** Flujo completo: picker → calidad del caso → ejecución → resultados, topología y exportación. */
 export function Workspace(): JSX.Element {
@@ -36,42 +37,63 @@ export function Workspace(): JSX.Element {
 
   return (
     <>
-      <header>
-        <h1>sinsim</h1>
-        <p className="label" data-testid="label">
-          {run ? run.label : "Flujo sobre despacho programado (no es el estado real del SIN)"}
-        </p>
+      <header className="app-header">
+        <div className="app-header__row">
+          <h1>sinsim</h1>
+          <p className="label chip chip--accent" data-testid="label">
+            {run ? run.label : SCOPE}
+          </p>
+          <span className="spacer" />
+          {run && (
+            <a className="button button--secondary" href={api.exportUrl(run.run_id)} download data-testid="export-link">
+              Exportar .zip
+            </a>
+          )}
+        </div>
         {run && (
-          <p className="trace">
-            Snapshot {run.trace.snapshot_date} · despacho {run.trace.dispatch_date} periodo {run.trace.period} · flujo{" "}
-            {run.trace.flow_type} · pandapower {run.trace.pandapower_version} · sinsim {run.trace.sinsim_version} · caso{" "}
-            <code>{run.trace.case_id.slice(0, 12)}…</code>
+          <p className="trace app-header__trace">
+            <span>
+              Snapshot <code>{run.trace.snapshot_date}</code>
+            </span>
+            <span>
+              Despacho <code>{run.trace.dispatch_date}</code> · periodo <code>{run.trace.period}</code>
+            </span>
+            <span>
+              Flujo <code>{run.trace.flow_type}</code>
+            </span>
+            <span>
+              pandapower <code>{run.trace.pandapower_version}</code> · sinsim <code>{run.trace.sinsim_version}</code>
+            </span>
+            <span>
+              Caso <code>{run.trace.case_id.slice(0, 12)}…</code>
+            </span>
           </p>
         )}
       </header>
       <main>
         <RunPicker busy={busy} onSubmit={(r) => void execute(r)} />
         {error && (
-          <p className="error" role="alert" data-testid="error">
+          <p className="notice notice--error" role="alert" data-testid="error">
             {error}
           </p>
         )}
         {busy && <p className="muted">Construyendo el caso y corriendo el flujo…</p>}
-        {studyCase && <CaseQuality studyCase={studyCase} />}
-        {run && (
-          <>
-            <p className="actions">
-              <a className="button" href={api.exportUrl(run.run_id)} download data-testid="export-link">
-                Exportar .zip
-              </a>
-            </p>
-            <ResultsTables run={run} />
-            <ViolationsReport run={run} />
-            {run.result && <TopologyView run={run} />}
-          </>
+        {run && run.result && <TopologyView run={run} />}
+        {run && <ResultsTables run={run} />}
+        {studyCase && (
+          <div className="reports">
+            <CaseQuality studyCase={studyCase} />
+            {run && <ViolationsReport run={run} />}
+          </div>
         )}
       </main>
-      <footer>{ATTRIBUTION}</footer>
+      <footer>
+        <div className="footer__row">
+          <span>{ATTRIBUTION}</span>
+          <span className="spacer" />
+          <span>Todo resultado describe el programa publicado por XM, nunca el estado real del SIN.</span>
+        </div>
+      </footer>
     </>
   );
 }

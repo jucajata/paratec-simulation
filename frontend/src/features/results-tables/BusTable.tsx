@@ -9,10 +9,11 @@ export function BusTable({ rows }: { rows: BusResult[] }): JSX.Element {
         <tr>
           <th>Barra</th>
           <th>Subárea</th>
-          <th>Vn</th>
-          <th>V (pu)</th>
-          <th>V (kV)</th>
-          <th>Ángulo (°)</th>
+          <th className="num">Vn</th>
+          <th className="num">V (pu)</th>
+          <th className="num">V (kV)</th>
+          <th className="num">Ángulo (°)</th>
+          <th>Estado</th>
         </tr>
       </thead>
       <tbody>
@@ -20,10 +21,15 @@ export function BusTable({ rows }: { rows: BusResult[] }): JSX.Element {
           <tr key={b.bus_id} className={b.violation ? `violation ${b.violation}` : ""}>
             <td>{b.bus_id}</td>
             <td>{b.subarea ?? "sin subárea"}</td>
-            <td>{fmtKv(b.vn_kv)}</td>
-            <td>{fmtPu(b.vm_pu)}</td>
-            <td>{fmtKv(b.vm_kv)}</td>
-            <td>{fmtNum(b.va_degree, 2)}</td>
+            <td className="num">{fmtKv(b.vn_kv)}</td>
+            <td className="num">{b.violation ? <strong>{fmtPu(b.vm_pu)}</strong> : fmtPu(b.vm_pu)}</td>
+            <td className="num">{fmtKv(b.vm_kv)}</td>
+            <td className="num">{fmtNum(b.va_degree, 2)}</td>
+            <td>
+              {b.violation && (
+                <span className="chip chip--error chip--outline">{b.violation === "low" ? "Tensión baja" : "Tensión alta"}</span>
+              )}
+            </td>
           </tr>
         ))}
       </tbody>

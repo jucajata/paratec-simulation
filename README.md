@@ -32,7 +32,7 @@ make demo                       # construye el caso del 2026-10-20, periodo 19, 
 |---|---|
 | `uv run --project backend sinsim snapshots list` | Lista las fechas disponibles y qué datos tiene cada una |
 | `uv run --project backend sinsim run --fecha YYYY-MM-DD --periodo N [--tipo ac\|dc] [--exportar DIR] [--json]` | Construye el caso, imprime el reporte de calidad y corre el flujo |
-| `uv run --project backend sinsim scrape --fecha YYYY-MM-DD [--out data/paratec/]` | Descarga PARATEC, `dDEC` y `PRON_BARRA` de esa fecha y crea un snapshot nuevo |
+| `uv run --project backend sinsim scrape --fecha YYYY-MM-DD [--out data/paratec/]` | Descarga PARATEC, `dDEC` y `PRON_BARRA` de esa fecha y crea un snapshot nuevo. Se admite hasta mañana (XM publica el despacho la víspera). La interfaz hace lo mismo desde el campo de fecha |
 | `make dev` | Levanta la API (`127.0.0.1:8000`) y la interfaz (`127.0.0.1:5173`) |
 | `make test` | Corre todas las pruebas |
 
@@ -69,3 +69,21 @@ specs/     Especificaciones (Spec Kit)
 ```
 
 La fuente de verdad del proyecto es `.specify/memory/constitution.md`.
+
+## Cómo colaborar
+
+El modelo se afina con las tablas de equivalencias de `data/equivalencias/`, que relacionan los
+recursos del despacho (`dDEC`) y los nodos del pronóstico de demanda (`PRON_BARRA`) con las
+plantas, subestaciones y niveles de tensión de PARATEC. Lo que no tiene fila queda "sin ubicar"
+en el reporte de calidad; nunca se completa en silencio. Para aportar:
+
+1. Corre un caso y revisa en el reporte de calidad los recursos y nodos sin ubicar (el aviso
+   "Cómo colaborar" de la interfaz permite copiar la lista).
+2. Confirma el elemento real en [PARATEC](https://paratec.xm.com.co).
+3. Edita la tabla que corresponda (`recursos_despacho.csv`, `nodos_demanda.csv` o
+   `subestaciones_alias.csv`): fechas `AAAA-MM-DD`, una sola fila vigente por clave y fecha,
+   fuente en `note` y sin la marca "NO CURADA". Deja sin fila lo que no puedas confirmar; nunca
+   se inventan parámetros eléctricos.
+4. Verifica con `make test` y `make demo`: la cobertura debe subir y no debe aparecer nada nuevo
+   sin ubicar.
+5. Abre un pull request con el motivo y la fuente de cada fila.

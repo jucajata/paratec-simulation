@@ -14,6 +14,7 @@ from sinsim.adapters.storage.equivalences import CsvEquivalenceRepository
 from sinsim.adapters.storage.snapshots import ParquetSnapshotRepository
 from sinsim.config import LoadedConfig, RepoPaths, load_config, repo_paths, sinsim_version
 from sinsim.observability import configure_logging
+from sinsim.services.scrape import ScrapeRunner
 
 
 @dataclass(frozen=True)
@@ -26,6 +27,7 @@ class AppContext:
     equivalences: CsvEquivalenceRepository
     cases: FileCaseRepository
     version: str
+    scrape_runner: ScrapeRunner
 
 
 def build_context(
@@ -47,4 +49,5 @@ def build_context(
         equivalences=CsvEquivalenceRepository(equivalences_dir or paths.equivalences),
         cases=FileCaseRepository(cases_dir or paths.cases),
         version=sinsim_version(),
+        scrape_runner=ScrapeRunner(),
     )

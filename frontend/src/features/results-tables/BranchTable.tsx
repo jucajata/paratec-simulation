@@ -18,11 +18,12 @@ export function BranchTable({ rows }: { rows: BranchResult[] }): JSX.Element {
           <th>Desde</th>
           <th>Hacia</th>
           <th>Subárea</th>
-          <th>P desde</th>
-          <th>Q desde</th>
-          <th>I (kA)</th>
-          <th>Cargabilidad</th>
-          <th>Pérdidas</th>
+          <th className="num">P desde</th>
+          <th className="num">Q desde</th>
+          <th className="num">I (kA)</th>
+          <th className="num">Cargabilidad</th>
+          <th className="num">Pérdidas</th>
+          <th>Estado</th>
         </tr>
       </thead>
       <tbody>
@@ -32,11 +33,12 @@ export function BranchTable({ rows }: { rows: BranchResult[] }): JSX.Element {
             <td>{b.from_bus}</td>
             <td>{b.to_bus}</td>
             <td>{subareaLabel(b.subarea_from, b.subarea_to)}</td>
-            <td>{fmtMw(b.p_from_mw)}</td>
-            <td>{fmtMvar(b.q_from_mvar)}</td>
-            <td>{fmtNum(b.i_ka, 3)}</td>
-            <td>{fmtNum(b.loading_percent, 1)} %</td>
-            <td>{fmtMw(b.pl_mw)}</td>
+            <td className="num">{fmtMw(b.p_from_mw)}</td>
+            <td className="num">{fmtMvar(b.q_from_mvar)}</td>
+            <td className="num">{fmtNum(b.i_ka, 3)}</td>
+            <td className="num">{b.overload ? <strong>{fmtNum(b.loading_percent, 1)} %</strong> : `${fmtNum(b.loading_percent, 1)} %`}</td>
+            <td className="num">{fmtMw(b.pl_mw)}</td>
+            <td>{b.overload && <span className="chip chip--error chip--outline">Sobrecarga</span>}</td>
           </tr>
         ))}
       </tbody>

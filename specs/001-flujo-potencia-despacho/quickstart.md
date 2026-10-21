@@ -89,6 +89,8 @@ pnpm --dir frontend exec playwright test
 ```
 
 **Esperado**:
+- La interfaz permite escribir cualquier fecha hasta mañana; si no tiene snapshot, ofrece
+  descargarla y muestra el paso en curso (FR-038); al terminar queda disponible y seleccionada.
 - La interfaz permite elegir la fecha y el periodo, y ejecutar.
 - Muestra las tablas filtrables de barras, líneas, transformadores y generadores.
 - Las violaciones aparecen resaltadas y contadas.

@@ -39,6 +39,22 @@ Es un directorio inmutable `data/paratec/<YYYY-MM-DD>/`; su formato está en
 | archivos (`files[]`) | `{path, sha256, bytes}` | Uno por cada archivo de `raw/` y `normalized/` |
 | atribucion (`attribution`) | str | "Información proporcionada por XM S.A. E.S.P. – PARATEC y archivos públicos de despacho" (III.10, R-12, D-1) |
 
+### 1.2 Descarga desde la interfaz (`ScrapeJob`, FR-038)
+
+Estado transitorio en memoria de la API (una sola a la vez; no se persiste ni sobrevive a un
+reinicio). La escritura del snapshot sigue siendo la de §1 y §1.1.
+
+| Campo | Tipo | Regla |
+|---|---|---|
+| job_id | UUID | Generado al aceptar la petición |
+| date | date | Fecha pedida; hasta D+1 (FR-039) |
+| status | `en_cola` \| `descargando` \| `listo` \| `error` | Estado final solo `listo` o `error` |
+| step | `en_cola` \| `paratec` \| `despacho_y_demanda` \| `normalizacion` \| `listo` \| `error` | Paso que se muestra en la interfaz |
+| started_at, finished_at | datetime | `finished_at` nulo mientras corre |
+| snapshot | `SnapshotSummary` \| null | Solo con `listo` |
+| error | Problem Details \| null | Solo con `error`; mismo código que el CLI |
+| notice | str | Advertencia de FR-038: PARATEC no tiene histórico |
+
 ## 2. Tablas normalizadas (Parquet en `normalized/`)
 
 Todas tienen `source_id` (el identificador del registro en `raw/`) para la trazabilidad, y

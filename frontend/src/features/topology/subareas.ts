@@ -3,7 +3,7 @@
 import type { TopologyEdge, TopologyNode } from "../../api/types";
 
 /** Gris para barras sin subárea: nunca se les asigna una por inferencia. */
-export const NO_SUBAREA_COLOR = "#9aa0a6";
+export const NO_SUBAREA_COLOR = "#767b80";
 
 /** Paleta categórica de 20 colores distinguibles (las subáreas del SIN son 18). */
 const PALETTE = [

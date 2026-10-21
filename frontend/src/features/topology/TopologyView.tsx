@@ -25,6 +25,13 @@ import { NO_SUBAREA_COLOR, filterBySubarea, subareaColor } from "./subareas";
 
 type ColorBy = "voltage" | "loading" | "subarea" | "angle";
 
+/** Lee un token de color de la hoja de estilos para que Cytoscape siga el tema (claro u oscuro). */
+function cssVar(name: string, fallback: string): string {
+  if (typeof window === "undefined") return fallback;
+  const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  return v || fallback;
+}
+
 
 function storage(): Storage | null {
   try {
@@ -75,6 +82,10 @@ export function TopologyView({ run }: Props): JSX.Element {
   const [unplaced, setUnplaced] = useState<string[]>([]);
   const [strVisible, setStrVisible] = useState(false);
   const [labels, setLabels] = useState<LabelSelection>(() => loadLabelSelection(storage()));
+  // Reiniciar el mapa reconstruye el grafo (vista, selección y, en la lógica, posiciones).
+  const [resetCount, setResetCount] = useState(0);
+  // El coloreado se lee por referencia desde los estilos: cambiarlo no reconstruye el grafo.
+  const colorByRef = useRef<ColorBy>(colorBy);
   function toggleBusLabel(l: BusLabel): void {
     const bus = labels.bus.includes(l) ? labels.bus.filter((x) => x !== l) : [...labels.bus, l];
     const next = { ...labels, bus };
@@ -109,6 +120,30 @@ export function TopologyView({ run }: Props): JSX.Element {
     return node ? busDetail(node, data.edges, run.result?.generators ?? []) : null;
   }, [topology.data, selectedBus, run.result]);
 
+  // Cambiar las etiquetas solo actualiza los textos del grafo existente: conserva zoom y posición.
+  useEffect(() => {
+    const cy = cyRef.current;
+    const data = topology.data;
+    if (!cy || !data) return;
+    const nodes = new Map(data.nodes.map((n) => [n.id, n]));
+    const edges = new Map(data.edges.map((e) => [e.id, e]));
+    cy.batch(() => {
+      cy.nodes().forEach((ele) => {
+        const n = nodes.get(ele.id());
+        if (n) ele.data("caption", busCaption(n, labels.bus));
+      });
+      cy.edges().forEach((ele) => {
+        const e = edges.get(ele.id());
+        if (e) ele.data("flow_label", branchCaption(e, labels.branch));
+      });
+    });
+  }, [labels, topology.data]);
+
+  useEffect(() => {
+    colorByRef.current = colorBy;
+    cyRef.current?.style().update();
+  }, [colorBy]);
+
   useEffect(() => {
     const data = topology.data;
     const el = container.current;
@@ -126,6 +161,14 @@ export function TopologyView({ run }: Props): JSX.Element {
     let zoom = 1;
     const sizeFactor = () => Math.pow(zoom, SIZE_EXPONENT);
     const labelsVisible = () => zoom >= LABEL_ZOOM;
+    const theme = {
+      node: cssVar("--graph-node", "#5f6368"),
+      border: cssVar("--graph-node-border", "#000000"),
+      accent: cssVar("--accent", "#0b5fff"),
+      edge: cssVar("--graph-edge", "#8b949e"),
+      labelBg: cssVar("--graph-label-bg", "#ffffff"),
+      fg: cssVar("--fg", "#1f2328"),
+    };
     const cy = cytoscape({
       container: el,
       elements: [
@@ -176,27 +219,29 @@ export function TopologyView({ run }: Props): JSX.Element {
             width: (ele: NodeSingular) => sizeFactor() * (6 + Math.sqrt(Number(ele.data("vn_kv")) || 0) / 2),
             height: (ele: NodeSingular) => sizeFactor() * (6 + Math.sqrt(Number(ele.data("vn_kv")) || 0) / 2),
             "background-color": (ele: NodeSingular) => {
-              if (colorBy === "voltage") return voltageColor(ele.data("vm_pu") as number | null);
-              if (colorBy === "subarea") return subareaColor(ele.data("subarea") as string | null, allNames);
-              if (colorBy === "angle") return angleColor(ele.data("va") as number | null);
-              return "#5f6368";
+              const by = colorByRef.current;
+              if (by === "voltage") return voltageColor(ele.data("vm_pu") as number | null);
+              if (by === "subarea") return subareaColor(ele.data("subarea") as string | null, allNames);
+              if (by === "angle") return angleColor(ele.data("va") as number | null);
+              return theme.node;
             },
             "background-opacity": (ele: NodeSingular) => (ele.data("frontier") ? 0.35 : 1),
             "border-width": (ele: NodeSingular) => sizeFactor() * (ele.data("violation") ? 2 : 0),
-            "border-color": "#000",
+            "border-color": theme.border,
             label: (ele: NodeSingular) => (labelsVisible() ? String(ele.data("caption")) : ""),
+            color: theme.fg,
             "text-wrap": "wrap",
             "font-size": () => 10 / zoom,
             "text-valign": "bottom",
             "text-margin-y": () => 3 / zoom,
-            "text-background-color": "#fff",
+            "text-background-color": theme.labelBg,
             "text-background-opacity": 0.75,
             "text-background-padding": "1px",
           },
         },
         {
           selector: "node:selected",
-          style: { "border-width": () => sizeFactor() * 3, "border-color": "#0b5fff" },
+          style: { "border-width": () => sizeFactor() * 3, "border-color": theme.accent },
         },
         {
           selector: "edge",
@@ -204,7 +249,7 @@ export function TopologyView({ run }: Props): JSX.Element {
             width: (ele: EdgeSingular) => sizeFactor() * (ele.data("kind") === "line" ? 1.5 : 2.5),
             "line-style": (ele: EdgeSingular) => (ele.data("kind") === "line" ? "solid" : "dashed"),
             "line-color": (ele: EdgeSingular) =>
-              colorBy === "loading" ? loadingColor(ele.data("loading") as number | null) : "#b0b4b8",
+              colorByRef.current === "loading" ? loadingColor(ele.data("loading") as number | null) : theme.edge,
             "line-opacity": (ele: EdgeSingular) => (ele.data("unplaced") ? 0.12 : ele.data("frontier") ? 0.45 : 1),
             "curve-style": "straight",
             // Flecha en el sentido del flujo de P: hacia target si p_from > 0, hacia source si < 0.
@@ -212,15 +257,16 @@ export function TopologyView({ run }: Props): JSX.Element {
               labelsVisible() && typeof ele.data("p_from") === "number" && ele.data("p_from") > 0 ? "triangle" : "none",
             "source-arrow-shape": (ele: EdgeSingular) =>
               labelsVisible() && typeof ele.data("p_from") === "number" && ele.data("p_from") < 0 ? "triangle" : "none",
-            "target-arrow-color": "#5f6368",
-            "source-arrow-color": "#5f6368",
+            "target-arrow-color": theme.node,
+            "source-arrow-color": theme.node,
             // En pantalla la flecha mide ∝ zoom · ancho · escala; con escala ∝ zoom^−0,7 y ancho
             // ∝ zoom^−0,6, la flecha se hace proporcionalmente más pequeña al acercarse.
             "arrow-scale": () => Math.max(0.15, 1.2 * Math.pow(zoom, -0.7)),
             label: (ele: EdgeSingular) => (labelsVisible() ? String(ele.data("flow_label")) : ""),
+            color: theme.fg,
             "font-size": () => 9 / zoom,
             "text-rotation": "autorotate",
-            "text-background-color": "#fff",
+            "text-background-color": theme.labelBg,
             "text-background-opacity": 0.75,
           },
         },
@@ -281,14 +327,22 @@ export function TopologyView({ run }: Props): JSX.Element {
       cyRef.current = null;
       cy.destroy();
     };
-  }, [topology.data, colorBy, subarea, allNames, layout, labels]);
+    // `labels` y `colorBy` no están en las dependencias a propósito: los aplican los efectos de
+    // arriba sin reconstruir el grafo. `resetCount` fuerza la reconstrucción (botón Reiniciar).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [topology.data, subarea, allNames, layout, resetCount]);
 
   return (
-    <section className="topology" data-testid="topology">
-      <h2>Topología {layout === "geo" ? "geográfica" : "lógica"}</h2>
+    <section className="topology stack" data-testid="topology">
+      <div className="section-head">
+        <h2>Topología {layout === "geo" ? "geográfica" : "lógica"}</h2>
+        <span className="muted small">
+          {strVisible ? "STN y STR visibles" : "solo STN: acerca para ver el STR"} · clic en una barra para su detalle
+        </span>
+      </div>
       <div className="toolbar">
         <label>
-          Colorear por{" "}
+          Colorear por
           <select value={colorBy} onChange={(e) => setColorBy(e.target.value as ColorBy)} data-testid="color-by">
             <option value="voltage">tensión (pu)</option>
             <option value="loading">cargabilidad (%)</option>
@@ -297,14 +351,14 @@ export function TopologyView({ run }: Props): JSX.Element {
           </select>
         </label>
         <label>
-          Disposición{" "}
+          Disposición
           <select value={layout} onChange={(e) => setLayout(e.target.value as Layout)} data-testid="layout">
             <option value="logical">lógica</option>
             <option value="geo">geográfica</option>
           </select>
         </label>
         <label>
-          Subárea{" "}
+          Subárea
           <select
             value={subarea ?? ""}
             onChange={(e) => setSubarea(e.target.value === "" ? null : e.target.value)}
@@ -319,7 +373,7 @@ export function TopologyView({ run }: Props): JSX.Element {
           </select>
         </label>
         <label>
-          Barra{" "}
+          Barra
           <input
             list="bus-ids"
             placeholder="buscar y centrar"
@@ -338,86 +392,99 @@ export function TopologyView({ run }: Props): JSX.Element {
               Ver unifilar de XM ({selected.name})
             </a>
           ) : (
-            <span className="muted">XM no publica unifilar de esta subárea.</span>
+            <span className="muted small">XM no publica unifilar de esta subárea.</span>
           ))}
-        <span className="legend">
-          {colorBy === "voltage" && (
-            <>
-              <i style={{ background: voltageColor(0.9) }} /> 0,90 pu <i style={{ background: voltageColor(1.0) }} /> 1,00 pu{" "}
-              <i style={{ background: voltageColor(1.1) }} /> 1,10 pu
-            </>
-          )}
-          {colorBy === "loading" && (
-            <>
-              <i style={{ background: loadingColor(0) }} /> 0 % <i style={{ background: loadingColor(50) }} /> 50 %{" "}
-              <i style={{ background: loadingColor(100) }} /> ≥ 100 %
-            </>
-          )}
-          {colorBy === "angle" && (
-            <>
-              <i style={{ background: angleColor(-30) }} /> −30° <i style={{ background: angleColor(0) }} /> 0°{" "}
-              <i style={{ background: angleColor(30) }} /> +30°
-            </>
-          )}
-          {colorBy === "subarea" && (
-            <span data-testid="subarea-legend">
-              {subareas.map((s) => (
-                <span key={s.name}>
-                  <i style={{ background: subareaColor(s.name, allNames) }} /> {s.name}{" "}
-                </span>
-              ))}
-              <i style={{ background: NO_SUBAREA_COLOR }} /> sin subárea
-            </span>
-          )}
-          {" · "}líneas continuas, transformadores discontinuos
-          {strVisible ? " · STN y STR visibles" : " · solo STN: acerca para ver el STR"}
-          {" · acerca más para ver G, C y flujos; clic en una barra para su detalle"}
-          {layout === "geo" ? " · barras fijas en su ubicación" : " · barras arrastrables"}
-          {subarea && ", barras y ramas de frontera atenuadas"}
-          {layout === "geo" && unplaced.length > 0 && (
-            <span data-testid="unplaced">
-              {" · "}
-              {unplaced.length} barras sin coordenadas en PARATEC, en la columna izquierda
-            </span>
-          )}
-        </span>
-        <span className="hover" data-testid="hover">
-          {hover}
-        </span>
+        <span className="spacer" />
+        <button
+          type="button"
+          onClick={() => {
+            setSelectedBus(null);
+            setResetCount((c) => c + 1);
+          }}
+          data-testid="reset-map"
+        >
+          Reiniciar mapa
+        </button>
       </div>
       <div className="toolbar labels" data-testid="label-selectors">
-        <span className="muted">Etiquetas de barra:</span>
+        <span className="muted small">Etiquetas de barra:</span>
         {BUS_LABELS.map((l) => (
-          <label key={l}>
-            <input type="checkbox" checked={labels.bus.includes(l)} onChange={() => toggleBusLabel(l)} data-testid={`bus-label-${l}`} />{" "}
+          <label key={l} className="inline-check">
+            <input type="checkbox" checked={labels.bus.includes(l)} onChange={() => toggleBusLabel(l)} data-testid={`bus-label-${l}`} />
             {BUS_LABEL_TEXT[l]}
           </label>
         ))}
-        <span className="muted">· de rama:</span>
+        <span className="muted small">· de rama:</span>
         {BRANCH_LABELS.map((l) => (
-          <label key={l}>
-            <input type="checkbox" checked={labels.branch.includes(l)} onChange={() => toggleBranchLabel(l)} data-testid={`branch-label-${l}`} />{" "}
+          <label key={l} className="inline-check">
+            <input type="checkbox" checked={labels.branch.includes(l)} onChange={() => toggleBranchLabel(l)} data-testid={`branch-label-${l}`} />
             {BRANCH_LABEL_TEXT[l]}
           </label>
         ))}
       </div>
-      {topology.isLoading && <p>Cargando topología…</p>}
-      {topology.isError && <p className="error">No se pudo cargar la topología.</p>}
+      {topology.isLoading && <p className="muted">Cargando topología…</p>}
+      {topology.isError && <p className="notice notice--error">No se pudo cargar la topología.</p>}
       {layout === "geo" && basemap.isError && (
-        <p className="error">No se pudo cargar el mapa base; las barras siguen en su ubicación.</p>
+        <p className="notice notice--error">No se pudo cargar el mapa base; las barras siguen en su ubicación.</p>
       )}
-      <div className="graph-wrap">
-        <svg className="basemap" aria-hidden="true" style={{ display: layout === "geo" ? "block" : "none" }} data-testid="basemap">
-          <g ref={basemapLayer}>
-            {basemapPaths.map((p) => (
-              <path key={p.key} d={p.d} className={p.kind === "departamento" ? "department" : "neighbor"} />
-            ))}
-          </g>
-        </svg>
-        <div ref={container} className="graph" />
+      <div className="graph-area">
+        <div className="graph-wrap">
+          <svg className="basemap" aria-hidden="true" style={{ display: layout === "geo" ? "block" : "none" }} data-testid="basemap">
+            <g ref={basemapLayer}>
+              {basemapPaths.map((p) => (
+                <path key={p.key} d={p.d} className={p.kind === "departamento" ? "department" : "neighbor"} />
+              ))}
+            </g>
+          </svg>
+          <div ref={container} className="graph" />
+          <span className="graph-overlay graph-overlay--hover hover" data-testid="hover">
+            {hover}
+          </span>
+          <span className="graph-overlay graph-overlay--legend legend">
+            {colorBy === "voltage" && (
+              <>
+                <i style={{ background: voltageColor(0.9) }} /> 0,90 pu <i style={{ background: voltageColor(1.0) }} /> 1,00 pu{" "}
+                <i style={{ background: voltageColor(1.1) }} /> 1,10 pu
+              </>
+            )}
+            {colorBy === "loading" && (
+              <>
+                <i style={{ background: loadingColor(0) }} /> 0 % <i style={{ background: loadingColor(50) }} /> 50 %{" "}
+                <i style={{ background: loadingColor(100) }} /> ≥ 100 %
+              </>
+            )}
+            {colorBy === "angle" && (
+              <>
+                <i style={{ background: angleColor(-30) }} /> −30° <i style={{ background: angleColor(0) }} /> 0°{" "}
+                <i style={{ background: angleColor(30) }} /> +30°
+              </>
+            )}
+            {colorBy === "subarea" && (
+              <span data-testid="subarea-legend">
+                {subareas.map((s) => (
+                  <span key={s.name}>
+                    <i style={{ background: subareaColor(s.name, allNames) }} /> {s.name}{" "}
+                  </span>
+                ))}
+                <i style={{ background: NO_SUBAREA_COLOR }} /> sin subárea
+              </span>
+            )}
+          </span>
+        </div>
+        {detail && <BusDetail detail={detail} onClose={() => setSelectedBus(null)} />}
       </div>
-      {detail && <BusDetail detail={detail} onClose={() => setSelectedBus(null)} />}
-      {layout === "geo" && basemap.data && <p className="muted attribution">{basemap.data.attribution}</p>}
+      {layout === "geo" && basemap.data && <p className="hint attribution">{basemap.data.attribution}</p>}
+      <p className="hint">
+        Líneas continuas, transformadores discontinuos · acerca más para ver G, C y flujos
+        {layout === "geo" ? " · barras fijas en su ubicación" : " · barras arrastrables"}
+        {subarea && " · barras y ramas de frontera atenuadas"}
+        {layout === "geo" && unplaced.length > 0 && (
+          <span data-testid="unplaced">
+            {" · "}
+            {unplaced.length} barras sin coordenadas en PARATEC, en la columna izquierda
+          </span>
+        )}
+      </p>
     </section>
   );
 }

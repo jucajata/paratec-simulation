@@ -18,6 +18,22 @@ export interface SnapshotSummary {
   intact: boolean;
 }
 
+export type ScrapeStatus = "en_cola" | "descargando" | "listo" | "error";
+export type ScrapeStep = "en_cola" | "paratec" | "despacho_y_demanda" | "normalizacion" | "listo" | "error";
+
+/** Descarga de una fecha pedida desde la interfaz (FR-038); vive en memoria de la API. */
+export interface ScrapeJob {
+  job_id: string;
+  date: string;
+  status: ScrapeStatus;
+  step: ScrapeStep;
+  started_at: string;
+  finished_at: string | null;
+  snapshot: SnapshotSummary | null;
+  error: Problem | null;
+  notice: string;
+}
+
 export type FlowType = "ac" | "dc";
 export type RunStatus = "convergio" | "no_convergio";
 

@@ -17,11 +17,28 @@ test("flujo completo desde la interfaz", async ({ page }) => {
   await expect(page.getByTestId("label")).toContainText("Flujo sobre despacho programado");
   await expect(page.locator("footer")).toContainText("XM S.A. E.S.P.");
 
-  await page.getByTestId("snapshot-date").selectOption("2026-10-20");
+  // FR-038: una fecha sin snapshot muestra "Sin descargar" y el botón de descarga; la prueba no
+  // descarga nada (las pruebas nunca llaman a XM). FR-039: después de mañana no se admite.
+  await page.getByTestId("snapshot-date").fill("2000-01-01");
+  await expect(page.getByTestId("snapshot-status")).toHaveAttribute("data-kind", "missing");
+  await expect(page.getByTestId("scrape-button")).toBeVisible();
+  await expect(page.getByTestId("run-button")).toBeDisabled();
+  await page.getByTestId("snapshot-date").fill("2099-01-01");
+  await expect(page.getByTestId("snapshot-status")).toHaveAttribute("data-kind", "too_late");
+  await expect(page.getByTestId("scrape-button")).toBeHidden();
+
+  await page.getByTestId("snapshot-date").fill("2026-10-20");
+  await expect(page.getByTestId("snapshot-status")).toHaveAttribute("data-kind", "available");
   await page.getByTestId("period").fill("19");
   await page.getByTestId("run-button").click();
 
   await expect(page.getByTestId("case-quality")).toBeVisible({ timeout: 90_000 });
+  // FR-040: aviso de colaboración con el paso a paso en una ventana emergente.
+  await page.getByTestId("collab-open").click();
+  await expect(page.getByTestId("collab-dialog")).toBeVisible();
+  await expect(page.getByTestId("collab-dialog")).toContainText("recursos_despacho.csv");
+  await page.getByTestId("collab-close").click();
+  await expect(page.getByTestId("collab-dialog")).toBeHidden();
   await expect(page.getByTestId("results")).toContainText("Estado: convergio", { timeout: 90_000 });
   await expect(page.getByTestId("table-buses")).toBeVisible();
   await page.getByRole("button", { name: "Transformadores" }).click();
@@ -50,6 +67,11 @@ test("flujo completo desde la interfaz", async ({ page }) => {
   await expect(page.getByTestId("basemap").locator("path.department")).toHaveCount(33, { timeout: 30_000 });
   await expect(page.locator(".attribution")).toContainText("Natural Earth");
 
+  // Vista inicial (ajuste completo) antes de cualquier zoom.
+  const layer = page.getByTestId("basemap").locator("g");
+  await page.waitForTimeout(300);
+  const initial = await layer.getAttribute("transform");
+
   // FR-036: buscar una barra la selecciona, centra el mapa y abre su detalle con el balance.
   const firstBus = await page.locator("#bus-ids option").first().getAttribute("value");
   await page.getByTestId("bus-search").fill(firstBus ?? "");
@@ -59,8 +81,18 @@ test("flujo completo desde la interfaz", async ({ page }) => {
   await expect(page.getByTestId("bus-detail")).toBeHidden();
 
   // FR-036: etiquetas seleccionables; FR-037: reporte de violaciones con sus tres grupos.
+  // Cambiar una etiqueta o el coloreado no reinicia la vista: el mapa base (sincronizado con
+  // pan y zoom) conserva la transformación que dejó la búsqueda de barra. "Reiniciar mapa"
+  // vuelve al ajuste inicial.
+  const zoomed = await layer.getAttribute("transform");
+  expect(zoomed).not.toBe(initial);
   await page.getByTestId("bus-label-vm_pu").check();
   await expect(page.getByTestId("bus-label-vm_pu")).toBeChecked();
+  await page.getByTestId("color-by").selectOption("voltage");
+  await page.waitForTimeout(300);
+  expect(await layer.getAttribute("transform")).toBe(zoomed);
+  await page.getByTestId("reset-map").click();
+  await expect.poll(() => layer.getAttribute("transform")).toBe(initial);
   await expect(page.getByTestId("violations")).toBeVisible();
   await expect(page.getByTestId("violations-low").locator("tbody tr").first()).toBeVisible();
   await expect(page.getByTestId("violations-overload").locator("tbody tr").first()).toBeVisible();

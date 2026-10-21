@@ -2,25 +2,18 @@
 
 from __future__ import annotations
 
-from datetime import date
-
 import pandapower as pp
 from fastapi import APIRouter, Request, Response, status
 
 from sinsim.api.routers.snapshots import ctx_of
 from sinsim.api.schemas import CaseRequest
 from sinsim.domain.case_hash import case_id_for
+from sinsim.domain.dates import ensure_allowed
 from sinsim.domain.entities import StudyCase
-from sinsim.domain.errors import DomainError
 from sinsim.services import snapshots as snapshot_service
 from sinsim.services.build_case import build_case, make_inputs
 
 router = APIRouter(tags=["cases"])
-
-
-def _check_not_future(value: date) -> None:
-    if value > date.today():
-        raise DomainError("INVALID_DATE", f"fecha futura {value}")
 
 
 @router.post("/cases", response_model=StudyCase, status_code=status.HTTP_201_CREATED)
@@ -28,8 +21,8 @@ def create_case(body: CaseRequest, request: Request, response: Response) -> Stud
     """Construye un caso; si ya existe uno con el mismo `case_id`, lo devuelve con 200."""
     ctx = ctx_of(request)
     dispatch_date = body.dispatch_date or body.snapshot_date
-    _check_not_future(body.snapshot_date)
-    _check_not_future(dispatch_date)
+    ensure_allowed(body.snapshot_date)  # hasta D+1 (FR-039)
+    ensure_allowed(dispatch_date)
     snapshot = snapshot_service.load_verified(ctx.snapshots, body.snapshot_date)
     dispatch_snapshot = (
         snapshot

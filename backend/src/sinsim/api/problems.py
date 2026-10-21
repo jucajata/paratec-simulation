@@ -6,9 +6,8 @@ from typing import Any
 
 from fastapi.responses import JSONResponse
 
-from sinsim.domain.errors import CATALOG, DomainError
+from sinsim.domain.errors import CATALOG, DomainError, problem_type_url
 
-ERROR_TYPE_BASE = "https://github.com/jucajata/paratec-simulation/errors/"
 MEDIA_TYPE = "application/problem+json"
 
 
@@ -17,7 +16,7 @@ def problem_body(
 ) -> dict[str, Any]:
     """Cuerpo de un Problem Details con los campos extendidos del proyecto."""
     return {
-        "type": ERROR_TYPE_BASE + code.lower().replace("_", "-"),
+        "type": problem_type_url(code),
         "title": title,
         "status": status,
         "detail": detail,
