@@ -10,6 +10,7 @@ from __future__ import annotations
 import math
 import uuid
 from datetime import UTC, datetime
+from typing import Any
 
 import pandapower as pp
 import pandas as pd
@@ -32,6 +33,7 @@ from sinsim.domain.entities import (
     Trace,
 )
 from sinsim.domain.limits import branch_overload, bus_violation, limit_infos
+from sinsim.domain.violations import violations_report
 from sinsim.services.diagnostics import diagnose
 
 
@@ -125,6 +127,7 @@ def _result(net: pp.pandapowerNet, case: StudyCase, cfg: LoadedConfig, *, dc: bo
     bands = cfg.config.voltage_bands()
     loading = cfg.config.loading_limit()
     bus_name = net.bus.name.to_dict()
+    bus_subarea = subareas_of(net)
     has_nominal = "nominal_kv" in net.bus.columns
     buses: list[BusResult] = []
     for idx, row in net.res_bus.iterrows():
@@ -142,6 +145,7 @@ def _result(net: pp.pandapowerNet, case: StudyCase, cfg: LoadedConfig, *, dc: bo
                 vm_kv=vm_kv,
                 va_degree=float(row.va_degree),
                 violation=None if dc else bus_violation(vm_pu, nominal, bands),
+                subarea=bus_subarea.get(idx),
             )
         )
 
@@ -176,6 +180,8 @@ def _result(net: pp.pandapowerNet, case: StudyCase, cfg: LoadedConfig, *, dc: bo
                     pl_mw=_nz(row.get("pl_mw", 0.0)),
                     ql_mvar=_nz(row.get("ql_mvar", 0.0)),
                     overload=branch_overload(_nz(row.loading_percent), loading),
+                    subarea_from=bus_subarea.get(table.at[idx, fb]),
+                    subarea_to=bus_subarea.get(table.at[idx, tb]),
                 )
             )
         return out
@@ -251,8 +257,16 @@ def _result(net: pp.pandapowerNet, case: StudyCase, cfg: LoadedConfig, *, dc: bo
         limits=limit_infos(bands, loading),
         warnings=list(case.warnings)
         + (["La aproximación DC no calcula tensiones, reactiva ni pérdidas."] if dc else []),
+        violations=violations_report(buses, lines + trafos, bands, loading),
     )
     return RunResult(buses=buses, lines=lines, trafos=trafos, generators=gens, summary=summary)
+
+
+def subareas_of(net: pp.pandapowerNet) -> dict[Any, str]:
+    """Índice de barra → subárea de PARATEC; las barras sin subárea no aparecen (FR-034)."""
+    if "subarea" not in net.bus.columns:
+        return {}
+    return {int(i): str(v) for i, v in net.bus.subarea.items() if isinstance(v, str) and v.strip()}
 
 
 def _nz(value: object) -> float:

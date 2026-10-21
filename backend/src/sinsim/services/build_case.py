@@ -21,6 +21,7 @@ import pandapower as pp
 import pandas as pd
 
 from sinsim.adapters.sources_to_pandapower.buses import canonical_bus_id, level_for
+from sinsim.adapters.sources_to_pandapower.lines import far_end_from_name
 from sinsim.adapters.sources_to_pandapower.net_builder import ModelTables, build_net
 from sinsim.config import LoadedConfig
 from sinsim.domain import physical_checks
@@ -513,6 +514,39 @@ def _locate_demand(
     return pd.DataFrame(rows, columns=columns), p_located, p_unlocated
 
 
+def _repair_self_loops(
+    lines: pd.DataFrame, known_substations: set[str], declared_buses: dict[str, float]
+) -> pd.DataFrame:
+    """Reasigna el extremo lejano de las líneas lazo cuando el nombre lo da (ver `lines.py`)."""
+    if lines.empty:
+        return lines
+    out = lines.copy()
+    for idx, r in out[out.from_bus == out.to_bus].iterrows():
+        sub, _, kv_text = str(r.from_bus).rpartition("|")
+        name = str(r.line_id).removeprefix("line:")
+        far = far_end_from_name(name, sub, known_substations)
+        if far is None:
+            continue
+        candidate = f"{far}|{kv_text}"
+        if candidate in declared_buses:
+            out.at[idx, "to_bus"] = candidate
+    return out
+
+
+def _missing_coordinates(buses: pd.DataFrame) -> pd.Series:
+    """Máscara de barras sin coordenadas de PARATEC (FR-035); sin columnas, todas faltan."""
+    if not {"lat", "lon"} <= set(buses.columns):
+        return pd.Series(True, index=buses.index)
+    return buses.lat.isna() | buses.lon.isna()
+
+
+def _missing_subarea(buses: pd.DataFrame) -> pd.Series:
+    """Máscara de barras sin subárea de PARATEC (FR-034); sin columna, todas faltan."""
+    if "subarea" not in buses.columns:
+        return pd.Series(True, index=buses.index)
+    return ~buses.subarea.map(lambda v: isinstance(v, str) and bool(v.strip()))
+
+
 # --- Barra de ángulo ------------------------------------------------------------------
 
 
@@ -613,6 +647,21 @@ def build_case(
             NotModeled(element=r.line_id, kind="línea", reason=f"estado {r.state}")
         )
     lines = _exclude_incomplete(lines, "línea", "line_id", report)
+    # PARATEC publica `sub1 = sub2` cuando el otro extremo está fuera de su listado. Si el
+    # nombre de la línea nombra una subestación declarada (PIMAMPIRO), se usa ese extremo; se
+    # aplica aquí para que valga también en snapshots normalizados antes de esta regla.
+    lines = _repair_self_loops(lines, set(buses.substation.astype(str)), declared_buses)
+    # Lo que sigue siendo un lazo no transporta nada: es un hallazgo de datos, no se modela.
+    self_loop = lines.from_bus == lines.to_bus
+    for _, r in lines[self_loop].iterrows():
+        report.not_modeled.append(
+            NotModeled(
+                element=r.line_id,
+                kind="línea",
+                reason=f"los dos extremos resuelven a la misma barra ({r.from_bus})",
+            )
+        )
+    lines = lines[~self_loop]
     scope = in_scope(lines.from_bus, lines.to_bus)
     for _, r in lines[~scope].iterrows():
         report.not_modeled.append(
@@ -750,6 +799,12 @@ def build_case(
         not_modeled=report.not_modeled,
         islands=islands,
         physical_issues=[i.describe() for i in issues],
+        buses_without_coordinates=sorted(
+            str(b) for b in model_bus_df.bus_id[_missing_coordinates(model_bus_df)]
+        ),
+        buses_without_subarea=sorted(
+            str(b) for b in model_bus_df.bus_id[_missing_subarea(model_bus_df)]
+        ),
         balance=balance,
     )
     inputs = make_inputs(snapshot, dispatch_snapshot, period, equivalences, cfg, sinsim_version)

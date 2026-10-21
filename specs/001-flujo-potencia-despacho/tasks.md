@@ -285,3 +285,48 @@ Hallazgos de `/speckit-converge` (2026-10-20) tras ejecutar `/speckit-implement`
 - [X] T083 Mostrar en `assumptions` del caso, por generador conciliado, la consigna de tensión y los límites de reactiva asignados (`gen_id`, `vm_pu`, `q_min_mvar`, `q_max_mvar`) con la fuente de cada valor (PARATEC o el supuesto de `config/defaults.toml`), en `backend/src/sinsim/services/build_case.py`; reflejarlo en `frontend/src/features/case-quality/CaseQuality.tsx` y en `metadatos.json` de la exportación, con pruebas en `backend/tests/integration/test_build_and_run.py` per FR-018 (partial)
 - [X] T084 Dejar un componente por archivo en el frontend (constitución IV, convenciones TypeScript): extraer `BusTable`, `BranchTable` y `GenTable` de `frontend/src/features/results-tables/ResultsTables.tsx`, `Section` de `frontend/src/features/case-quality/CaseQuality.tsx` y `Workspace` de `frontend/src/App.tsx` a archivos propios, sin cambiar comportamiento; `pnpm lint`, `pnpm test` y el e2e deben seguir en verde per Constitution IV (contradicts)
 - [X] T085 Registrar y justificar en la tabla "Complejidad y desviaciones" de `specs/001-flujo-potencia-despacho/plan.md` (y en `data-model.md` donde aplique) lo que el código añadió sin estar en spec, plan ni tareas: módulos `backend/src/sinsim/config.py` y `bootstrap.py`; tabla `data/equivalencias/subestaciones_alias.csv` y el supuesto `alias_subestaciones`; base de tensión por clase (115/230/13,8 kV) conservando la nominal declarada; códigos `REQUEST_INVALID` y `XM_FILE_NOT_FOUND` en `domain/errors.py`; `imputation.rule = "median"` en lugar del `"exclude"` que pedía T008; tridevanados con dos devanados o terciario SDL modelados como 2 devanados. Lo que no se justifique se retira per Constitution VI.2 (unrequested)
+
+## Fase 9: Clasificación por subárea (FR-034)
+
+Ampliación de HU-4 aprobada por el usuario el 2026-10-20 (spec FR-034, escenario 4 de HU-4; plan D-7).
+
+- [X] T086 [US4] Añadir `"subAreaName": "subarea"` a `SUBSTATION` en `backend/src/sinsim/adapters/sources_to_pandapower/field_mapping.py`; crear `parse_subareas()` en `adapters/sources_to_pandapower/buses.py` (subestación normalizada → `subAreaName` sin el prefijo "SubArea "; nulo si falta) y la columna `subarea` en `build_buses_table`; pasarla desde `backend/src/sinsim/scraper/writer.py`; pruebas en `backend/tests/unit/test_buses.py`
+- [X] T087 [US4] En `backend/src/sinsim/adapters/storage/snapshots.py`, si `buses` no trae `subarea` (snapshots anteriores a FR-034), derivarla de `raw/paratec/*Substation_SubstationInfo.json` al cargar, sin escribir archivos (III.3, III.4); prueba en `backend/tests/integration/test_snapshot_storage.py` con el fixture
+- [X] T088 [US4] Llevar `subarea` a `net.bus` en `adapters/sources_to_pandapower/net_builder.py`; añadir `BusResult.subarea`, `BranchResult.subarea_from`/`subarea_to` y `QualityReport.buses_without_subarea` (por defecto vacío) en `domain/entities.py`; llenarlos en `services/run_flow.py` y `services/build_case.py`; pruebas en `test_net_builder.py` y `test_build_and_run.py`
+- [X] T089 [US4] Añadir `[unifilares]` a `config/defaults.toml` (URL base, `typeReport` del tema "Diagrama unifilar por subárea" y `category` por subárea, con la fuente: API pública `unifilares/api/Diagrama/getAll` de PARATEC, consultada el 2026-10-20) y su modelo en `backend/src/sinsim/config.py`
+- [X] T090 [US4] En `GET /api/runs/{run_id}/topology` (`api/routers/runs.py`) devolver `subarea` por nodo y la lista `subareas` con `unifilar_url`; prueba de contrato en `backend/tests/contract/test_api.py`
+- [X] T091 [P] [US4] Frontend: tipos en `frontend/src/api/types.ts`; en `features/topology/TopologyView.tsx` opción "subárea" en "Colorear por" con paleta categórica y leyenda, selector de subárea que deja solo sus barras y los enlaces de frontera, y enlace "Ver unifilar de XM"; columna y filtro de subárea en `features/results-tables/`; prueba Vitest del filtro
+- [X] T092 [US4] Actualizar `docs/supuestos.md` y `docs/fuentes-de-datos.md` (origen de la subárea y de los unifilares); ejecutar la suite completa, `ruff`, `mypy`, `pnpm lint`, Vitest y el e2e; regenerar `cases/demo`
+
+## Fase 10: Disposición geográfica con mapa base (FR-035)
+
+Ampliación de HU-4 aprobada por el usuario el 2026-10-20 (retira NG-12; spec FR-035, escenario 5 de HU-4; plan D-8).
+
+- [X] T093 [US4] Descargar Natural Earth 1:10m admin-1, filtrar Colombia, simplificar y guardar en `data/geo/colombia_departamentos.geojson` con `data/geo/README.md` (fuente, licencia de dominio público, fecha y procesamiento); script desechable fuera del repo
+- [X] T094 [US4] Añadir `latitude`/`longitude` a `SUBSTATION` en `field_mapping.py`; `parse_substation_coords()` y columnas `lat`/`lon` en `build_buses_table` (`buses.py`); pasarlas desde `scraper/writer.py`; derivarlas de `raw/` al cargar snapshots anteriores (`adapters/storage/snapshots.py`); pruebas en `test_buses.py` y `test_snapshot_storage.py`
+- [X] T095 [US4] Llevar `lat`/`lon` a `net.bus` (`net_builder.py`); `QualityReport.buses_without_coordinates` (`domain/entities.py`, `services/build_case.py`); `lat`/`lon` por nodo en `GET /api/runs/{run_id}/topology`; `GET /api/geo/basemap` (`api/routers/`); subir sinsim a 0.3.0 porque cambia el contenido del caso; pruebas de contrato
+- [X] T096 [P] [US4] Frontend: tipos y `api.basemap()`; proyección pura en `features/topology/geo.ts` (equirectangular, separación de barras de una misma subestación, franja para barras sin coordenadas) con prueba Vitest; selector "Disposición: lógica / geográfica" en `TopologyView.tsx` con fondo SVG sincronizado con el zoom; sección "Barras sin coordenadas" en `CaseQuality.tsx`
+- [X] T097 [US4] Actualizar `docs/supuestos.md` y `docs/fuentes-de-datos.md`; paso geográfico en `frontend/e2e/flujo.spec.ts`; ejecutar suite completa, `ruff`, `mypy`, `pnpm lint`, Vitest y e2e; regenerar `cases/demo`
+
+## Fase 11: Flujos, generación y carga por barra en la topología (FR-036)
+
+Ampliación de HU-4 pedida por el usuario el 2026-10-20 (spec FR-036, escenario 6 de HU-4; FR-035 pasa a disposición geográfica por defecto).
+
+- [X] T098 [US4] En `GET /api/runs/{run_id}/topology` (`api/routers/runs.py`) añadir por nodo `p_gen_mw`, `q_gen_mvar` (de `RunResult.generators`), `p_load_mw`, `q_load_mvar`, `p_load_act_mw`, `p_load_pstr_mw` (de `net.load`) y por rama `p_from_mw`, `q_from_mvar`, `p_to_mw`, `q_to_mvar` (de `RunResult`); prueba de contrato con el balance Σgen ≈ Σcarga + pérdidas
+- [X] T099 [P] [US4] Frontend: módulo puro `features/topology/busDetail.ts` (flujos orientados desde la barra, balance) con prueba Vitest; componente `features/topology/BusDetail.tsx` con tensión, generadores, carga, ramas y balance, con prueba Vitest
+- [X] T100 [US4] `TopologyView.tsx`: disposición geográfica por defecto; tamaño de nodos y grosor de ramas ∝ zoom^−0,6; etiquetas de barra (nombre, G, C) y de rama (|P| MW) visibles solo al acercarse; flecha de sentido de P; clic en barra abre `BusDetail`; pasar `run` desde `Workspace.tsx`
+- [X] T101 [US4] Actualizar `docs/supuestos.md`; ajustar `frontend/e2e/flujo.spec.ts`; suite completa, `ruff`, `mypy`, `pnpm lint`, Vitest y e2e
+
+## Fase 12: Nivel de detalle y barras fijas en el mapa (FR-036, ampliación del 2026-10-20)
+
+- [X] T102 [US4] Comprimir las respuestas de la API con `GZipMiddleware` de Starlette en `backend/src/sinsim/api/app.py` (sin dependencia nueva); prueba de contrato: `/topology` con `Accept-Encoding: gzip` responde `Content-Encoding: gzip`
+- [X] T103 [US4] `TopologyView.tsx`: nivel de detalle por zoom (solo STN por debajo de un umbral; el STR aparece al acercarse), barras fijas en la disposición geográfica (`autoungrabify`) y arrastrables en la lógica, `hideEdgesOnViewport` al desplazar; leyenda que lo explique; prueba Vitest de la regla de detalle en `features/topology/lod.ts`
+- [X] T104 [US4] Actualizar `docs/supuestos.md` (S18); e2e; suite completa, `ruff`, `mypy`, `pnpm lint`, Vitest
+
+## Fase 13: Etiquetas seleccionables y reporte de violaciones (FR-036, FR-037; 2026-10-20)
+
+- [X] T105 [US4] `GET /api/runs/{run_id}/topology`: añadir por nodo `vm_kv`, `va_degree`, `slack_adjust_mw` y por rama `i_ka`, `pl_mw`, `ql_mvar`; prueba de contrato
+- [X] T106 [US4] Reporte de violaciones (FR-037): función pura `domain/violations.py` (tres grupos ordenados por desviación, con límite y fuente) usada por `adapters/storage/export.py` para `violaciones.csv` y expuesta en `RunResult.summary` o por `GET /api/runs/{run_id}` sin cambiar el hash; pruebas unitarias y de contrato; actualizar `contracts/export-format.md`
+- [X] T107 [P] [US4] Frontend: selectores de etiquetas de barra y de rama en `TopologyView.tsx` (módulo puro `features/topology/labels.ts` con prueba Vitest; preferencia guardada en `localStorage` con `try/catch`), "Colorear por → ángulo", pérdidas por rama en `BusDetail.tsx`
+- [X] T108 [P] [US4] Frontend: componente `features/violations/ViolationsReport.tsx` con las tres tablas (tensión baja, tensión alta, sobrecarga > 100 %) ordenadas por desviación, con subárea, límite y fuente; prueba Vitest; enlazado desde `Workspace.tsx`
+- [X] T109 [US4] Docs (`docs/supuestos.md`, `docs/fuentes-de-datos.md` no cambia), e2e, suite completa, `ruff`, `mypy`, `pnpm lint`, Vitest; regenerar `cases/demo`

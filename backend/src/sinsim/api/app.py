@@ -11,10 +11,12 @@ from collections.abc import Awaitable, Callable
 
 from fastapi import FastAPI, Request, Response
 from fastapi.exceptions import RequestValidationError
+from starlette.middleware.gzip import GZipMiddleware
 
 from sinsim.api import problems
-from sinsim.api.routers import cases, runs, snapshots
+from sinsim.api.routers import cases, geo, runs, snapshots
 from sinsim.bootstrap import AppContext, build_context
+from sinsim.config import sinsim_version
 from sinsim.domain.errors import DomainError
 from sinsim.observability import current_trace_id, log_event, new_trace_id
 
@@ -25,7 +27,7 @@ def create_app(ctx: AppContext | None = None) -> FastAPI:
     """Crea la aplicación con el contexto dado (o el del repositorio)."""
     app = FastAPI(
         title="sinsim API local",
-        version="0.1.0",
+        version=sinsim_version(),
         description="API REST local del flujo de potencia del SIN sobre despacho programado.",
     )
     app.state.ctx = ctx or build_context()
@@ -70,9 +72,12 @@ def create_app(ctx: AppContext | None = None) -> FastAPI:
         log.exception("error no previsto", extra={"extra_fields": {"error": type(exc).__name__}})
         return problems.internal_error(current_trace_id())
 
+    # Las topologías con flujos pesan ~0,5 MB; comprimidas quedan en ~70 KB (FR-036).
+    app.add_middleware(GZipMiddleware, minimum_size=1024)
     app.include_router(snapshots.router, prefix="/api")
     app.include_router(cases.router, prefix="/api")
     app.include_router(runs.router, prefix="/api")
+    app.include_router(geo.router, prefix="/api")
     return app
 
 

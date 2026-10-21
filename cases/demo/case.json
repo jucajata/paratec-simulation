@@ -1,13 +1,13 @@
 {
-  "case_id": "704c54fbcc298386ca165ac09a3643724e21849909778b6842e8d653d5b65d00",
+  "case_id": "887de6992c23e76200ed3d0fb8d175ec2bb5cbcd375c227692f195782ed63ea1",
   "inputs": {
     "snapshot_date": "2026-10-20",
     "dispatch_date": "2026-10-20",
     "period": 19,
     "snapshot_manifest_sha256": "43cf99184702029059e3cb28b471446761d28a6051cbcd9392d0b231e8e7d024",
-    "equivalences_sha256": "ab28f8de33f4cca5c9e2899b418b1a62b559da91034aef199e70b035191b3df2",
-    "config_sha256": "d62f90ca144733b33bc579ebf9028739fe0e495780aede388046bb8f5b0e2cbc",
-    "sinsim_version": "0.1.0"
+    "equivalences_sha256": "3bf0c73ee1b3195ce7c439db38da7aaf6321bfc784aed2df87e34f9d74db209a",
+    "config_sha256": "5f27cfec29072367f22d712ea5a905d88c5769b18da18fd8aa059a3a2cb33906",
+    "sinsim_version": "0.3.0"
   },
   "quality": {
     "unlocated_resources": [
@@ -48,39 +48,11 @@
         "reason": "sin equivalencia"
       },
       {
-        "node": "ANTIOQ41",
-        "vn_kv": 44.0,
-        "p_mw": 12.689236,
-        "q_mvar": 6.287107271,
-        "reason": "barra 'ANTIOQUIA|44' no existe en PARATEC"
-      },
-      {
-        "node": "APRTADO1",
-        "vn_kv": 110.0,
-        "p_mw": 50.882580000000004,
-        "q_mvar": 23.0506033992,
-        "reason": "sin equivalencia"
-      },
-      {
         "node": "CAUCAS73",
         "vn_kv": 13.0,
         "p_mw": 9.566284,
         "q_mvar": 3.3228527119,
         "reason": "sin barra en el alcance ni frontera STR/SDL"
-      },
-      {
-        "node": "GIRARDT1",
-        "vn_kv": 110.0,
-        "p_mw": 35.662676000000005,
-        "q_mvar": 15.706599229,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "LACEJA_1",
-        "vn_kv": 110.0,
-        "p_mw": 16.278836000000002,
-        "q_mvar": 7.5709390705,
-        "reason": "sin equivalencia"
       },
       {
         "node": "NSROSA11",
@@ -104,45 +76,10 @@
         "reason": "sin equivalencia"
       },
       {
-        "node": "PTOANT_1",
-        "vn_kv": 110.0,
-        "p_mw": 0.0,
-        "q_mvar": 0.0,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "SALTEPM4",
-        "vn_kv": 44.0,
-        "p_mw": 3.392172,
-        "q_mvar": 1.3853882893,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "TEXAS__1",
-        "vn_kv": 110.0,
-        "p_mw": 2.763992,
-        "q_mvar": 0.3150740563,
-        "reason": "sin equivalencia"
-      },
-      {
         "node": "YMALII11",
         "vn_kv": 110.0,
         "p_mw": 0.0,
         "q_mvar": 0.0,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "ARGTOL21",
-        "vn_kv": 230.0,
-        "p_mw": 6.47,
-        "q_mvar": 3.133564018,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "ACESCO_1",
-        "vn_kv": 110.0,
-        "p_mw": 5.658016,
-        "q_mvar": 2.516914289,
         "reason": "sin equivalencia"
       },
       {
@@ -153,32 +90,11 @@
         "reason": "sin equivalencia"
       },
       {
-        "node": "EL_RIO31",
-        "vn_kv": 34.0,
-        "p_mw": 40.133912,
-        "q_mvar": 14.1632145898,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "EL_RIO32",
-        "vn_kv": 34.0,
-        "p_mw": 20.647536,
-        "q_mvar": 7.0280850855,
-        "reason": "sin equivalencia"
-      },
-      {
         "node": "MAGDALE3",
         "vn_kv": 34.0,
         "p_mw": 28.722876,
         "q_mvar": 8.8948180195,
         "reason": "barra 'NUEVA MAGDALENA|34.5' no existe en PARATEC"
-      },
-      {
-        "node": "NVABRRQ1",
-        "vn_kv": 110.0,
-        "p_mw": 17.04794,
-        "q_mvar": 1.2926970868,
-        "reason": "sin equivalencia"
       },
       {
         "node": "PIZANO_3",
@@ -202,52 +118,10 @@
         "reason": "barra 'SALAMINA (CALDAS)|13.8' no existe en PARATEC"
       },
       {
-        "node": "VTEJUL21",
-        "vn_kv": 110.0,
-        "p_mw": 43.437940000000005,
-        "q_mvar": 12.220288245,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "VTEJUL31",
-        "vn_kv": 110.0,
-        "p_mw": 42.086771999999996,
-        "q_mvar": 10.57861071,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "VTEJULI1",
-        "vn_kv": 110.0,
-        "p_mw": 39.131092,
-        "q_mvar": 10.2117555081,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "SIDELPA1",
-        "vn_kv": 115.0,
-        "p_mw": 24.983639999999998,
-        "q_mvar": 10.8260883757,
-        "reason": "sin equivalencia"
-      },
-      {
         "node": "SURCAL11",
         "vn_kv": 115.0,
         "p_mw": 37.8675,
         "q_mvar": 11.4195976091,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "CAN_ECA1",
-        "vn_kv": 110.0,
-        "p_mw": 14.04418,
-        "q_mvar": 4.974870356,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "NV_COSP1",
-        "vn_kv": 110.0,
-        "p_mw": 37.533849999999994,
-        "q_mvar": 23.5841166923,
         "reason": "sin equivalencia"
       },
       {
@@ -258,38 +132,10 @@
         "reason": "sin equivalencia"
       },
       {
-        "node": "SERENAM1",
-        "vn_kv": 66.0,
-        "p_mw": 1.18862,
-        "q_mvar": 0.7376027961,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "VILLAES6",
-        "vn_kv": 66.0,
-        "p_mw": 26.90551,
-        "q_mvar": 8.8091165558,
-        "reason": "sin equivalencia"
-      },
-      {
         "node": "IPIALES3",
         "vn_kv": 34.0,
         "p_mw": 21.680487,
         "q_mvar": 3.8321314642,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "SMARTIN1",
-        "vn_kv": 115.0,
-        "p_mw": 10.595592,
-        "q_mvar": 3.2668284822,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "TUMACO_1",
-        "vn_kv": 115.0,
-        "p_mw": 24.951489000000002,
-        "q_mvar": 6.7901216227,
         "reason": "sin equivalencia"
       },
       {
@@ -332,35 +178,14 @@
         "vn_kv": 0.0,
         "p_mw": 16.704846,
         "q_mvar": 3.8477146799,
-        "reason": "barra 'EL COPEY|0' no existe en PARATEC"
+        "reason": "sin barra en el alcance ni frontera STR/SDL"
       },
       {
         "node": "COPEY__32",
         "vn_kv": 0.0,
         "p_mw": 17.906406,
         "q_mvar": 5.7598866857,
-        "reason": "barra 'EL COPEY|0' no existe en PARATEC"
-      },
-      {
-        "node": "ELBANCO1",
-        "vn_kv": 0.0,
-        "p_mw": 40.182696,
-        "q_mvar": 12.0802192312,
-        "reason": "barra 'EL BANCO|0' no existe en PARATEC"
-      },
-      {
-        "node": "ELPASO31",
-        "vn_kv": 0.0,
-        "p_mw": 10.431438,
-        "q_mvar": 3.7573998784,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "ELPASO71",
-        "vn_kv": 0.0,
-        "p_mw": 4.961177999999999,
-        "q_mvar": 0.6216005376,
-        "reason": "sin equivalencia"
+        "reason": "sin barra en el alcance ni frontera STR/SDL"
       },
       {
         "node": "GUATAPU3",
@@ -368,34 +193,6 @@
         "p_mw": 31.632648,
         "q_mvar": 9.2006663939,
         "reason": "barra 'GUATAPURI|0' no existe en PARATEC"
-      },
-      {
-        "node": "LAJAGUA1",
-        "vn_kv": 0.0,
-        "p_mw": 7.1492819999999995,
-        "q_mvar": 1.9565390857,
-        "reason": "barra 'LA JAGUA|0' no existe en PARATEC"
-      },
-      {
-        "node": "LAJAGUA2",
-        "vn_kv": 0.0,
-        "p_mw": 7.234655999999999,
-        "q_mvar": 1.0509007599,
-        "reason": "barra 'LA JAGUA|0' no existe en PARATEC"
-      },
-      {
-        "node": "LALOMA31",
-        "vn_kv": 0.0,
-        "p_mw": 15.288269999999999,
-        "q_mvar": 1.802193698,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "LALOMA71",
-        "vn_kv": 0.0,
-        "p_mw": 12.894636,
-        "q_mvar": 1.6937102405,
-        "reason": "sin equivalencia"
       },
       {
         "node": "PAZ___31",
@@ -426,27 +223,6 @@
         "reason": "sin equivalencia"
       },
       {
-        "node": "VALLED27",
-        "vn_kv": 0.0,
-        "p_mw": 22.326882,
-        "q_mvar": 7.6553952163,
-        "reason": "barra 'VALLEDUPAR|0' no existe en PARATEC"
-      },
-      {
-        "node": "VALLEDP7",
-        "vn_kv": 0.0,
-        "p_mw": 36.650742,
-        "q_mvar": 10.902363,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "ACASA__1",
-        "vn_kv": 115.0,
-        "p_mw": 18.8232,
-        "q_mvar": 7.3511205867,
-        "reason": "sin equivalencia"
-      },
-      {
         "node": "BCAFE__1",
         "vn_kv": 115.0,
         "p_mw": 9.613999999999999,
@@ -468,24 +244,10 @@
         "reason": "sin equivalencia"
       },
       {
-        "node": "ITSMINA1",
-        "vn_kv": 115.0,
-        "p_mw": 6.63662,
-        "q_mvar": 2.3875716642,
-        "reason": "sin equivalencia"
-      },
-      {
         "node": "AGAFANO1",
         "vn_kv": 115.0,
         "p_mw": 0.0,
         "q_mvar": 0.0,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "CALLE1_1",
-        "vn_kv": 115.0,
-        "p_mw": 25.504166,
-        "q_mvar": 4.7513699855,
         "reason": "sin equivalencia"
       },
       {
@@ -496,45 +258,10 @@
         "reason": "sin equivalencia"
       },
       {
-        "node": "EEARC__1",
-        "vn_kv": 115.0,
-        "p_mw": 0.0,
-        "q_mvar": 0.0,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "EL_SOL_1",
-        "vn_kv": 115.0,
-        "p_mw": 62.747569000000006,
-        "q_mvar": 12.1900071529,
-        "reason": "sin equivalencia"
-      },
-      {
         "node": "FLORCOD1",
         "vn_kv": 115.0,
         "p_mw": 60.111732,
         "q_mvar": 14.6180489477,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "GRASAB_1",
-        "vn_kv": 115.0,
-        "p_mw": 30.312127999999998,
-        "q_mvar": 7.3169903254,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "LA_PAZ_1",
-        "vn_kv": 115.0,
-        "p_mw": 61.454056,
-        "q_mvar": 18.3964662722,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "LACALER1",
-        "vn_kv": 115.0,
-        "p_mw": 9.518301,
-        "q_mvar": 0.8640617543,
         "reason": "sin equivalencia"
       },
       {
@@ -594,52 +321,10 @@
         "reason": "sin equivalencia"
       },
       {
-        "node": "TUNAL_71",
-        "vn_kv": 11.0,
-        "p_mw": 27.578667,
-        "q_mvar": 8.3510931721,
-        "reason": "barra 'TUNAL|11' no existe en PARATEC"
-      },
-      {
-        "node": "TZIPAQU1",
-        "vn_kv": 115.0,
-        "p_mw": 39.830428999999995,
-        "q_mvar": 12.303558416,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "PTODRM21",
-        "vn_kv": 220.0,
-        "p_mw": 16.0,
-        "q_mvar": 7.7491536768,
-        "reason": "sin equivalencia"
-      },
-      {
         "node": "DRUMMO11",
         "vn_kv": 110.0,
         "p_mw": 60.0,
         "q_mvar": 23.2964173924,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "ACERIPR1",
-        "vn_kv": 115.0,
-        "p_mw": 39.288079,
-        "q_mvar": 22.9389084224,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "ARICAUR1",
-        "vn_kv": 115.0,
-        "p_mw": 9.550282,
-        "q_mvar": 2.6367515756,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "CEMENPR1",
-        "vn_kv": 115.0,
-        "p_mw": 0.0,
-        "q_mvar": 0.0,
         "reason": "sin equivalencia"
       },
       {
@@ -650,20 +335,6 @@
         "reason": "barra 'SAN ANTONIO|34.5' no existe en PARATEC"
       },
       {
-        "node": "SPABLO_1",
-        "vn_kv": 115.0,
-        "p_mw": 4.714093,
-        "q_mvar": 1.6375903541,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "STERES11",
-        "vn_kv": 115.0,
-        "p_mw": 4.943395,
-        "q_mvar": 1.2355963814,
-        "reason": "sin equivalencia"
-      },
-      {
         "node": "POPAYA12",
         "vn_kv": 115.0,
         "p_mw": 1.0317299999999998,
@@ -671,80 +342,10 @@
         "reason": "sin equivalencia"
       },
       {
-        "node": "ALTILLA1",
-        "vn_kv": 115.0,
-        "p_mw": 49.52086,
-        "q_mvar": 22.7859988726,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "CAMPBON1",
-        "vn_kv": 115.0,
-        "p_mw": 0.400323,
-        "q_mvar": 0.1274241945,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "CAMPBON2",
-        "vn_kv": 115.0,
-        "p_mw": 4.758036000000001,
-        "q_mvar": 0.2149394215,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "POCOAE_1",
-        "vn_kv": 115.0,
-        "p_mw": 0.0,
-        "q_mvar": 0.0,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "SNFER__1",
-        "vn_kv": 115.0,
-        "p_mw": 54.938970000000005,
-        "q_mvar": 10.8632809637,
-        "reason": "sin equivalencia"
-      },
-      {
         "node": "CANLARA3",
         "vn_kv": 34.0,
         "p_mw": 26.993779,
         "q_mvar": 6.5668980079,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "AAZUL_11",
-        "vn_kv": 115.0,
-        "p_mw": 12.945852,
-        "q_mvar": 3.9040449077,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "SANLUIS1",
-        "vn_kv": 115.0,
-        "p_mw": 2.675224,
-        "q_mvar": 0.1054671163,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "SROSLIA1",
-        "vn_kv": 115.0,
-        "p_mw": 0.267921,
-        "q_mvar": 1.482294705,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "PLATO_31",
-        "vn_kv": 34.0,
-        "p_mw": 16.861955000000002,
-        "q_mvar": 5.5979890883,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "PTO_NVO1",
-        "vn_kv": 110.0,
-        "p_mw": 0.6255700000000001,
-        "q_mvar": 0.0,
         "reason": "sin equivalencia"
       },
       {
@@ -769,20 +370,6 @@
         "reason": "sin equivalencia"
       },
       {
-        "node": "SAN_JDG1",
-        "vn_kv": 115.0,
-        "p_mw": 14.6248,
-        "q_mvar": 0.0,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "ECOPETR2",
-        "vn_kv": 230.0,
-        "p_mw": 90.085977,
-        "q_mvar": 0.0,
-        "reason": "sin equivalencia"
-      },
-      {
         "node": "CANLOXY3",
         "vn_kv": 34.0,
         "p_mw": 70.5,
@@ -804,60 +391,11 @@
         "reason": "sin equivalencia"
       },
       {
-        "node": "ALFERII1",
-        "vn_kv": 115.0,
-        "p_mw": 3.551854,
-        "q_mvar": 0.8849017457,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "B_MALAG1",
-        "vn_kv": 115.0,
-        "p_mw": 1.5516210000000001,
-        "q_mvar": 0.60979417,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "BUENAVE1",
-        "vn_kv": 115.0,
-        "p_mw": 12.92743,
-        "q_mvar": 3.9089453737,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "CARTON11",
-        "vn_kv": 115.0,
-        "p_mw": 18.924013,
-        "q_mvar": 2.8941675825,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "ELPAIL12",
-        "vn_kv": 115.0,
-        "p_mw": 2.983886,
-        "q_mvar": 0.4482338324,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "ELPAILO1",
-        "vn_kv": 115.0,
-        "p_mw": 13.725877,
-        "q_mvar": 0.8627826348,
-        "reason": "sin equivalencia"
-      },
-      {
         "node": "GUACHA31",
         "vn_kv": 34.0,
         "p_mw": 15.293961,
         "q_mvar": 4.814735057,
         "reason": "sin barra en el alcance ni frontera STR/SDL"
-      },
-      {
-        "node": "PALMIRA1",
-        "vn_kv": 115.0,
-        "p_mw": 22.574644,
-        "q_mvar": 8.7167203223,
-        "reason": "sin equivalencia"
       },
       {
         "node": "PALSECA31",
@@ -874,52 +412,10 @@
         "reason": "sin equivalencia"
       },
       {
-        "node": "PROPAL11",
-        "vn_kv": 115.0,
-        "p_mw": 0.0,
-        "q_mvar": 0.0,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "DIAMANT1",
-        "vn_kv": 115.0,
-        "p_mw": 33.68875,
-        "q_mvar": 0.0,
-        "reason": "sin equivalencia"
-      },
-      {
         "node": "GUAMO_31",
         "vn_kv": 34.0,
         "p_mw": 4.801427,
         "q_mvar": 0.6962395856,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "PICALE31",
-        "vn_kv": 34.0,
-        "p_mw": 2.1883480000000004,
-        "q_mvar": 0.4850727764,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "SALADO31",
-        "vn_kv": 34.0,
-        "p_mw": 15.430950000000001,
-        "q_mvar": 6.2301388958,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "SANFEL31",
-        "vn_kv": 34.0,
-        "p_mw": 1.833937,
-        "q_mvar": 0.0,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "SANFEL32",
-        "vn_kv": 34.0,
-        "p_mw": 15.605342,
-        "q_mvar": 0.0,
         "reason": "sin equivalencia"
       },
       {
@@ -951,13 +447,6 @@
         "reason": "sin barra en el alcance ni frontera STR/SDL"
       },
       {
-        "node": "REFICAR2",
-        "vn_kv": 220.0,
-        "p_mw": 0.128866,
-        "q_mvar": 0.0624126523,
-        "reason": "sin equivalencia"
-      },
-      {
         "node": "COROCO21",
         "vn_kv": 220.0,
         "p_mw": 112.429058,
@@ -972,66 +461,10 @@
         "reason": "sin equivalencia"
       },
       {
-        "node": "SNFER_21",
-        "vn_kv": 220.0,
-        "p_mw": 157.754579,
-        "q_mvar": 39.5370243389,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "BSCONIA1",
-        "vn_kv": 115.0,
-        "p_mw": 3.415898,
-        "q_mvar": 1.2729650463,
-        "reason": "sin equivalencia"
-      },
-      {
         "node": "BUCMANG1",
         "vn_kv": 115.0,
         "p_mw": 26.658339,
         "q_mvar": 10.7134957897,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "BVISTA_1",
-        "vn_kv": 115.0,
-        "p_mw": 13.419941,
-        "q_mvar": -0.837276757,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "CONDOR_1",
-        "vn_kv": 115.0,
-        "p_mw": 0.0,
-        "q_mvar": 0.0,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "PRCIPAL1",
-        "vn_kv": 14.0,
-        "p_mw": 14.504429,
-        "q_mvar": 4.9045855455,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "RFRIO__1",
-        "vn_kv": 115.0,
-        "p_mw": 27.589947000000002,
-        "q_mvar": 8.5702748055,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "SBNTORR1",
-        "vn_kv": 115.0,
-        "p_mw": 11.193636,
-        "q_mvar": 4.6703105996,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "YARIGUI1",
-        "vn_kv": 115.0,
-        "p_mw": 9.124986999999999,
-        "q_mvar": 2.7581720681,
         "reason": "sin equivalencia"
       },
       {
@@ -1042,24 +475,10 @@
         "reason": "sin equivalencia"
       },
       {
-        "node": "NVAMON_1",
-        "vn_kv": 110.0,
-        "p_mw": 32.087896,
-        "q_mvar": 11.4160002773,
-        "reason": "sin equivalencia"
-      },
-      {
         "node": "SANMARC1",
         "vn_kv": 110.0,
         "p_mw": 9.606268,
         "q_mvar": 4.2749169468,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "SIEFLOR1",
-        "vn_kv": 110.0,
-        "p_mw": 27.528093000000002,
-        "q_mvar": 12.5648315332,
         "reason": "sin equivalencia"
       },
       {
@@ -1070,45 +489,10 @@
         "reason": "sin equivalencia"
       },
       {
-        "node": "TIEALTA1",
-        "vn_kv": 110.0,
-        "p_mw": 15.541418,
-        "q_mvar": 7.0586922212,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "PAEZ__31",
-        "vn_kv": 34.0,
-        "p_mw": 49.774387000000004,
-        "q_mvar": 17.3324499649,
-        "reason": "sin barra en el alcance ni frontera STR/SDL"
-      },
-      {
         "node": "POPAYA11",
         "vn_kv": 115.0,
         "p_mw": 40.919701999999994,
         "q_mvar": 7.7569872853,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "SANBERN1",
-        "vn_kv": 115.0,
-        "p_mw": 22.872790000000002,
-        "q_mvar": 19.1286343175,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "TERNIUM2",
-        "vn_kv": 220.0,
-        "p_mw": 6.735,
-        "q_mvar": 0.0,
-        "reason": "sin equivalencia"
-      },
-      {
-        "node": "TUBOCAR1",
-        "vn_kv": 220.0,
-        "p_mw": 5.984,
-        "q_mvar": 0.9146228637,
         "reason": "sin equivalencia"
       }
     ],
@@ -1554,6 +938,14 @@
         "q_mvar": 0.0
       },
       {
+        "element": "ANTIOQ41",
+        "kind": "demand",
+        "from_bus": "ANTIOQUIA|18",
+        "to_bus": "ANTIOQUIA|500",
+        "p_mw": 12.689236,
+        "q_mvar": 6.287107271
+      },
+      {
         "element": "CAUCAS71",
         "kind": "demand",
         "from_bus": "CAUCASIA|44",
@@ -1610,6 +1002,14 @@
         "q_mvar": 0.8433577361
       },
       {
+        "element": "SALTEPM4",
+        "kind": "demand",
+        "from_bus": "ANTIOQUIA|18",
+        "to_bus": "ANTIOQUIA|500",
+        "p_mw": 3.392172,
+        "q_mvar": 1.3853882893
+      },
+      {
         "element": "BARANO31",
         "kind": "demand",
         "from_bus": "BARANOA|34.5",
@@ -1640,6 +1040,22 @@
         "to_bus": "CARACOLI|115",
         "p_mw": 19.803056,
         "q_mvar": 5.9121935267
+      },
+      {
+        "element": "EL_RIO31",
+        "kind": "demand",
+        "from_bus": "EL RIO|34.5",
+        "to_bus": "EL RIO|115",
+        "p_mw": 40.133912,
+        "q_mvar": 14.1632145898
+      },
+      {
+        "element": "EL_RIO32",
+        "kind": "demand",
+        "from_bus": "EL RIO|34.5",
+        "to_bus": "EL RIO|115",
+        "p_mw": 20.647536,
+        "q_mvar": 7.0280850855
       },
       {
         "element": "JUANMIN31",
@@ -1826,6 +1242,78 @@
         "q_mvar": 5.4605534545
       },
       {
+        "element": "ELBANCO1",
+        "kind": "demand",
+        "from_bus": "EL BANCO|13.8",
+        "to_bus": "EL BANCO|115",
+        "p_mw": 40.182696,
+        "q_mvar": 12.0802192312
+      },
+      {
+        "element": "ELPASO31",
+        "kind": "demand",
+        "from_bus": "EL PASO|13.8",
+        "to_bus": "EL PASO|115",
+        "p_mw": 10.431438,
+        "q_mvar": 3.7573998784
+      },
+      {
+        "element": "ELPASO71",
+        "kind": "demand",
+        "from_bus": "EL PASO|13.8",
+        "to_bus": "EL PASO|115",
+        "p_mw": 4.961177999999999,
+        "q_mvar": 0.6216005376
+      },
+      {
+        "element": "LAJAGUA1",
+        "kind": "demand",
+        "from_bus": "LA JAGUA|13.8",
+        "to_bus": "LA JAGUA|115",
+        "p_mw": 7.1492819999999995,
+        "q_mvar": 1.9565390857
+      },
+      {
+        "element": "LAJAGUA2",
+        "kind": "demand",
+        "from_bus": "LA JAGUA|13.8",
+        "to_bus": "LA JAGUA|115",
+        "p_mw": 7.234655999999999,
+        "q_mvar": 1.0509007599
+      },
+      {
+        "element": "LALOMA31",
+        "kind": "demand",
+        "from_bus": "LA LOMA|13.8",
+        "to_bus": "LA LOMA|115",
+        "p_mw": 15.288269999999999,
+        "q_mvar": 1.802193698
+      },
+      {
+        "element": "LALOMA71",
+        "kind": "demand",
+        "from_bus": "LA LOMA|13.8",
+        "to_bus": "LA LOMA|115",
+        "p_mw": 12.894636,
+        "q_mvar": 1.6937102405
+      },
+      {
+        "element": "VALLED27",
+        "kind": "demand",
+        "from_bus": "VALLEDUPAR|13.8",
+        "to_bus": "VALLEDUPAR|115",
+        "p_mw": 22.326882,
+        "q_mvar": 7.6553952163
+      },
+      {
+        "element": "VALLEDP7",
+        "kind": "demand",
+        "from_bus": "VALLEDUPAR|13.8",
+        "to_bus": "VALLEDUPAR|115",
+        "p_mw": 36.650742,
+        "q_mvar": 10.902363
+      },
+      {
         "element": "INSULA31",
         "kind": "demand",
         "from_bus": "INSULA (CHINCHINA)|34.5",
@@ -1864,6 +1352,14 @@
         "to_bus": "SIMIJACA|115",
         "p_mw": 3.831726,
         "q_mvar": 0.9150070951
+      },
+      {
+        "element": "TUNAL_71",
+        "kind": "demand",
+        "from_bus": "TUNAL|13.8",
+        "to_bus": "TUNAL|230",
+        "p_mw": 27.578667,
+        "q_mvar": 8.3510931721
       },
       {
         "element": "UBATE__3",
@@ -1952,6 +1448,14 @@
         "to_bus": "SURIA|115",
         "p_mw": 4.476894,
         "q_mvar": 1.4608115536
+      },
+      {
+        "element": "PLATO_31",
+        "kind": "demand",
+        "from_bus": "ZAMBRANO|34.5",
+        "to_bus": "ZAMBRANO|66",
+        "p_mw": 16.861955000000002,
+        "q_mvar": 5.5979890883
       },
       {
         "element": "RIOCOR31",
@@ -2162,12 +1666,44 @@
         "q_mvar": 0.0
       },
       {
+        "element": "PICALE31",
+        "kind": "demand",
+        "from_bus": "MIROLINDO|34.5",
+        "to_bus": "MIROLINDO|115",
+        "p_mw": 2.1883480000000004,
+        "q_mvar": 0.4850727764
+      },
+      {
         "element": "PRADO_13",
         "kind": "demand",
         "from_bus": "PRADO|34.5",
         "to_bus": "PRADO|115",
         "p_mw": 4.064477,
         "q_mvar": 1.9094605738
+      },
+      {
+        "element": "SALADO31",
+        "kind": "demand",
+        "from_bus": "PAPAYO|34.5",
+        "to_bus": "PAPAYO|115",
+        "p_mw": 15.430950000000001,
+        "q_mvar": 6.2301388958
+      },
+      {
+        "element": "SANFEL31",
+        "kind": "demand",
+        "from_bus": "SAN FELIPE|34.5",
+        "to_bus": "SAN FELIPE|115",
+        "p_mw": 1.833937,
+        "q_mvar": 0.0
+      },
+      {
+        "element": "SANFEL32",
+        "kind": "demand",
+        "from_bus": "SAN FELIPE|34.5",
+        "to_bus": "SAN FELIPE|115",
+        "p_mw": 15.605342,
+        "q_mvar": 0.0
       },
       {
         "element": "PLANET31",
@@ -2216,6 +1752,14 @@
         "to_bus": "PALENQUE|115",
         "p_mw": 54.286505999999996,
         "q_mvar": 34.87900524
+      },
+      {
+        "element": "PRCIPAL1",
+        "kind": "demand",
+        "from_bus": "SANTANDER|13.8",
+        "to_bus": "SANTANDER|115",
+        "p_mw": 14.504429,
+        "q_mvar": 4.9045855455
       },
       {
         "element": "SAN_SI31",
@@ -2352,6 +1896,14 @@
         "to_bus": "ZAMBRANO|66",
         "p_mw": 4.850741999999999,
         "q_mvar": 1.2822422279
+      },
+      {
+        "element": "PAEZ__31",
+        "kind": "demand",
+        "from_bus": "CABAÑA (CAUCA)|34.5",
+        "to_bus": "CABAÑA (CAUCA)|115",
+        "p_mw": 49.774387000000004,
+        "q_mvar": 17.3324499649
       },
       {
         "element": "SANTAN31",
@@ -2789,6 +2341,1007 @@
       }
     ],
     "imputed": [
+      {
+        "element": "trafo:AGUABLANCA 1 41.75 MVA 110/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:AGUABLANCA 2 41.75 MVA 110/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:AMOYA G1 45.7 MVA 115/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:AMOYA G2 45.7 MVA 115/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:APARTADO 1 40 MVA 110/44 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:APARTADO 3 37.5 MVA 110/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:ARGOS SOGAMOSO 1 G1 28 MVA 115/13.8 KV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:ARGOS SOGAMOSO 1 G1 30 MVA 115/13.8/(7.92) KV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:BARROSO G1 12 MVA 110/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:BARROSO G2 12 MVA 110/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:BARZAL B1 40 MVA 115/34.5/(13.8) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:BARZAL B2 30 MVA 115/34.5/(13.8) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:BARZAL B3 40 MVA 115/34.5/(13.8) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:BETANIA 10 MVA 115/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:BOCAGRANDE 1 33 MVA 66/13.8/(7.84) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:BOCAGRANDE 2 33 MVA 66/13.8/(7.8) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:BOSCONIA 1 16 MVA 115/2.4 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:BOSCONIA 2 16 MVA 115/2.4 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:CABAÑA (CAUCA) 15 MVA 110/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:CABAÑAS (MEDELLIN) 1 10 MVA 110/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:CALDERAS 1 G12 24.75 MVA 115/13.8 KV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:CALIZAS 2 40 MVA 110/44 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:CALLE67 3 30 MVA 115/11.4 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:CAMPOBONITO  2 13.75 MVA 115/34.5/(6) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:CATAMBUCO 25 MVA  115/13.8/(5) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:CAUCASIA 1 60 MVA 110/44 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:CAUCASIA 3 60 MVA 110/44 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:CHICALA 1 56 MVA 115/11.4 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:CHORODO (FRONTINO) 40 MVA 110/44 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:COCORNA 1 30 MVA 110/44/6.35 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:COSPIQUE 1 20 MVA 66/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:EL BOSQUE 1 20 MVA 66/13.8/(9.7) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:EL BOTE 1 46 MVA 115/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:EL BOTE 2 40 MVA 115/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:EL SOL D1 30 MVA 115/12/(4.16) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:EL SOL R1 30 MVA 115/34.5/(4.16) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:EL SOL R2 40 MVA 115/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:EL TIGRE 1 32 MVA 110/44 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:FLORIDA (CAUCA) 1 G1 16.9 MVA 115/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:FLORIDA (CAUCA) 2 G2 16.9 MVA 115/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:GAMBOTE 1 20 MVA 66/13.8/(4.26) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:GRANADA 2 30 MVA 115/34.5/(13.2) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:GRANADA G1 20 MVA 115/13.2/11.4 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:GUACHAL II 1 58.5 MVA 115/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:GUAPI 1 15 MVA 115/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:GUAPI 2 15 MVA 115/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:GUATAPE 1 15 MVA 110/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:GUAYABAL 3 40 MVA 110/44 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:HOBO 1 25 MVA 115/34.5/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:JUNIN (NARIÑO) 12.5 MVA 115/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:LA CAMPIÑA 1 12.5 MVA 110/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:LA CAMPIÑA 2 12.5 MVA 110/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:LA CEJA 1 60 MVA 110/44 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:LA PAZ (BOGOTA) 1 30 MVA 115/11.4 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:LA PAZ (BOGOTA) 1 30 MVA 115/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:LA PAZ (BOGOTA) 2 30 MVA 115/11.4 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:LIZAMA 1 20 MVA 115/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:LUZMA I 1 G12 26 MVA 115/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:LUZMA II 1 G12 26 MVA 115/13.8 KV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:MAMONAL 1 33 MVA 66/13.8/(8.8) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:MAMONAL 2 33 MVA 66/13.8/(8.8) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:MELENDEZ 2 41.75MVA 110/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:MELENDEZ 3 58.45 MVA 110/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:MEMBRILLAL 1 35 MVA 66/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:MORICHE 1 7.5 MVA 110/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:NUEVA COSPIQUE 1 50 MVA 110/13.8/(6.9) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:NUEVA COSPIQUE 2 50 MVA 110/13.8/(6.9) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:NUEVA COSPIQUE 3 20 MVA 110/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:NUEVA COSPIQUE 4 30 MVA 110/13.8/(7.69) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:OLAYA HERRERA 1 15 MVA 115/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:ORIENTE (HUILA) 1 50 MVA 115/34.5/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:PASTO 33 MVA 115/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:PELDAR D1 12 MVA 115/6.9 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:PORCE (EADE) 1 30 MVA 110/44 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:PORTUGAL 1 40 MVA 115/11.4 KV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:PROVIDENCIA 1 G12 33 MVA 115/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:PUERTO GAITAN 2 30 MVA 115/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:PUERTO NARE 1 15 MVA 110/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:RIO CLARO 1 10 MVA 110/7.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:RIO MAYO 1 33.3 MVA 115/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:RIO MAYO 2 G2 26.25 MVA 115/6.6 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:RIOGRANDE 4 40 MVA 110/44/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:RIONEGRO 2 40 MVA 110/44/10.9 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:SALTO I (BOGOTA) R1 30 MVA 115/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:SAN ANTONIO (CALI) 2 41.75 MVA 110/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:SAN ANTONIO (CALI) 3 41.75 MVA 110/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:SAN ANTONIO (CALI) 4 58.45 MVA 110/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:SAN LUIS 1 58.45 MVA 110/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:SAN LUIS 2 58.45 MVA 110/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:SAN LUIS 3 41.75 MVA 110/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:SAN LUIS 4 41.75 MVA 110/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:SAN MARTIN 1 40 MVA 115/34.5",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:SANTA ROSA 1 8 MVA 115/6.3 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:SANTA ROSA 2 8 MVA 115/6.3 KV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:SONSON 2 25 MVA 110/44 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:TENAY 1 25 MVA 115/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:TERMOFLORES - GAS 1 G1 65 MVA 110/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:TERMOFLORES - GAS 2 G1 65 MVA 110/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:TERMOFLORES - VAPOR 4 G1 65 MVA 110/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:TERMOFLORES G2 156.8 MVA 110/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:TERMOYOPAL 2 G2 41.5 MVA 115/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:TERMOZIPA 1 25 MVA 115/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:TERMOZIPA 2 25 MVA 115/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:TERNERA 3 45 MVA 66/13.8/7.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:TUNJITA 1 G12 25 MVA 115/13.8 KV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:UBATE R1 40 MVA 115/34.5/(6.9) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:UBATE R2 30 MVA 115/34.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:URABA 1 40 MVA 110/44 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:VILLA ESTRELLA 2 30 MVA 66/13.8/(8.76) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:ZARAGOCILLA 1 35 MVA 66/13.8/(6.9) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:ZARAGOCILLA 2 35 MVA 66/13.8/(6.9) kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:ZIPAQUIRA D1 30 MVA 115/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:ZIPAQUIRA D2 30 MVA 115/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 22.555
+      },
+      {
+        "element": "trafo:BETANIA G1 210.9 MVA 230/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:BETANIA G2 210.9 MVA 230/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:BETANIA G3 210.9 MVA 230/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:CARTAGENA G2 78 MVA 230/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:CARTAGENA G3 78 MVA 220/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:GUAVIO G2 270 MVA 230/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:GUAVIO G3 270 MVA 230/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:GUAVIO G4 270 MVA 230/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:GUAVIO G5 270 MVA 230/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:JAGUAS G1 103.5 MVA 230/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:JAGUAS G2 103.5 MVA 230/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:LA GUACA G2 140 MVA 230/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:LA GUACA G3 140 MVA 230/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:MIEL I G1 150 MVA 230/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:MIEL I G2 150 MVA 230/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:MIEL I G3 150 MVA 230/13.8 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:PARAISO G1 120 MVA 230/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:PARAISO G2 120 MVA 230/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:PARAISO G3 120 MVA 230/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:PLAYAS 5 10 MVA 220/13.2 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:SOGAMOSO G1 324 MVA 230/16.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:SOGAMOSO G2 324 MVA 230/16.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:SOGAMOSO G3 324 MVA 230/16.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:TASAJERO 2 G2 216 MVA 230/15.75 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:TERMOCOL 1 125 MVA 220/44 KV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:TERMOFLORES 9 G4 220 MVA 220/16.5 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:TERMOFLORES G3 205 MVA 220/18 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 60.078
+      },
+      {
+        "element": "trafo:PRADO 4 G4 6 MVA 34.5/4.16 kV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 9.99
+      },
+      {
+        "element": "trafo:TERMONORTE 1 G1-5 64 MVA 44/13.8 KV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 9.99
+      },
+      {
+        "element": "trafo:TERMONORTE 2 G6-10  64 MVA 44/13.8 KV",
+        "kind": "transformador",
+        "param": "pfe_kw",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 9.99
+      },
       {
         "element": "trafo:AGUABLANCA 1 41.75 MVA 110/13.2 kV",
         "kind": "transformador",
@@ -3817,1770 +4370,6 @@
         "param": "vkr_percent",
         "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
         "value": 0.40592
-      },
-      {
-        "element": "trafo:AGUABLANCA 1 41.75 MVA 110/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:AGUABLANCA 2 41.75 MVA 110/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:AMOYA G1 45.7 MVA 115/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:AMOYA G2 45.7 MVA 115/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:APARTADO 1 40 MVA 110/44 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:APARTADO 3 37.5 MVA 110/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:ARGOS SOGAMOSO 1 G1 28 MVA 115/13.8 KV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:ARGOS SOGAMOSO 1 G1 30 MVA 115/13.8/(7.92) KV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:BARROSO G1 12 MVA 110/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:BARROSO G2 12 MVA 110/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:BARZAL B1 40 MVA 115/34.5/(13.8) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:BARZAL B2 30 MVA 115/34.5/(13.8) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:BARZAL B3 40 MVA 115/34.5/(13.8) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:BETANIA 10 MVA 115/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:BOCAGRANDE 1 33 MVA 66/13.8/(7.84) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:BOCAGRANDE 2 33 MVA 66/13.8/(7.8) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:BOSCONIA 1 16 MVA 115/2.4 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:BOSCONIA 2 16 MVA 115/2.4 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:CABAÑA (CAUCA) 15 MVA 110/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:CABAÑAS (MEDELLIN) 1 10 MVA 110/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:CALDERAS 1 G12 24.75 MVA 115/13.8 KV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:CALIZAS 2 40 MVA 110/44 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:CALLE67 3 30 MVA 115/11.4 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:CAMPOBONITO  2 13.75 MVA 115/34.5/(6) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:CATAMBUCO 25 MVA  115/13.8/(5) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:CAUCASIA 1 60 MVA 110/44 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:CAUCASIA 3 60 MVA 110/44 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:CHICALA 1 56 MVA 115/11.4 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:CHORODO (FRONTINO) 40 MVA 110/44 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:COCORNA 1 30 MVA 110/44/6.35 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:COSPIQUE 1 20 MVA 66/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:EL BOSQUE 1 20 MVA 66/13.8/(9.7) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:EL BOTE 1 46 MVA 115/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:EL BOTE 2 40 MVA 115/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:EL SOL D1 30 MVA 115/12/(4.16) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:EL SOL R1 30 MVA 115/34.5/(4.16) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:EL SOL R2 40 MVA 115/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:EL TIGRE 1 32 MVA 110/44 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:FLORIDA (CAUCA) 1 G1 16.9 MVA 115/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:FLORIDA (CAUCA) 2 G2 16.9 MVA 115/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:GAMBOTE 1 20 MVA 66/13.8/(4.26) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:GRANADA 2 30 MVA 115/34.5/(13.2) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:GRANADA G1 20 MVA 115/13.2/11.4 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:GUACHAL II 1 58.5 MVA 115/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:GUAPI 1 15 MVA 115/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:GUAPI 2 15 MVA 115/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:GUATAPE 1 15 MVA 110/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:GUAYABAL 3 40 MVA 110/44 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:HOBO 1 25 MVA 115/34.5/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:JUNIN (NARIÑO) 12.5 MVA 115/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:LA CAMPIÑA 1 12.5 MVA 110/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:LA CAMPIÑA 2 12.5 MVA 110/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:LA CEJA 1 60 MVA 110/44 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:LA PAZ (BOGOTA) 1 30 MVA 115/11.4 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:LA PAZ (BOGOTA) 1 30 MVA 115/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:LA PAZ (BOGOTA) 2 30 MVA 115/11.4 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:LIZAMA 1 20 MVA 115/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:LUZMA I 1 G12 26 MVA 115/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:LUZMA II 1 G12 26 MVA 115/13.8 KV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:MAMONAL 1 33 MVA 66/13.8/(8.8) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:MAMONAL 2 33 MVA 66/13.8/(8.8) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:MELENDEZ 2 41.75MVA 110/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:MELENDEZ 3 58.45 MVA 110/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:MEMBRILLAL 1 35 MVA 66/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:MORICHE 1 7.5 MVA 110/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:NUEVA COSPIQUE 1 50 MVA 110/13.8/(6.9) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:NUEVA COSPIQUE 2 50 MVA 110/13.8/(6.9) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:NUEVA COSPIQUE 3 20 MVA 110/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:NUEVA COSPIQUE 4 30 MVA 110/13.8/(7.69) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:OLAYA HERRERA 1 15 MVA 115/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:ORIENTE (HUILA) 1 50 MVA 115/34.5/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:PASTO 33 MVA 115/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:PELDAR D1 12 MVA 115/6.9 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:PORCE (EADE) 1 30 MVA 110/44 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:PORTUGAL 1 40 MVA 115/11.4 KV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:PROVIDENCIA 1 G12 33 MVA 115/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:PUERTO GAITAN 2 30 MVA 115/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:PUERTO NARE 1 15 MVA 110/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:RIO CLARO 1 10 MVA 110/7.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:RIO MAYO 1 33.3 MVA 115/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:RIO MAYO 2 G2 26.25 MVA 115/6.6 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:RIOGRANDE 4 40 MVA 110/44/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:RIONEGRO 2 40 MVA 110/44/10.9 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:SALTO I (BOGOTA) R1 30 MVA 115/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:SAN ANTONIO (CALI) 2 41.75 MVA 110/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:SAN ANTONIO (CALI) 3 41.75 MVA 110/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:SAN ANTONIO (CALI) 4 58.45 MVA 110/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:SAN LUIS 1 58.45 MVA 110/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:SAN LUIS 2 58.45 MVA 110/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:SAN LUIS 3 41.75 MVA 110/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:SAN LUIS 4 41.75 MVA 110/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:SAN MARTIN 1 40 MVA 115/34.5",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:SANTA ROSA 1 8 MVA 115/6.3 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:SANTA ROSA 2 8 MVA 115/6.3 KV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:SONSON 2 25 MVA 110/44 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:TENAY 1 25 MVA 115/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:TERMOFLORES - GAS 1 G1 65 MVA 110/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:TERMOFLORES - GAS 2 G1 65 MVA 110/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:TERMOFLORES - VAPOR 4 G1 65 MVA 110/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:TERMOFLORES G2 156.8 MVA 110/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:TERMOYOPAL 2 G2 41.5 MVA 115/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:TERMOZIPA 1 25 MVA 115/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:TERMOZIPA 2 25 MVA 115/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:TERNERA 3 45 MVA 66/13.8/7.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:TUNJITA 1 G12 25 MVA 115/13.8 KV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:UBATE R1 40 MVA 115/34.5/(6.9) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:UBATE R2 30 MVA 115/34.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:URABA 1 40 MVA 110/44 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:VILLA ESTRELLA 2 30 MVA 66/13.8/(8.76) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:ZARAGOCILLA 1 35 MVA 66/13.8/(6.9) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:ZARAGOCILLA 2 35 MVA 66/13.8/(6.9) kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:ZIPAQUIRA D1 30 MVA 115/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:ZIPAQUIRA D2 30 MVA 115/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 22.555
-      },
-      {
-        "element": "trafo:BETANIA G1 210.9 MVA 230/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:BETANIA G2 210.9 MVA 230/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:BETANIA G3 210.9 MVA 230/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:CARTAGENA G2 78 MVA 230/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:CARTAGENA G3 78 MVA 220/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:GUAVIO G2 270 MVA 230/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:GUAVIO G3 270 MVA 230/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:GUAVIO G4 270 MVA 230/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:GUAVIO G5 270 MVA 230/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:JAGUAS G1 103.5 MVA 230/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:JAGUAS G2 103.5 MVA 230/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:LA GUACA G2 140 MVA 230/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:LA GUACA G3 140 MVA 230/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:MIEL I G1 150 MVA 230/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:MIEL I G2 150 MVA 230/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:MIEL I G3 150 MVA 230/13.8 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:PARAISO G1 120 MVA 230/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:PARAISO G2 120 MVA 230/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:PARAISO G3 120 MVA 230/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:PLAYAS 5 10 MVA 220/13.2 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:SOGAMOSO G1 324 MVA 230/16.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:SOGAMOSO G2 324 MVA 230/16.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:SOGAMOSO G3 324 MVA 230/16.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:TASAJERO 2 G2 216 MVA 230/15.75 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:TERMOCOL 1 125 MVA 220/44 KV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:TERMOFLORES 9 G4 220 MVA 220/16.5 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:TERMOFLORES G3 205 MVA 220/18 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 60.078
-      },
-      {
-        "element": "trafo:PRADO 4 G4 6 MVA 34.5/4.16 kV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 9.99
-      },
-      {
-        "element": "trafo:TERMONORTE 1 G1-5 64 MVA 44/13.8 KV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 9.99
-      },
-      {
-        "element": "trafo:TERMONORTE 2 G6-10  64 MVA 44/13.8 KV",
-        "kind": "transformador",
-        "param": "pfe_kw",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 9.99
-      },
-      {
-        "element": "trafo:AGUACLARA 1 20 MVA 115/34.5/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:AGUAZUL 1 25 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:ALTAMIRA 2 47 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:AMAGA 40 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:ANCON SUR (EPM) 1 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:ANCON SUR (EPM) 2 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:BARBOSA (ANTIOQUIA) 1 30 MVA 110/44/6.35 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:BARBOSA (ANTIOQUIA) 2 30 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:BARRANCA 6 40 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:BARRANCA 7 40 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:BELEN (ANTIOQUIA) 1 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:BELEN (ANTIOQUIA) 2 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:BELLO 1 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:BELLO 2 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:BOLOMBOLO 1 40 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:BOSTON 1 60 MVA 110/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:BUCARAMANGA 2 40 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:BUCHELY 1 40 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:BUENAVISTA 2 40 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:CABAÑA (CAUCA) 1 60 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:CAQUEZA DR1 15 MVA 115/34.5/13.2 KV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:CASTILLA 1 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:CASTILLA 2 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:CATAMBUCO 40 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:CAUCHERAS 1 14 MVA 115/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:CENTRAL 1 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:CENTRAL 2 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:CENTRAL 3 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:CODAZZI (CESAR) 1 25 MVA 110/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:COLOMBIA 1 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:COLOMBIA 2 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:EL BANCO 1 60 MVA 110/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:EL CARMEN 1 60 MVA 110/66/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:EL CARMEN 2 60 MVA 110/66/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:EL MOLINO 1 G12 25 MVA 110/13.2/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:EL RODEO 1 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:EL ZAQUE 1 17.92 MVA 115/34.5/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:ENVIGADO 1 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:ENVIGADO 2 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:GIRARDOTA 1 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:GUAYABAL 1 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:GUAYABAL 2 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:HISPANIA 40 MVA 115/44/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:HORIZONTE 1 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:ITAGUI 1 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:JARDINERA 1 40 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:LA CRUZADA 1 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:LA JAGUA 1 30 MVA 110/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:LA JAGUA 2 30 MVA 110/34.5/13.8 KV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:LA MOJANA 1 30 MVA 110/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:LOS PALOS 2 40 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:LOS PALOS 7 40 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:MIRAFLORES 3 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:ORIENTE 1 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:PANAMERICANA 4 40 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:PAZ DE ARIPORO 1 15 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:PIEDECUESTA 2 40 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:PIEDRAS BLANCAS 1 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:PIEDRAS BLANCAS 2 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:POBLADO 1 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:PRINCIPAL (POPAYAN) 1 60 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:PRINCIPAL (POPAYAN) 2 26.25 MVA 115/13.2/11.5 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:PUERTO WILCHES 1 40 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:REAL DE MINAS 1 40 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:REAL DE MINAS 3 40 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:REAL DE MINAS 5 40 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:RIO FRIO 1 40 MVA 115/34.5/13.8 KV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:RIO FRIO 2 40 MVA 115/34.5/13.8 KV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:RIO SINU 1 45 MVA 110/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:RIONEGRO 1 40 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:SABANA DE TORRES 1 20 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:SAN ALBERTO 1 40 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:SAN BERNARDINO 1 60 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:SAN DIEGO 1 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:SAN DIEGO 2 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:SAN GIL 1 40 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:SAN JACINTO 1 8 MVA 66/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:SAN LORENZO - EL POPAL 1 G12 25 MVA 110/13.2/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:SAN LORENZO - SAN MATIAS 2 G12 25 MVA 110/13.2/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:SAN MIGUEL 1 G12 62.5 MVA 110/13.8/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:SAN SILVESTRE 4 40 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:SAUCES 1 30 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:TERNERA 5 45 MVA 66/13.8/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:VICTORIA (CALDAS) 1 20 MVA 115/33/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:VILLA HERMOSA 1 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:YARUMAL I 1 30 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:YOPAL 2 50 MVA 115/34.5/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:ZAMORA 1 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:ZAMORA 2 60 MVA 110/44/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.31666666666666665
-      },
-      {
-        "element": "trafo:BETANIA 2 168 MVA 230/115/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
-      },
-      {
-        "element": "trafo:CUESTECITAS 2 60 MVA 220/110/6.83 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
-      },
-      {
-        "element": "trafo:FUNDACION 6 100 MVA 220/110/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
-      },
-      {
-        "element": "trafo:LA REFORMA 2 150 MVA 230/115/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
-      },
-      {
-        "element": "trafo:LA REFORMA 3 150 MVA 230/115/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
-      },
-      {
-        "element": "trafo:LA SIERRA (ANTIOQUIA) 1 90 MVA 220/115/44 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
-      },
-      {
-        "element": "trafo:NUEVA ESPERANZA 1 450 MVA 500/230/34.5 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
-      },
-      {
-        "element": "trafo:NUEVA MONTERIA 1 100 MVA 230/110/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
-      },
-      {
-        "element": "trafo:NUEVA MONTERIA 2 100 MVA 230/110/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
-      },
-      {
-        "element": "trafo:SAN CARLOS G12 366 MVA 230/15.8/15.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
-      },
-      {
-        "element": "trafo:SAN CARLOS G34 366 MVA 230/15.8/15.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
-      },
-      {
-        "element": "trafo:SAN CARLOS G56 366 MVA 230/15.8/15.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
-      },
-      {
-        "element": "trafo:SAN CARLOS G78 366 MVA 230/15.8/15.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
-      },
-      {
-        "element": "trafo:SAN MARCOS (VALLE) 1 168 MVA 220/115/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
-      },
-      {
-        "element": "trafo:SAN MARCOS (VALLE) 2 168 MVA 220/115/13.2 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
-      },
-      {
-        "element": "trafo:SOCHAGOTA 1 180 MVA 230/115/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
-      },
-      {
-        "element": "trafo:SUAMOX 1 150 MVA 230/115/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
-      },
-      {
-        "element": "trafo:SUAMOX 2 150 MVA 230/115/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
-      },
-      {
-        "element": "trafo:URABA 2 150 MVA 220/110/46 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
-      },
-      {
-        "element": "trafo:URRA 1 90 MVA 230/110/13.8 kV",
-        "kind": "transformador 3w",
-        "param": "vkr_lv_percent",
-        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
-        "value": 0.2181944444444444
       },
       {
         "element": "trafo:AGUACLARA 1 20 MVA 115/34.5/13.2 kV",
@@ -7681,6 +6470,769 @@
         "param": "vkr_hv_percent",
         "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
         "value": 0.21216726666666666
+      },
+      {
+        "element": "trafo:AGUACLARA 1 20 MVA 115/34.5/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:AGUAZUL 1 25 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:ALTAMIRA 2 47 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:AMAGA 40 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:ANCON SUR (EPM) 1 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:ANCON SUR (EPM) 2 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:BARBOSA (ANTIOQUIA) 1 30 MVA 110/44/6.35 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:BARBOSA (ANTIOQUIA) 2 30 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:BARRANCA 6 40 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:BARRANCA 7 40 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:BELEN (ANTIOQUIA) 1 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:BELEN (ANTIOQUIA) 2 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:BELLO 1 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:BELLO 2 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:BOLOMBOLO 1 40 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:BOSTON 1 60 MVA 110/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:BUCARAMANGA 2 40 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:BUCHELY 1 40 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:BUENAVISTA 2 40 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:CABAÑA (CAUCA) 1 60 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:CAQUEZA DR1 15 MVA 115/34.5/13.2 KV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:CASTILLA 1 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:CASTILLA 2 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:CATAMBUCO 40 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:CAUCHERAS 1 14 MVA 115/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:CENTRAL 1 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:CENTRAL 2 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:CENTRAL 3 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:CODAZZI (CESAR) 1 25 MVA 110/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:COLOMBIA 1 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:COLOMBIA 2 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:EL BANCO 1 60 MVA 110/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:EL CARMEN 1 60 MVA 110/66/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:EL CARMEN 2 60 MVA 110/66/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:EL MOLINO 1 G12 25 MVA 110/13.2/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:EL RODEO 1 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:EL ZAQUE 1 17.92 MVA 115/34.5/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:ENVIGADO 1 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:ENVIGADO 2 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:GIRARDOTA 1 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:GUAYABAL 1 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:GUAYABAL 2 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:HISPANIA 40 MVA 115/44/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:HORIZONTE 1 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:ITAGUI 1 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:JARDINERA 1 40 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:LA CRUZADA 1 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:LA JAGUA 1 30 MVA 110/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:LA JAGUA 2 30 MVA 110/34.5/13.8 KV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:LA MOJANA 1 30 MVA 110/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:LOS PALOS 2 40 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:LOS PALOS 7 40 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:MIRAFLORES 3 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:ORIENTE 1 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:PANAMERICANA 4 40 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:PAZ DE ARIPORO 1 15 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:PIEDECUESTA 2 40 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:PIEDRAS BLANCAS 1 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:PIEDRAS BLANCAS 2 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:POBLADO 1 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:PRINCIPAL (POPAYAN) 1 60 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:PRINCIPAL (POPAYAN) 2 26.25 MVA 115/13.2/11.5 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:PUERTO WILCHES 1 40 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:REAL DE MINAS 1 40 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:REAL DE MINAS 3 40 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:REAL DE MINAS 5 40 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:RIO FRIO 1 40 MVA 115/34.5/13.8 KV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:RIO FRIO 2 40 MVA 115/34.5/13.8 KV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:RIO SINU 1 45 MVA 110/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:RIONEGRO 1 40 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:SABANA DE TORRES 1 20 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:SAN ALBERTO 1 40 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:SAN BERNARDINO 1 60 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:SAN DIEGO 1 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:SAN DIEGO 2 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:SAN GIL 1 40 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:SAN JACINTO 1 8 MVA 66/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:SAN LORENZO - EL POPAL 1 G12 25 MVA 110/13.2/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:SAN LORENZO - SAN MATIAS 2 G12 25 MVA 110/13.2/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:SAN MIGUEL 1 G12 62.5 MVA 110/13.8/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:SAN SILVESTRE 4 40 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:SAUCES 1 30 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:TERNERA 5 45 MVA 66/13.8/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:VICTORIA (CALDAS) 1 20 MVA 115/33/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:VILLA HERMOSA 1 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:YARUMAL I 1 30 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:YOPAL 2 50 MVA 115/34.5/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:ZAMORA 1 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:ZAMORA 2 60 MVA 110/44/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.31666666666666665
+      },
+      {
+        "element": "trafo:BETANIA 2 168 MVA 230/115/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
+      },
+      {
+        "element": "trafo:CUESTECITAS 2 60 MVA 220/110/6.83 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
+      },
+      {
+        "element": "trafo:FUNDACION 6 100 MVA 220/110/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
+      },
+      {
+        "element": "trafo:LA REFORMA 2 150 MVA 230/115/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
+      },
+      {
+        "element": "trafo:LA REFORMA 3 150 MVA 230/115/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
+      },
+      {
+        "element": "trafo:LA SIERRA (ANTIOQUIA) 1 90 MVA 220/115/44 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
+      },
+      {
+        "element": "trafo:NUEVA ESPERANZA 1 450 MVA 500/230/34.5 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
+      },
+      {
+        "element": "trafo:NUEVA MONTERIA 1 100 MVA 230/110/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
+      },
+      {
+        "element": "trafo:NUEVA MONTERIA 2 100 MVA 230/110/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
+      },
+      {
+        "element": "trafo:SAN CARLOS G12 366 MVA 230/15.8/15.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
+      },
+      {
+        "element": "trafo:SAN CARLOS G34 366 MVA 230/15.8/15.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
+      },
+      {
+        "element": "trafo:SAN CARLOS G56 366 MVA 230/15.8/15.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
+      },
+      {
+        "element": "trafo:SAN CARLOS G78 366 MVA 230/15.8/15.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
+      },
+      {
+        "element": "trafo:SAN MARCOS (VALLE) 1 168 MVA 220/115/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
+      },
+      {
+        "element": "trafo:SAN MARCOS (VALLE) 2 168 MVA 220/115/13.2 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
+      },
+      {
+        "element": "trafo:SOCHAGOTA 1 180 MVA 230/115/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
+      },
+      {
+        "element": "trafo:SUAMOX 1 150 MVA 230/115/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
+      },
+      {
+        "element": "trafo:SUAMOX 2 150 MVA 230/115/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
+      },
+      {
+        "element": "trafo:URABA 2 150 MVA 220/110/46 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
+      },
+      {
+        "element": "trafo:URRA 1 90 MVA 230/110/13.8 kV",
+        "kind": "transformador 3w",
+        "param": "vkr_lv_percent",
+        "method": "mediana de elementos del mismo tipo y nivel de tensión en el snapshot",
+        "value": 0.2181944444444444
       }
     ],
     "not_modeled": [
@@ -7703,6 +7255,76 @@
         "element": "line:CUESTECITAS - JOUKTAI 1 110 kV",
         "kind": "línea",
         "reason": "estado Pruebas"
+      },
+      {
+        "element": "line:LA DORADA - TERMODORADA 1 115 kV",
+        "kind": "línea",
+        "reason": "los dos extremos resuelven a la misma barra (LA DORADA|115)"
+      },
+      {
+        "element": "line:CABAÑA (CAUCA) - PROPAL 1 115 kV",
+        "kind": "línea",
+        "reason": "los dos extremos resuelven a la misma barra (CABAÑA (CAUCA)|115)"
+      },
+      {
+        "element": "line:EL QUIMBO - TESALIA 2 230 kV",
+        "kind": "línea",
+        "reason": "los dos extremos resuelven a la misma barra (TESALIA|230)"
+      },
+      {
+        "element": "line:EL QUIMBO - TESALIA 1 230 kV",
+        "kind": "línea",
+        "reason": "los dos extremos resuelven a la misma barra (TESALIA|230)"
+      },
+      {
+        "element": "line:GUAVIO SUBT DUCTO - GUAVIO 2 230 kV",
+        "kind": "línea",
+        "reason": "los dos extremos resuelven a la misma barra (GUAVIO|230)"
+      },
+      {
+        "element": "line:GUAVIO SUBT DUCTO - GUAVIO 1 230 kV",
+        "kind": "línea",
+        "reason": "los dos extremos resuelven a la misma barra (GUAVIO|230)"
+      },
+      {
+        "element": "line:EL SOL - REFISAL 1 115 kV",
+        "kind": "línea",
+        "reason": "los dos extremos resuelven a la misma barra (EL SOL|115)"
+      },
+      {
+        "element": "line:PUERTO INMARCO - PUERTO NARE 1 110 kV",
+        "kind": "línea",
+        "reason": "los dos extremos resuelven a la misma barra (PUERTO NARE|115)"
+      },
+      {
+        "element": "line:JUANCHITO - JUANCHITO (EPSA) 2 115 kV",
+        "kind": "línea",
+        "reason": "los dos extremos resuelven a la misma barra (JUANCHITO|115)"
+      },
+      {
+        "element": "line:JUANCHITO - JUANCHITO (EPSA) 1 115 kV",
+        "kind": "línea",
+        "reason": "los dos extremos resuelven a la misma barra (JUANCHITO|115)"
+      },
+      {
+        "element": "line:GUATAPE - VARIANTE 1 230 kV",
+        "kind": "línea",
+        "reason": "los dos extremos resuelven a la misma barra (GUATAPE|230)"
+      },
+      {
+        "element": "line:GUATAPE - VARIANTE 2 230 kV",
+        "kind": "línea",
+        "reason": "los dos extremos resuelven a la misma barra (GUATAPE|230)"
+      },
+      {
+        "element": "line:ESMERALDA (ISA) - ESMERALDA (CHEC) 1 115 kV",
+        "kind": "línea",
+        "reason": "los dos extremos resuelven a la misma barra (ESMERALDA|115)"
+      },
+      {
+        "element": "line:ESMERALDA (ISA) - ESMERALDA (CHEC) 2 115 kV",
+        "kind": "línea",
+        "reason": "los dos extremos resuelven a la misma barra (ESMERALDA|115)"
       },
       {
         "element": "line:GUATAPURI - VALLEDUPAR 2 34.5 kV",
@@ -8473,6 +8095,16 @@
         "island_id": 4,
         "n_buses": 1,
         "buses": [
+          "PUERTO NUEVO|115"
+        ],
+        "p_gen_lost_mw": 0.0,
+        "p_demand_lost_mw": 0.6255700000000001,
+        "energized": false
+      },
+      {
+        "island_id": 5,
+        "n_buses": 1,
+        "buses": [
           "PELDAR|115"
         ],
         "p_gen_lost_mw": 0.0,
@@ -8480,7 +8112,7 @@
         "energized": false
       },
       {
-        "island_id": 5,
+        "island_id": 6,
         "n_buses": 1,
         "buses": [
           "CIMITARRA|115"
@@ -8490,7 +8122,17 @@
         "energized": false
       },
       {
-        "island_id": 6,
+        "island_id": 7,
+        "n_buses": 1,
+        "buses": [
+          "BOSCONIA|115"
+        ],
+        "p_gen_lost_mw": 0.0,
+        "p_demand_lost_mw": 3.415898,
+        "energized": false
+      },
+      {
+        "island_id": 8,
         "n_buses": 1,
         "buses": [
           "SANTA ROSA|115"
@@ -8500,7 +8142,7 @@
         "energized": false
       },
       {
-        "island_id": 7,
+        "island_id": 9,
         "n_buses": 1,
         "buses": [
           "CALAMAR|66"
@@ -8510,7 +8152,7 @@
         "energized": false
       },
       {
-        "island_id": 8,
+        "island_id": 10,
         "n_buses": 1,
         "buses": [
           "JOUKTAI|115"
@@ -8520,7 +8162,7 @@
         "energized": false
       },
       {
-        "island_id": 9,
+        "island_id": 11,
         "n_buses": 1,
         "buses": [
           "SEBORUCO|115"
@@ -8530,7 +8172,7 @@
         "energized": false
       },
       {
-        "island_id": 10,
+        "island_id": 12,
         "n_buses": 1,
         "buses": [
           "PAPELES NACIONALES|115"
@@ -8540,7 +8182,7 @@
         "energized": false
       },
       {
-        "island_id": 11,
+        "island_id": 13,
         "n_buses": 1,
         "buses": [
           "HISPANIA|115"
@@ -8554,14 +8196,27 @@
       "[aviso] generador GUATRON@EL SALTO (EPM)|115: p_mw > p_max_mw (PARATEC) (valor: 369.0)",
       "[aviso] generador INGENIO PROVIDENCIA 2@PROVIDENCIA|115: p_mw > p_max_mw (PARATEC) (valor: 12.300000000000002)"
     ],
+    "buses_without_coordinates": [
+      "LA CUNA|115",
+      "LA YOPALOSA|115",
+      "MEDELLIN|230",
+      "MEDELLIN|500",
+      "MUÑA III|115",
+      "PIMAMPIRO|230",
+      "SANTA ROSALIA|115"
+    ],
+    "buses_without_subarea": [
+      "MEDELLIN|230",
+      "MEDELLIN|500"
+    ],
     "balance": {
       "p_scheduled_total_mw": 12330.969999999998,
       "p_located_mw": 12322.899999999998,
       "p_unlocated_mw": 8.069999999999709,
       "coverage_pct": 99.9345550268957,
-      "p_demand_mw": 8929.772703000002,
-      "p_demand_unlocated_mw": 3220.166847,
-      "difference_mw": 3393.1272969999955
+      "p_demand_mw": 10710.627055999996,
+      "p_demand_unlocated_mw": 1439.3124940000005,
+      "difference_mw": 1612.272944000002
     }
   },
   "assumptions": {
@@ -10584,6 +10239,18 @@
           "q_mvar": 8.0198317872
         },
         {
+          "barra": "AGUAZUL|115",
+          "p_act_mw": 12.75166422,
+          "p_pstr_mw": 0.19418778,
+          "q_mvar": 3.9040449077
+        },
+        {
+          "barra": "ALFEREZ II|115",
+          "p_act_mw": 3.49857619,
+          "p_pstr_mw": 0.05327781,
+          "q_mvar": 0.8849017457
+        },
+        {
           "barra": "ALFEREZ I|115",
           "p_act_mw": 27.6806079,
           "p_pstr_mw": 0.4215321,
@@ -10594,6 +10261,12 @@
           "p_act_mw": 22.64410984,
           "p_pstr_mw": 0.34483416,
           "q_mvar": 7.8457909351
+        },
+        {
+          "barra": "ALTO RICAURTE|115",
+          "p_act_mw": 9.40702777,
+          "p_pstr_mw": 0.14325423,
+          "q_mvar": 2.6367515756
         },
         {
           "barra": "AMAGA|115",
@@ -10608,10 +10281,28 @@
           "q_mvar": 43.3537831238
         },
         {
+          "barra": "ANTIOQUIA|500",
+          "p_act_mw": 15.598965759999999,
+          "p_pstr_mw": 0.48244224,
+          "q_mvar": 7.6724955603
+        },
+        {
+          "barra": "APARTADO|115",
+          "p_act_mw": 50.1193413,
+          "p_pstr_mw": 0.7632387,
+          "q_mvar": 23.0506033992
+        },
+        {
           "barra": "ARANJUEZ|115",
           "p_act_mw": 36.396275005,
           "p_pstr_mw": 0.554257995,
           "q_mvar": 10.0245267027
+        },
+        {
+          "barra": "ARGOS SOGAMOSO|115",
+          "p_act_mw": 0.0,
+          "p_pstr_mw": 0.0,
+          "q_mvar": 0.0
         },
         {
           "barra": "ARGOS|115",
@@ -10636,6 +10327,12 @@
           "p_act_mw": 51.589435085,
           "p_pstr_mw": 0.785625915,
           "q_mvar": 12.9385503814
+        },
+        {
+          "barra": "AVENIDA PRIMERA|115",
+          "p_act_mw": 25.12160351,
+          "p_pstr_mw": 0.38256249,
+          "q_mvar": 4.7513699855
         },
         {
           "barra": "AYACUCHO|115",
@@ -10710,6 +10407,12 @@
           "q_mvar": 23.8193004576
         },
         {
+          "barra": "BELENCITO (APR)|115",
+          "p_act_mw": 38.698757815,
+          "p_pstr_mw": 0.589321185,
+          "q_mvar": 22.9389084224
+        },
+        {
           "barra": "BELLO|115",
           "p_act_mw": 77.04412324,
           "p_pstr_mw": 1.17326076,
@@ -10740,6 +10443,12 @@
           "q_mvar": 4.0903738041
         },
         {
+          "barra": "BOLIVAR|230",
+          "p_act_mw": 0.128866,
+          "p_pstr_mw": 0.0,
+          "q_mvar": 0.0624126523
+        },
+        {
           "barra": "BOLIVIA|115",
           "p_act_mw": 45.09868598,
           "p_pstr_mw": 0.68678202,
@@ -10758,6 +10467,12 @@
           "q_mvar": 20.4919447615
         },
         {
+          "barra": "BOSCONIA|115",
+          "p_act_mw": 3.36465953,
+          "p_pstr_mw": 0.05123847,
+          "q_mvar": 1.2729650463
+        },
+        {
           "barra": "BOSTON|115",
           "p_act_mw": 50.27561352,
           "p_pstr_mw": 0.76561848,
@@ -10770,6 +10485,18 @@
           "q_mvar": 2.822822635
         },
         {
+          "barra": "BUCHELY|115",
+          "p_act_mw": 24.577216665,
+          "p_pstr_mw": 0.374272335,
+          "q_mvar": 6.7901216227
+        },
+        {
+          "barra": "BUENAVISTA|115",
+          "p_act_mw": 13.218641885,
+          "p_pstr_mw": 0.201299115,
+          "q_mvar": -0.837276757
+        },
+        {
           "barra": "BUGA|115",
           "p_act_mw": 34.268206145,
           "p_pstr_mw": 0.521850855,
@@ -10780,6 +10507,12 @@
           "p_act_mw": 4.01093182,
           "p_pstr_mw": 0.06108018,
           "q_mvar": 1.1004884245
+        },
+        {
+          "barra": "CABAÑA (CAUCA)|115",
+          "p_act_mw": 48.28115539,
+          "p_pstr_mw": 1.49323161,
+          "q_mvar": 17.3324499649
         },
         {
           "barra": "CABAÑAS (MEDELLIN)|115",
@@ -10800,6 +10533,12 @@
           "q_mvar": 8.6293438234
         },
         {
+          "barra": "CALERA|115",
+          "p_act_mw": 9.375526485,
+          "p_pstr_mw": 0.142774515,
+          "q_mvar": 0.8640617543
+        },
+        {
           "barra": "CALIMA|115",
           "p_act_mw": 12.65243926,
           "p_pstr_mw": 0.19267674,
@@ -10816,6 +10555,12 @@
           "p_act_mw": 88.394387575,
           "p_pstr_mw": 1.346107425,
           "q_mvar": 18.1142746425
+        },
+        {
+          "barra": "CAMPOBONITO|115",
+          "p_act_mw": 5.080983615,
+          "p_pstr_mw": 0.07737538499999999,
+          "q_mvar": 0.342363616
         },
         {
           "barra": "CANDELARIA (VALLE)|115",
@@ -10882,6 +10627,12 @@
           "p_act_mw": 8.11456002,
           "p_pstr_mw": 0.12357198,
           "q_mvar": 1.5215796106
+        },
+        {
+          "barra": "CEMEX|115",
+          "p_act_mw": 33.18341875,
+          "p_pstr_mw": 0.50533125,
+          "q_mvar": 0.0
         },
         {
           "barra": "CENTRAL|115",
@@ -10969,9 +10720,9 @@
         },
         {
           "barra": "COCORNA|115",
-          "p_act_mw": 6.34668202,
-          "p_pstr_mw": 0.09664998,
-          "q_mvar": 2.5449460557
+          "p_act_mw": 9.06921414,
+          "p_pstr_mw": 0.13810986,
+          "q_mvar": 2.860020112
         },
         {
           "barra": "CODAZZI (CESAR)|115",
@@ -10996,6 +10747,12 @@
           "p_act_mw": 33.487457715,
           "p_pstr_mw": 0.509961285,
           "q_mvar": 5.6217070677
+        },
+        {
+          "barra": "COMUNEROS|230",
+          "p_act_mw": 90.085977,
+          "p_pstr_mw": 0.0,
+          "q_mvar": 0.0
         },
         {
           "barra": "CONCORDIA|115",
@@ -11082,6 +10839,12 @@
           "q_mvar": 4.6704934899
         },
         {
+          "barra": "EL BANCO|115",
+          "p_act_mw": 34.1552916,
+          "p_pstr_mw": 6.0274044,
+          "q_mvar": 12.0802192312
+        },
+        {
           "barra": "EL BOSQUE|66",
           "p_act_mw": 65.68363165,
           "p_pstr_mw": 1.00025835,
@@ -11106,6 +10869,18 @@
           "q_mvar": 0.0
         },
         {
+          "barra": "EL PASO|115",
+          "p_act_mw": 13.083723599999999,
+          "p_pstr_mw": 2.3088924,
+          "q_mvar": 4.379000416
+        },
+        {
+          "barra": "EL RIO|115",
+          "p_act_mw": 58.95800456,
+          "p_pstr_mw": 1.82344344,
+          "q_mvar": 21.1912996753
+        },
+        {
           "barra": "EL RODEO|115",
           "p_act_mw": 37.77955286,
           "p_pstr_mw": 0.57532314,
@@ -11122,6 +10897,12 @@
           "p_act_mw": 2.524358,
           "p_pstr_mw": 0.038442,
           "q_mvar": 0.6633977908
+        },
+        {
+          "barra": "EL SOL|115",
+          "p_act_mw": 61.806355465,
+          "p_pstr_mw": 0.941213535,
+          "q_mvar": 12.1900071529
         },
         {
           "barra": "EL TIGRE|115",
@@ -11196,10 +10977,22 @@
           "q_mvar": 11.7219212755
         },
         {
+          "barra": "GIRARDOTA|115",
+          "p_act_mw": 35.12773586,
+          "p_pstr_mw": 0.53494014,
+          "q_mvar": 15.706599229
+        },
+        {
           "barra": "GORGONZOLA|57.5",
           "p_act_mw": 63.753580295,
           "p_pstr_mw": 0.970866705,
           "q_mvar": 13.0818556805
+        },
+        {
+          "barra": "GRAN SABANA|115",
+          "p_act_mw": 29.85744608,
+          "p_pstr_mw": 0.45468192,
+          "q_mvar": 7.3169903254
         },
         {
           "barra": "GRANADA|115",
@@ -11209,9 +11002,9 @@
         },
         {
           "barra": "GUACHAL|115",
-          "p_act_mw": 34.9415748,
-          "p_pstr_mw": 0.5321052,
-          "q_mvar": 13.4876856431
+          "p_act_mw": 53.581727605,
+          "p_pstr_mw": 0.8159653949999999,
+          "q_mvar": 16.3818532256
         },
         {
           "barra": "GUADALUPE IV|230",
@@ -11304,6 +11097,12 @@
           "q_mvar": 2.0421434533
         },
         {
+          "barra": "ISTMINA|115",
+          "p_act_mw": 6.5370707,
+          "p_pstr_mw": 0.0995493,
+          "q_mvar": 2.3875716642
+        },
+        {
           "barra": "ITAGUI|115",
           "p_act_mw": 40.96173326,
           "p_pstr_mw": 0.62378274,
@@ -11358,6 +11157,12 @@
           "q_mvar": 1.3018659216
         },
         {
+          "barra": "LA CEJA|115",
+          "p_act_mw": 16.03465346,
+          "p_pstr_mw": 0.24418254,
+          "q_mvar": 7.5709390705
+        },
+        {
           "barra": "LA CIRA INFANTAS|230",
           "p_act_mw": 45.0,
           "p_pstr_mw": 0.0,
@@ -11377,9 +11182,9 @@
         },
         {
           "barra": "LA ENEA|115",
-          "p_act_mw": 30.801738,
-          "p_pstr_mw": 0.469062,
-          "q_mvar": 11.6334325358
+          "p_act_mw": 49.34259,
+          "p_pstr_mw": 0.7514099999999999,
+          "q_mvar": 18.9845531225
         },
         {
           "barra": "LA GUACA|230",
@@ -11394,6 +11199,18 @@
           "q_mvar": 4.0012516308
         },
         {
+          "barra": "LA JAGUA|115",
+          "p_act_mw": 12.2263473,
+          "p_pstr_mw": 2.1575907,
+          "q_mvar": 3.0074398456
+        },
+        {
+          "barra": "LA LOMA|115",
+          "p_act_mw": 23.9554701,
+          "p_pstr_mw": 4.2274359,
+          "q_mvar": 3.4959039384999997
+        },
+        {
           "barra": "LA MARINA|66",
           "p_act_mw": 18.823470999999998,
           "p_pstr_mw": 0.9907090000000001,
@@ -11406,6 +11223,12 @@
           "q_mvar": 5.6710470709
         },
         {
+          "barra": "LA PAZ (BOGOTA)|115",
+          "p_act_mw": 60.53224516,
+          "p_pstr_mw": 0.92181084,
+          "q_mvar": 18.3964662722
+        },
+        {
           "barra": "LA RAMADA|115",
           "p_act_mw": 19.37431172,
           "p_pstr_mw": 0.29504028,
@@ -11416,6 +11239,12 @@
           "p_act_mw": 15.76016203,
           "p_pstr_mw": 0.57362297,
           "q_mvar": 5.0241250277
+        },
+        {
+          "barra": "LA REFORMA|230",
+          "p_act_mw": 157.754579,
+          "p_pstr_mw": 0.0,
+          "q_mvar": 39.5370243389
         },
         {
           "barra": "LA ROSA|115",
@@ -11490,10 +11319,16 @@
           "q_mvar": 8.4410095365
         },
         {
+          "barra": "MALAGA|115",
+          "p_act_mw": 1.528346685,
+          "p_pstr_mw": 0.023274315,
+          "q_mvar": 0.60979417
+        },
+        {
           "barra": "MALAMBO|115",
-          "p_act_mw": 83.34975376,
-          "p_pstr_mw": 3.73724624,
-          "q_mvar": 26.084166243700004
+          "p_act_mw": 88.92289952,
+          "p_pstr_mw": 3.82211648,
+          "q_mvar": 28.601080532700003
         },
         {
           "barra": "MALENA|230",
@@ -11527,9 +11362,9 @@
         },
         {
           "barra": "MANZANILLO|66",
-          "p_act_mw": 19.34078035,
-          "p_pstr_mw": 0.29452965,
-          "q_mvar": 5.9285890437
+          "p_act_mw": 20.51157105,
+          "p_pstr_mw": 0.31235894999999997,
+          "q_mvar": 6.6661918398
         },
         {
           "barra": "MARIQUITA|115",
@@ -11569,9 +11404,9 @@
         },
         {
           "barra": "MIROLINDO|115",
-          "p_act_mw": 28.85559492,
-          "p_pstr_mw": 0.89244108,
-          "q_mvar": 5.9294477314
+          "p_act_mw": 30.97829248,
+          "p_pstr_mw": 0.95809152,
+          "q_mvar": 6.4145205078
         },
         {
           "barra": "MOCOA (JUNIN)|115",
@@ -11659,9 +11494,9 @@
         },
         {
           "barra": "NUEVA BARRANQUILLA|115",
-          "p_act_mw": 20.0764564,
-          "p_pstr_mw": 1.0566556,
-          "q_mvar": 2.9225527355
+          "p_act_mw": 36.8686773,
+          "p_pstr_mw": 1.3123747,
+          "q_mvar": 4.215249822300001
         },
         {
           "barra": "NUEVA CAJAMARCA (TOLIMA)|115",
@@ -11676,10 +11511,22 @@
           "q_mvar": 1.8477245584
         },
         {
+          "barra": "NUEVA COSPIQUE|115",
+          "p_act_mw": 36.97084225,
+          "p_pstr_mw": 0.56300775,
+          "q_mvar": 23.5841166923
+        },
+        {
           "barra": "NUEVA ESPINAL|115",
           "p_act_mw": 16.73886813,
           "p_pstr_mw": 0.62446687,
           "q_mvar": 4.7135361057
+        },
+        {
+          "barra": "NUEVA MONTERIA|115",
+          "p_act_mw": 31.60657756,
+          "p_pstr_mw": 0.48131844,
+          "q_mvar": 11.4160002773
         },
         {
           "barra": "OASIS|115",
@@ -11695,9 +11542,9 @@
         },
         {
           "barra": "OCOA|115",
-          "p_act_mw": 39.64113489499999,
-          "p_pstr_mw": 1.158186105,
-          "q_mvar": 14.757893543600002
+          "p_act_mw": 93.756020345,
+          "p_pstr_mw": 1.982270655,
+          "q_mvar": 25.6211745073
         },
         {
           "barra": "OIBA|115",
@@ -11716,6 +11563,12 @@
           "p_act_mw": 100.03293223,
           "p_pstr_mw": 2.13667377,
           "q_mvar": 35.5412130442
+        },
+        {
+          "barra": "PAILON|115",
+          "p_act_mw": 16.459116555,
+          "p_pstr_mw": 0.250646445,
+          "q_mvar": 1.3110164672
         },
         {
           "barra": "PAIPA|115",
@@ -11737,9 +11590,9 @@
         },
         {
           "barra": "PAPAYO|115",
-          "p_act_mw": 35.65331398000001,
-          "p_pstr_mw": 0.73008702,
-          "q_mvar": 7.404103878
+          "p_act_mw": 50.621335480000006,
+          "p_pstr_mw": 1.19301552,
+          "q_mvar": 13.6342427738
         },
         {
           "barra": "PAPELCAUCA|115",
@@ -11850,6 +11703,12 @@
           "q_mvar": 2.8208997884
         },
         {
+          "barra": "PUERTO GAITAN|115",
+          "p_act_mw": 48.7780471,
+          "p_pstr_mw": 0.7428129,
+          "q_mvar": 22.7859988726
+        },
+        {
           "barra": "PUERTO LOPEZ|115",
           "p_act_mw": 5.18633626,
           "p_pstr_mw": 0.07897974,
@@ -11862,10 +11721,16 @@
           "q_mvar": 0.8347287682
         },
         {
+          "barra": "PUERTO NUEVO|115",
+          "p_act_mw": 0.61618645,
+          "p_pstr_mw": 0.00938355,
+          "q_mvar": 0.0
+        },
+        {
           "barra": "PUERTO WILCHES|115",
-          "p_act_mw": 19.816199465,
-          "p_pstr_mw": 0.301769535,
-          "q_mvar": 10.1576262811
+          "p_act_mw": 28.80431166,
+          "p_pstr_mw": 0.43864433999999997,
+          "q_mvar": 12.915798349200001
         },
         {
           "barra": "QUIBDO|115",
@@ -11896,6 +11761,18 @@
           "p_act_mw": 17.822034340000002,
           "p_pstr_mw": 0.58109766,
           "q_mvar": 8.060973395
+        },
+        {
+          "barra": "RIO CORDOBA|230",
+          "p_act_mw": 16.0,
+          "p_pstr_mw": 0.0,
+          "q_mvar": 7.7491536768
+        },
+        {
+          "barra": "RIO FRIO|115",
+          "p_act_mw": 27.176097795,
+          "p_pstr_mw": 0.413849205,
+          "q_mvar": 8.5702748055
         },
         {
           "barra": "RIO MAYO|115",
@@ -11934,10 +11811,22 @@
           "q_mvar": 12.8963124137
         },
         {
+          "barra": "SABANA DE TORRES|115",
+          "p_act_mw": 11.02573146,
+          "p_pstr_mw": 0.16790454,
+          "q_mvar": 4.6703105996
+        },
+        {
           "barra": "SABANALARGA|115",
           "p_act_mw": 61.5050618,
           "p_pstr_mw": 2.3692941999999997,
           "q_mvar": 26.127902200300003
+        },
+        {
+          "barra": "SABANALARGA|230",
+          "p_act_mw": 6.735,
+          "p_pstr_mw": 0.0,
+          "q_mvar": 0.0
         },
         {
           "barra": "SALAMINA (CALDAS)|115",
@@ -11976,6 +11865,12 @@
           "q_mvar": 13.3705720509
         },
         {
+          "barra": "SAN BERNARDINO|115",
+          "p_act_mw": 22.52969815,
+          "p_pstr_mw": 0.34309185,
+          "q_mvar": 19.1286343175
+        },
+        {
           "barra": "SAN DIEGO|115",
           "p_act_mw": 56.89031404,
           "p_pstr_mw": 0.86634996,
@@ -11986,6 +11881,12 @@
           "p_act_mw": 24.97736405,
           "p_pstr_mw": 0.38036595,
           "q_mvar": 4.5326641967
+        },
+        {
+          "barra": "SAN FELIPE|115",
+          "p_act_mw": 16.916100630000003,
+          "p_pstr_mw": 0.52317837,
+          "q_mvar": 0.0
         },
         {
           "barra": "SAN GIL|115",
@@ -12006,6 +11907,12 @@
           "q_mvar": 3.9762184477
         },
         {
+          "barra": "SAN JOSE DEL GUAVIARE|115",
+          "p_act_mw": 14.405428,
+          "p_pstr_mw": 0.219372,
+          "q_mvar": 0.0
+        },
+        {
           "barra": "SAN JOSE|115",
           "p_act_mw": 20.2896013,
           "p_pstr_mw": 0.3089787,
@@ -12013,9 +11920,15 @@
         },
         {
           "barra": "SAN LUIS|115",
-          "p_act_mw": 53.0852157,
-          "p_pstr_mw": 0.8084043000000001,
-          "q_mvar": 12.1431014277
+          "p_act_mw": 80.32919674,
+          "p_pstr_mw": 1.22328726,
+          "q_mvar": 23.0746569197
+        },
+        {
+          "barra": "SAN MARTIN|115",
+          "p_act_mw": 10.43665812,
+          "p_pstr_mw": 0.15893388,
+          "q_mvar": 3.2668284822
         },
         {
           "barra": "SAN MATEO (CUCUTA)|115",
@@ -12024,10 +11937,22 @@
           "q_mvar": 31.1488485627
         },
         {
+          "barra": "SAN PABLO|115",
+          "p_act_mw": 4.643381605,
+          "p_pstr_mw": 0.070711395,
+          "q_mvar": 1.6375903541
+        },
+        {
           "barra": "SAN SILVESTRE|115",
           "p_act_mw": 24.74175702,
           "p_pstr_mw": 0.76520898,
           "q_mvar": 10.0793908944
+        },
+        {
+          "barra": "SANTA BARBARA (PALMIRA)|115",
+          "p_act_mw": 22.23602434,
+          "p_pstr_mw": 0.33861966,
+          "q_mvar": 8.7167203223
         },
         {
           "barra": "SANTA MARIA|115",
@@ -12036,16 +11961,28 @@
           "q_mvar": 23.8556589794
         },
         {
+          "barra": "SANTA ROSALIA|115",
+          "p_act_mw": 0.263902185,
+          "p_pstr_mw": 0.004018815,
+          "q_mvar": 1.482294705
+        },
+        {
           "barra": "SANTA ROSA|115",
           "p_act_mw": 2.197616755,
           "p_pstr_mw": 0.033466245,
           "q_mvar": -2.5892046034
         },
         {
+          "barra": "SANTA TERESA|115",
+          "p_act_mw": 4.869244075,
+          "p_pstr_mw": 0.074150925,
+          "q_mvar": 1.2355963814
+        },
+        {
           "barra": "SANTANDER|115",
-          "p_act_mw": 28.26490663,
-          "p_pstr_mw": 0.87417237,
-          "q_mvar": 5.0352754746
+          "p_act_mw": 42.04411418,
+          "p_pstr_mw": 1.59939382,
+          "q_mvar": 9.9398610201
         },
         {
           "barra": "SAUCES|115",
@@ -12082,6 +12019,12 @@
           "p_act_mw": 29.092267545,
           "p_pstr_mw": 0.443029455,
           "q_mvar": 15.2229464378
+        },
+        {
+          "barra": "SIERRA FLOR|115",
+          "p_act_mw": 27.115171605,
+          "p_pstr_mw": 0.412921395,
+          "q_mvar": 12.5648315332
         },
         {
           "barra": "SILENCIO|115",
@@ -12127,9 +12070,9 @@
         },
         {
           "barra": "TABOR (BVENTURA)|115",
-          "p_act_mw": 2.104010235,
-          "p_pstr_mw": 0.032040765,
-          "q_mvar": 0.2533189293
+          "p_act_mw": 14.837528785,
+          "p_pstr_mw": 0.225952215,
+          "q_mvar": 4.162264303
         },
         {
           "barra": "TAME|115",
@@ -12174,6 +12117,30 @@
           "q_mvar": 5.9247558378
         },
         {
+          "barra": "TERMOCANDELARIA|115",
+          "p_act_mw": 13.8335173,
+          "p_pstr_mw": 0.2106627,
+          "q_mvar": 4.974870356
+        },
+        {
+          "barra": "TERMOYUMBO|115",
+          "p_act_mw": 0.0,
+          "p_pstr_mw": 0.0,
+          "q_mvar": 0.0
+        },
+        {
+          "barra": "TERMOZIPA|115",
+          "p_act_mw": 39.232972565,
+          "p_pstr_mw": 0.597456435,
+          "q_mvar": 12.303558416
+        },
+        {
+          "barra": "TERNERA|230",
+          "p_act_mw": 5.984,
+          "p_pstr_mw": 0.0,
+          "q_mvar": 0.9146228637
+        },
+        {
           "barra": "TERNERA|66",
           "p_act_mw": 90.8448995,
           "p_pstr_mw": 4.7813105,
@@ -12192,6 +12159,12 @@
           "q_mvar": 5.5135551873
         },
         {
+          "barra": "TIERRALTA|115",
+          "p_act_mw": 15.30829673,
+          "p_pstr_mw": 0.23312127,
+          "q_mvar": 7.0586922212
+        },
+        {
           "barra": "TOLEDO|230",
           "p_act_mw": 12.456945,
           "p_pstr_mw": 0.0,
@@ -12202,6 +12175,12 @@
           "p_act_mw": 34.65804909,
           "p_pstr_mw": 1.23320991,
           "q_mvar": 10.5028402063
+        },
+        {
+          "barra": "TOLUVIEJO|230",
+          "p_act_mw": 6.47,
+          "p_pstr_mw": 0.0,
+          "q_mvar": 3.133564018
         },
         {
           "barra": "TOQUILLA|115",
@@ -12240,6 +12219,12 @@
           "q_mvar": 5.7196368782
         },
         {
+          "barra": "TUNAL|230",
+          "p_act_mw": 26.19973365,
+          "p_pstr_mw": 1.37893335,
+          "q_mvar": 8.3510931721
+        },
+        {
           "barra": "TUNJA (DONATO)|115",
           "p_act_mw": 27.29416679,
           "p_pstr_mw": 0.41564721,
@@ -12276,10 +12261,22 @@
           "q_mvar": 12.4211056414
         },
         {
+          "barra": "VALLEDUPAR|115",
+          "p_act_mw": 50.1309804,
+          "p_pstr_mw": 8.8466436,
+          "q_mvar": 18.557758216299998
+        },
+        {
           "barra": "VASCONIA|115",
           "p_act_mw": 17.461813065,
           "p_pstr_mw": 0.265915935,
           "q_mvar": 6.3794082735
+        },
+        {
+          "barra": "VEINTE DE JULIO|115",
+          "p_act_mw": 122.78596694,
+          "p_pstr_mw": 1.86983706,
+          "q_mvar": 33.010654463099996
         },
         {
           "barra": "VERAGUAS|115",
@@ -12298,6 +12295,12 @@
           "p_act_mw": 13.15513204,
           "p_pstr_mw": 0.20033195999999998,
           "q_mvar": 1.790081697
+        },
+        {
+          "barra": "VILLA ESTRELLA|66",
+          "p_act_mw": 26.50192735,
+          "p_pstr_mw": 0.40358265,
+          "q_mvar": 8.8091165558
         },
         {
           "barra": "VILLA HERMOSA|115",
@@ -12337,9 +12340,9 @@
         },
         {
           "barra": "ZAMBRANO|66",
-          "p_act_mw": 4.6082049,
-          "p_pstr_mw": 0.2425371,
-          "q_mvar": 1.2822422279
+          "p_act_mw": 20.964301250000002,
+          "p_pstr_mw": 0.74839575,
+          "q_mvar": 6.880231316200001
         },
         {
           "barra": "ZAMORA|115",
@@ -12373,7 +12376,7 @@
         }
       ]
     },
-    "traslados_frontera": 157,
+    "traslados_frontera": 178,
     "taps": {
       "politica": "neutral",
       "fuente": "Supuesto del proyecto aprobado por el usuario el 2026-10-20 (PARATEC publica rango, paso y neutro, no la posición operativa)"
@@ -12411,5 +12414,5 @@
   "warnings": [
     "PROGRAM_NOT_REAL_STATE: el resultado describe el despacho programado por XM, no el estado real del SIN."
   ],
-  "created_at": "2026-10-20T16:39:33.200879Z"
+  "created_at": "2026-10-21T03:49:46.479153Z"
 }

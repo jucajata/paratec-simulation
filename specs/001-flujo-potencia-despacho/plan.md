@@ -126,6 +126,10 @@ IV y VI; se revisan todos los principios.*
 | **D-5** | Islas | El SIN es totalmente interconectado: una isla en el modelo es un artefacto de los datos. Solo se energiza la componente con la barra de ángulo; el resto se reporta como hallazgo con los MW perdidos. Se elimina la referencia de ángulo por isla | research R5; data-model §5; caso borde de la spec |
 | **D-6** | SVC/STATCOM | Se modelan como fuentes de reactiva: `gen` con P = 0, Q ∈ [−inductivo, +capacitivo], consigna D-2 y `enforce_q_lims`. Probado en pandapower 3.5.6; `create_svc` y `create_ssc` se descartaron (research R6) | research R6; data-model §2 |
 
+| **D-7** | Clasificación por subárea (ampliación del 2026-10-20) | La subárea de cada barra es el `subAreaName` de su subestación en PARATEC (presente en las 509 subestaciones del snapshot incluido). Snapshots ya existentes sin la columna la toman de `raw/` al cargarse, sin reescribir archivos (III.3, III.4). Los enlaces a los unifilares usan los identificadores públicos de PARATEC (`typeReport` y `category`), configurados en `config/defaults.toml` con su fuente. La interfaz no descarga los PDF: los abre en PARATEC | FR-034; data-model §2 y §7; contracts/openapi.yaml; contracts/export-format.md |
+
+| **D-8** | Disposición geográfica (ampliación del 2026-10-20) | El usuario retira NG-12. Cada barra toma `latitude`/`longitude` de `SubstationInfo` (503 de 509 subestaciones en el snapshot incluido). Mapa base: límites departamentales de Natural Earth 1:10m (dominio público), filtrados a Colombia y simplificados, versionados en `data/geo/` y servidos por `GET /api/geo/basemap`. Proyección equirectangular centrada en Colombia, calculada en el frontend; el fondo es un SVG sincronizado con el zoom de Cytoscape, sin dependencias nuevas. No se descargan teselas raster (política de OpenStreetMap) | FR-035; data-model §2 y §5; contracts/openapi.yaml |
+
 **Pendiente fuera de este plan**: la opción `--force` de FR-004 sigue en "Decisiones
 pendientes" de la spec. Este plan la excluye, de acuerdo con la constitución III.4.
 
@@ -221,7 +225,8 @@ frontend/
 
 data/
 ├── paratec/<YYYY-MM-DD>/               # snapshot (contracts/snapshot-format.md)
-└── equivalencias/                      # recursos_despacho.csv, nodos_demanda.csv
+├── equivalencias/                      # recursos_despacho.csv, nodos_demanda.csv
+└── geo/                                # mapa base vectorial (Natural Earth, dominio público; D-8)
 config/
 └── defaults.toml                       # límites (con fuente), reglas de imputación,
                                         # consignas, barra de ángulo, tasa del scraper

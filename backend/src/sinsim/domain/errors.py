@@ -68,6 +68,14 @@ CATALOG: dict[str, ErrorSpec] = {
             "Ejecuta `sinsim scrape --fecha YYYY-MM-DD` para obtenerlos.",
         ),
         ErrorSpec(
+            "BASEMAP_NOT_FOUND",
+            "Mapa base no disponible",
+            404,
+            ExitCode.GENERAL,
+            "No se encontró el mapa base en `data/geo/`. Restáuralo desde git; la disposición "
+            "lógica sigue disponible.",
+        ),
+        ErrorSpec(
             "CASE_NOT_FOUND",
             "Caso no encontrado",
             404,

@@ -29,7 +29,7 @@ class ModelTables:
     """Tablas ya filtradas y conciliadas que entran al modelo.
 
     Columnas mínimas:
-        buses: bus_id, vn_kv
+        buses: bus_id, vn_kv (opcionales: nominal_kv, subarea, lat, lon)
         lines: line_id, from_bus, to_bus, length_km, r_ohm_per_km, x_ohm_per_km, c_nf_per_km,
             max_i_ka, parallel
         trafos2w: trafo_id, hv_bus, lv_bus, sn_mva, vn_hv_kv, vn_lv_kv, vk_percent,
@@ -64,6 +64,11 @@ def _f(value: object) -> float:
         return math.nan
 
 
+def _subarea(value: object) -> str | None:
+    """Subárea de PARATEC o `None` si falta (FR-034); nunca se infiere."""
+    return value if isinstance(value, str) and value.strip() else None
+
+
 def _tap_kwargs(row: pd.Series) -> dict[str, object]:
     if not isinstance(row.get("tap_side"), str):
         return {}
@@ -96,6 +101,9 @@ def build_net(model: ModelTables, f_hz: float, sn_mva: float) -> pp.pandapowerNe
             vn_kv=float(b.vn_kv),
             name=str(b.bus_id),
             nominal_kv=float(b.get("nominal_kv", b.vn_kv)),
+            subarea=_subarea(b.get("subarea")),
+            lat=_f(b.get("lat")),
+            lon=_f(b.get("lon")),
         )
 
     for _, ln in model.lines.iterrows():

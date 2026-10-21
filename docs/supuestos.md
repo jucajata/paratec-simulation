@@ -160,6 +160,61 @@ para lograr convergencia, 2026-10-20.
 
 Origen: research R9.
 
+### S16. Subárea de cada barra (FR-034)
+
+La subárea es el `subAreaName` que PARATEC publica para la subestación ("SubArea Antioquia" →
+"Antioquia"). Todas las barras de una subestación comparten su subárea. Si PARATEC no la
+publica, la barra queda "sin subárea" y se lista en `quality.buses_without_subarea`; nunca se
+asigna por cercanía ni por nombre. En el snapshot incluido, 11 de 1 344 barras quedan sin
+subárea: son barras que aparecen en líneas o transformadores con un nombre de subestación que
+no está en el listado de subestaciones. Origen: aprobado por el usuario el 2026-10-20.
+
+### S17. Ubicación geográfica de las barras (FR-035)
+
+Cada barra se dibuja en la latitud y longitud que PARATEC publica para su subestación
+(`SubstationInfo.latitude`/`longitude`, WGS84). Las barras de una misma subestación comparten
+punto y se reparten en un círculo de 3 px de modelo para que no se tapen. Una coordenada fuera
+del rectángulo de Colombia se descarta como dato inválido. Una barra sin coordenadas se dibuja
+en una franja al oeste y se lista en `quality.buses_without_coordinates`; nunca se ubica por
+cercanía ni por nombre. En el snapshot incluido faltan las coordenadas de 6 de 509
+subestaciones. El mapa de fondo es solo visual: no interviene en el cálculo ni en el hash del
+caso. Origen: el usuario retiró NG-12 el 2026-10-20.
+
+### S18. Lectura de flujos en la topología (FR-036)
+
+La generación y la carga de cada barra son las resultantes del flujo (suma de sus generadores
+y de sus cargas servidas; las cargas de islas no energizadas no cuentan, igual que en el
+resumen). El flujo de cada rama lleva el signo de pandapower: positivo sale del extremo
+`from`/`hv`. La flecha dibujada sigue el sentido de la potencia activa. El balance de una barra
+es generación − carga − Σ flujos salientes y vale cero salvo redondeo cuando el flujo
+convergió. Las etiquetas aparecen a partir de un acercamiento de 2,5× para no saturar la
+vista; el tamaño de barras y ramas crece como zoom^−0,6, más despacio que el acercamiento.
+Con un acercamiento menor de 1,6× solo se dibuja el STN (220 kV o más); el STR aparece al
+acercarse. Los datos de toda la red se cargan una sola vez, comprimidos con gzip. En la
+disposición geográfica las barras están fijas, porque su posición es un dato de PARATEC; en la
+lógica se pueden arrastrar.
+
+### S19. Líneas con los dos extremos en la misma subestación
+
+PARATEC publica `sub1 = sub2` en 17 líneas cuyo otro extremo no está en su listado de
+subestaciones: plantas (El Quimbo, Guavio subterránea), clientes industriales (Propal, Refisal)
+o el extranjero (Pimampiro, Ecuador). Si el nombre de la línea nombra una subestación que sí
+está declarada, se usa ese extremo: así las tres líneas Jamondino–Pimampiro 230 kV llegan a
+PIMAMPIRO|230. Las 14 restantes no transportan nada, se excluyen del modelo y aparecen en
+`quality.not_modeled`. Antes se modelaban como lazos, lo que sumaba a la barra la carga
+capacitiva completa de la línea (unos 70 Mvar en Jamondino): un apoyo de reactiva ficticio
+que enmascaraba la fragilidad de tensión del suroccidente en el periodo 21. Origen: hallazgo
+de la implementación, 2026-10-20.
+
+### S20. Reporte de violaciones y etiquetas (FR-037, FR-036)
+
+El reporte de violaciones separa barras bajo tensión, barras sobre tensión y ramas con
+cargabilidad mayor al límite (100 %), ordenadas por desviación respecto al límite aplicado,
+que viene de `config/defaults.toml` con su fuente. Una rama cuyos extremos están en subáreas
+distintas se reporta "entre subáreas". El reporte se exporta en `violaciones.csv`. Las
+etiquetas de barras y ramas de la topología se eligen por el usuario; la elección se guarda
+solo en el navegador y no forma parte del caso.
+
 ## Lo que NO es un supuesto sino una limitación conocida
 
 - Las tablas `recursos_despacho.csv` y `nodos_demanda.csv` del snapshot incluido son propuestas

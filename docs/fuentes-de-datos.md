@@ -99,6 +99,27 @@ La demanda activa de cada barra en el caso es `Ener.Act. + Perd.PSTR`. Las pérd
 pérdidas de la demanda (del nivel inferior al punto de conexión), distintas de las pérdidas de
 las líneas y transformadores que calcula el flujo.
 
+### Subáreas y diagramas unifilares (FR-034)
+
+- `SubstationInfo.subAreaName` da la subárea operativa de cada subestación (18 del SIN más
+  Ecuador y Venezuela). Los snapshots descargados antes de FR-034 no tienen la columna en
+  `normalized/buses.parquet`; se deriva de `raw/` al cargar, sin modificar el snapshot.
+- PARATEC publica los "Diagramas unifilares por subárea" en PDF (17 subáreas; Caquetá no tiene).
+  El listado sale de la API pública `https://paratecbackend.xm.com.co/unifilares/api/Diagrama/getAll`.
+  sinsim no los descarga: la interfaz enlaza a la página de PARATEC con los identificadores
+  guardados en `config/defaults.toml` (`[unifilares]`). Los PDF son dibujos vectoriales sin
+  texto extraíble, útiles para revisión manual, no como fuente de datos.
+
+### Coordenadas y mapa base (FR-035)
+
+- `SubstationInfo.latitude`/`longitude` dan la ubicación de 503 de las 509 subestaciones del
+  snapshot incluido. Snapshots anteriores a FR-035 las derivan de `raw/` al cargar.
+- PARATEC también publica el trazado de 807 líneas (`TransmissionMap/getLines`, campo
+  `geometry`). Hoy no se usa: las líneas se dibujan rectas entre barras.
+- El mapa base es `data/geo/colombia_departamentos.geojson`, derivado de Natural Earth 1:10m
+  (dominio público). Su origen y procesamiento están en `data/geo/README.md`. No se usan
+  teselas raster de OpenStreetMap porque su política prohíbe la descarga masiva.
+
 ## 4. Conciliación de nombres (`data/equivalencias/`)
 
 Las tres fuentes no comparten identificadores. La relación se mantiene en tablas CSV versionadas

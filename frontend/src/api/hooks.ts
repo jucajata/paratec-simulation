@@ -41,3 +41,8 @@ export function useTopology(runId: string | null) {
     enabled: runId !== null,
   });
 }
+
+/** Mapa base para la disposición geográfica (FR-035); no cambia, así que no se refresca. */
+export function useBasemap(enabled: boolean) {
+  return useQuery({ queryKey: ["basemap"], queryFn: () => api.basemap(), enabled, staleTime: Infinity });
+}

@@ -72,6 +72,56 @@ def test_case_creation_is_idempotent_and_runs_converge(client: TestClient):
     r4 = client.get(f"/api/runs/{run['run_id']}")
     assert r4.status_code == 200 and r4.json()["run_id"] == run["run_id"]
 
+    # FR-034: la topología trae la subárea por nodo y los enlaces a los unifilares de XM.
+    r5 = client.get(f"/api/runs/{run['run_id']}/topology")
+    assert r5.status_code == 200
+    topo = r5.json()
+    assert set(topo) == {"nodes", "edges", "subareas"}
+    assert all("subarea" in n for n in topo["nodes"])
+    names = [s["name"] for s in topo["subareas"]]
+    assert names == sorted(names) and "Antioquia" in names
+    antioquia = next(s for s in topo["subareas"] if s["name"] == "Antioquia")
+    assert antioquia["unifilar_url"].startswith("https://paratec.xm.com.co/unifilares/")
+    assert "category=76fd5d96-3e30-44a5-13e2-08dd52a72d2b" in antioquia["unifilar_url"]
+    # FR-035: coordenadas de PARATEC por nodo; las que faltan se reportan en la calidad.
+    located = [n for n in topo["nodes"] if n["lat"] is not None and n["lon"] is not None]
+    assert len(located) > 0.9 * len(topo["nodes"])
+    assert all(-5 <= n["lat"] <= 14 and -82.5 <= n["lon"] <= -66 for n in located)
+    missing = {n["id"] for n in topo["nodes"] if n["lat"] is None}
+    assert missing <= set(case["quality"]["buses_without_coordinates"])
+    # FR-036: generación, carga y flujos por elemento, coherentes con el resumen de la corrida.
+    summary = run["result"]["summary"]
+    p_gen = sum(n["p_gen_mw"] for n in topo["nodes"])
+    p_load = sum(n["p_load_mw"] for n in topo["nodes"])
+    assert p_gen == pytest.approx(summary["p_gen_mw"], rel=1e-6)
+    assert p_load == pytest.approx(summary["p_load_mw"], rel=1e-6)
+    parts = [n for n in topo["nodes"] if n["p_load_act_mw"] is not None]
+    assert parts and all(
+        n["p_load_act_mw"] + n["p_load_pstr_mw"] == pytest.approx(n["p_load_mw"], abs=1e-6)
+        for n in parts
+    )
+    with_flow = [e for e in topo["edges"] if e["p_from_mw"] is not None]
+    assert len(with_flow) > 0.9 * len(topo["edges"])
+    losses = sum(e["p_from_mw"] + e["p_to_mw"] for e in with_flow)
+    assert losses == pytest.approx(summary["p_losses_mw"], rel=0.05)
+    assert all(k in topo["nodes"][0] for k in ("vm_kv", "va_degree", "slack_adjust_mw"))
+    assert all(k in topo["edges"][0] for k in ("i_ka", "pl_mw", "ql_mvar"))
+    # FR-037: el reporte de violaciones coincide con los contadores del resumen.
+    viol = summary["violations"]
+    kinds = [v["kind"] for v in viol]
+    assert kinds.count("tension_baja") + kinds.count("tension_alta") == summary["n_voltage_violations"]
+    assert kinds.count("sobrecarga") == summary["n_overloads"]
+    assert all(v["deviation"] > 0 and v["source"] for v in viol)
+
+
+def test_basemap_is_served_offline_as_geojson(client: TestClient):
+    r = client.get("/api/geo/basemap")
+    assert r.status_code == 200 and r.headers["content-type"].startswith("application/geo+json")
+    fc = r.json()
+    assert fc["type"] == "FeatureCollection" and "Natural Earth" in fc["attribution"]
+    kinds = [f["properties"]["kind"] for f in fc["features"]]
+    assert kinds.count("departamento") == 33 and kinds.count("pais_vecino") == 5
+
 
 def test_errors_are_problem_details(client: TestClient):
     r = client.get("/api/cases/" + "0" * 64)
@@ -91,3 +141,11 @@ def test_errors_are_problem_details(client: TestClient):
     assert r.status_code == 400 and r.json()["code"] == "INVALID_DATE"
     r = client.get("/api/runs/00000000-0000-0000-0000-000000000000")
     assert r.status_code == 404 and r.json()["code"] == "RUN_NOT_FOUND"
+
+
+def test_large_responses_are_gzip_compressed_when_accepted(client: TestClient):
+    r = client.get("/api/geo/basemap", headers={"Accept-Encoding": "gzip"})
+    assert r.status_code == 200 and r.headers.get("content-encoding") == "gzip"
+    assert (
+        r.json()["type"] == "FeatureCollection"
+    )  # el cliente lo descomprime de forma transparente

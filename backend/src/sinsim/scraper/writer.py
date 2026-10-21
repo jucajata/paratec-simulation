@@ -101,6 +101,8 @@ def normalize(raw: RawSnapshot) -> tuple[SnapshotTables, DispatchVersion, dict[s
 
     declared = buses.parse_substations(data["paratec.substations"])
     nominals = buses.parse_nominal_levels(data["paratec.substations"])
+    subareas = buses.parse_subareas(data["paratec.substations"])
+    coords = buses.parse_substation_coords(data["paratec.substations"])
     line_map = lines.parse_line_map(data["paratec.line_map"])
     lines_df = lines.parse_lines(data["paratec.lines"], line_map, declared)
     t2, t3 = trafos.parse_transformers(data["paratec.transformers"], declared)
@@ -125,7 +127,7 @@ def normalize(raw: RawSnapshot) -> tuple[SnapshotTables, DispatchVersion, dict[s
         | set(sh.bus.dropna())
         | set(svc.bus.dropna())
     )
-    buses_df = buses.build_buses_table(declared, used, nominals)
+    buses_df = buses.build_buses_table(declared, used, nominals, subareas, coords)
 
     ddec_files = [n for n in raw.xm if xm_dispatch.dispatch_version_of(n) is not None]
     chosen, available = xm_dispatch.select_dispatch_version(ddec_files)

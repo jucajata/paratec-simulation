@@ -119,6 +119,23 @@ class AttributionCfg(_Model):
     text: str
 
 
+class UnifilaresCfg(_Model):
+    """Enlaces a los diagramas unifilares oficiales de XM por subárea (FR-034)."""
+
+    page_url: str
+    type_report: str
+    source: str
+    categories: dict[str, str] = {}
+    """Subárea (como `subarea` de las barras) → id de categoría en PARATEC."""
+
+    def url_for(self, subarea: str) -> str | None:
+        """URL del unifilar de la subárea, o `None` si XM no lo publica."""
+        category = self.categories.get(subarea)
+        if category is None:
+            return None
+        return f"{self.page_url}?typeReport={self.type_report}&category={category}"
+
+
 class Config(_Model):
     """Configuración completa de `defaults.toml`."""
 
@@ -130,6 +147,7 @@ class Config(_Model):
     solver: SolverCfg
     scraper: ScraperCfg
     attribution: AttributionCfg
+    unifilares: UnifilaresCfg
 
     def voltage_bands(self) -> list[VoltageBand]:
         """Bandas de tensión para `domain.limits`."""
@@ -174,6 +192,7 @@ class RepoPaths:
     snapshots: Path
     equivalences: Path
     cases: Path
+    geo: Path
 
 
 def find_repo_root(start: Path | None = None) -> Path:
@@ -200,6 +219,7 @@ def repo_paths(start: Path | None = None) -> RepoPaths:
         snapshots=root / "data" / "paratec",
         equivalences=root / "data" / "equivalencias",
         cases=root / "cases",
+        geo=root / "data" / "geo",
     )
 
 

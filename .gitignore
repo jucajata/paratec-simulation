@@ -235,3 +235,5 @@ cases/*
 # Directorios temporales del scraper (escritura atómica)
 data/paratec/.tmp-*/
 .DS_Store
+frontend/.vite/
+frontend/*.tsbuildinfo

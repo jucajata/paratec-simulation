@@ -1,0 +1,227 @@
+{
+  "schema_version": 1,
+  "snapshot_date": "2026-10-09",
+  "extracted_at": "2026-10-20T17:56:10.709206Z",
+  "scraper_version": "0.1.0",
+  "attribution": "Información proporcionada por XM S.A. E.S.P. – PARATEC y archivos públicos de despacho",
+  "sources": [
+    {
+      "entity": "paratec.substations",
+      "url": "https://paratecbackend.xm.com.co/reportetransmision/api/Substation/SubstationInfo",
+      "source_modified_at": null,
+      "standard_version": null
+    },
+    {
+      "entity": "paratec.lines",
+      "url": "https://paratecbackend.xm.com.co/reportetransmision/api/Line/getAll",
+      "source_modified_at": null,
+      "standard_version": null
+    },
+    {
+      "entity": "paratec.line_map",
+      "url": "https://paratecbackend.xm.com.co/mapas/api/TransmissionMap/getLines",
+      "source_modified_at": null,
+      "standard_version": null
+    },
+    {
+      "entity": "paratec.reactors",
+      "url": "https://paratecbackend.xm.com.co/reportetransmision/api/Reactor/getAll",
+      "source_modified_at": null,
+      "standard_version": null
+    },
+    {
+      "entity": "paratec.svc_statcom",
+      "url": "https://paratecbackend.xm.com.co/reportetransmision/api/StatcomSvc/getAll",
+      "source_modified_at": null,
+      "standard_version": null
+    },
+    {
+      "entity": "paratec.transformers",
+      "url": "https://paratecbackend.xm.com.co/reportetransformacion/api/PowerTransformer/PowerTransformerInfo",
+      "source_modified_at": null,
+      "standard_version": null
+    },
+    {
+      "entity": "paratec.hydraulic_units",
+      "url": "https://paratecbackend.xm.com.co/reportegeneracion/api/HydraulicUnit/HydraulicUnitInfo",
+      "source_modified_at": null,
+      "standard_version": null
+    },
+    {
+      "entity": "paratec.thermal_units",
+      "url": "https://paratecbackend.xm.com.co/reportegeneracion/api/ThermalUnit/ThermalUnitInfo",
+      "source_modified_at": null,
+      "standard_version": null
+    },
+    {
+      "entity": "paratec.solar_plants",
+      "url": "https://paratecbackend.xm.com.co/reportegeneracion/api/SolarPlant/getAll",
+      "source_modified_at": null,
+      "standard_version": null
+    },
+    {
+      "entity": "paratec.wind_plants",
+      "url": "https://paratecbackend.xm.com.co/reportegeneracion/api/WindPlant/WindPlantInfo",
+      "source_modified_at": null,
+      "standard_version": null
+    },
+    {
+      "entity": "paratec.capacitors",
+      "url": "https://paratecbackend.xm.com.co/reportegeneracion/api/Capacitor/getAll",
+      "source_modified_at": null,
+      "standard_version": null
+    },
+    {
+      "entity": "xm.dispatch",
+      "url": "https://api-portalxm.xm.com.co/administracion-archivos/ficheros/descarga-archivo?ruta=M%3A%2FInformacionAgentes%2FUsuarios%2FPublico%2FDESPACHO%2F2026-10%2FdDEC1009.txt&nombreBlobContainer=storageportalxm",
+      "source_modified_at": "2026-10-08T14:16:10-05:00",
+      "standard_version": "XM-CND-2014-045 ed. 2025"
+    },
+    {
+      "entity": "xm.demand",
+      "url": "https://api-portalxm.xm.com.co/administracion-archivos/ficheros/descarga-archivo?ruta=M%3A%2FInformacionAgentes%2FUsuarios%2FPublico%2FDEMANDAS%2FPronostico+Oficial%2F2026-10%2FPRON_BARRA1009.txt&nombreBlobContainer=storageportalxm",
+      "source_modified_at": "2026-10-08T08:27:41-05:00",
+      "standard_version": "XM-CND-2014-045 ed. 2025"
+    }
+  ],
+  "dispatch_version": {
+    "used": "V0",
+    "available": [
+      "V0"
+    ]
+  },
+  "record_counts": {
+    "paratec.substations": 509,
+    "paratec.lines": 929,
+    "paratec.line_map": 807,
+    "paratec.reactors": 81,
+    "paratec.svc_statcom": 26,
+    "paratec.transformers": 1075,
+    "paratec.hydraulic_units": 284,
+    "paratec.thermal_units": 130,
+    "paratec.solar_plants": 377,
+    "paratec.wind_plants": 3,
+    "paratec.capacitors": 63,
+    "normalized.buses": 1344,
+    "normalized.lines": 929,
+    "normalized.trafos2w": 689,
+    "normalized.trafos3w": 386,
+    "normalized.generators": 794,
+    "normalized.shunts": 144,
+    "normalized.svc_statcom": 26,
+    "xm.dispatch.resources": 626,
+    "xm.demand.nodes": 552
+  },
+  "files": [
+    {
+      "path": "normalized/buses.parquet",
+      "sha256": "6e365a3cdcf8f46de6ca7245b08acf8b2e7e7c1652eae4bece51fc8280c5c225",
+      "bytes": 32814
+    },
+    {
+      "path": "normalized/demand.parquet",
+      "sha256": "f181c44b9eb462522bac9231bae419750144a15b5d0e298946719496c8eeaf09",
+      "bytes": 379241
+    },
+    {
+      "path": "normalized/dispatch.parquet",
+      "sha256": "171d0a9d5d509fab383f38cce8b6ba7c8bdc8bdf4bb879f833bc68551dbad9bc",
+      "bytes": 25826
+    },
+    {
+      "path": "normalized/generators.parquet",
+      "sha256": "32c2c5278f995485c0b54286fd2f7892b9c0a00a6c522044bbbfb7e4b3ab6426",
+      "bytes": 52100
+    },
+    {
+      "path": "normalized/lines.parquet",
+      "sha256": "4c58ac9a5001e541531e368d77f044428c0bb212e381d3bf7206efd07cd9b4b4",
+      "bytes": 75825
+    },
+    {
+      "path": "normalized/shunts.parquet",
+      "sha256": "d09a42e6193378f0ff9aa2ba31d25654434f662c3410ea33da0f589ebe0abc52",
+      "bytes": 15960
+    },
+    {
+      "path": "normalized/svc_statcom.parquet",
+      "sha256": "852491b99d2e79596cc714bb69f12bc8c0b740b02bb0aa7c0d71ebf28e92a412",
+      "bytes": 10256
+    },
+    {
+      "path": "normalized/trafos2w.parquet",
+      "sha256": "8c8d8aee834ef960ebdb98af56a08d1721b1b4e001766518b897676b055178d9",
+      "bytes": 67982
+    },
+    {
+      "path": "normalized/trafos3w.parquet",
+      "sha256": "a24bca5c512279639da515bf88b88a1d97a59b72dd3972c655b23680afbb3dd0",
+      "bytes": 63929
+    },
+    {
+      "path": "raw/paratec/mapas__TransmissionMap_getLines.json",
+      "sha256": "a89391f18d4ed30f91f5ac61033d97c1112974698964debd6ebcaba35d6273cb",
+      "bytes": 305111
+    },
+    {
+      "path": "raw/paratec/reportegeneracion__Capacitor_getAll.json",
+      "sha256": "35baf991da618e0479eeef614d8365900a3243b1519a9cd59899eb767e50404f",
+      "bytes": 38230
+    },
+    {
+      "path": "raw/paratec/reportegeneracion__HydraulicUnit_HydraulicUnitInfo.json",
+      "sha256": "5f01f823020233dc730d86b7d008ae860d802c18dd1d775513a7caadef455e2a",
+      "bytes": 397014
+    },
+    {
+      "path": "raw/paratec/reportegeneracion__SolarPlant_getAll.json",
+      "sha256": "9ad2ad0b63411d71a328cfa3953e1094a3385a1cc73b54dee3abe3848bca4508",
+      "bytes": 385037
+    },
+    {
+      "path": "raw/paratec/reportegeneracion__ThermalUnit_ThermalUnitInfo.json",
+      "sha256": "bb368a45a23977bafc0c1fe351e5275257e886c95e3b03011b6dd73aee16a348",
+      "bytes": 164016
+    },
+    {
+      "path": "raw/paratec/reportegeneracion__WindPlant_WindPlantInfo.json",
+      "sha256": "aab30352ea38f0d68d54f42519da879a7d43252227a3aa38ca3053017c64555f",
+      "bytes": 3006
+    },
+    {
+      "path": "raw/paratec/reportetransformacion__PowerTransformer_PowerTransformerInfo.json",
+      "sha256": "cc67e575c95766079f60cba8e78052b3122b231104f6060c6a1545ec650b4360",
+      "bytes": 2072726
+    },
+    {
+      "path": "raw/paratec/reportetransmision__Line_getAll.json",
+      "sha256": "92650501cc52f254816f12219c0d1eec6297348a0004881951df1b789034298e",
+      "bytes": 743885
+    },
+    {
+      "path": "raw/paratec/reportetransmision__Reactor_getAll.json",
+      "sha256": "2130dd8378afb2c146452d1a3f543a64d3b6fdc066bf0428a089c14f79b3afd4",
+      "bytes": 44273
+    },
+    {
+      "path": "raw/paratec/reportetransmision__StatcomSvc_getAll.json",
+      "sha256": "0458b0161f055e8cc1cc0f98e084b0b03c643a0314f9c17a5c7f59353c2b0887",
+      "bytes": 30193
+    },
+    {
+      "path": "raw/paratec/reportetransmision__Substation_SubstationInfo.json",
+      "sha256": "509b741cc33f410472cb7350fb581a4714e8ee86eb31e00174c4dc1a72ffa1a5",
+      "bytes": 424324
+    },
+    {
+      "path": "raw/xm/PRON_BARRA1009.txt",
+      "sha256": "79709c5c44da8142a199c925f99b7f5c763c98195635dc220eccf217e4b8489c",
+      "bytes": 581929
+    },
+    {
+      "path": "raw/xm/dDEC1009.txt",
+      "sha256": "c74ddb4423b7815a65db61781f127fbf446227676f9cf1d59313586ddf5925e8",
+      "bytes": 88998
+    }
+  ]
+}

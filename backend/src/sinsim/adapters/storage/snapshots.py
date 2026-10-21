@@ -13,9 +13,11 @@ from pathlib import Path
 import duckdb
 import pandas as pd
 
+from sinsim.adapters.sources_to_pandapower.buses import parse_subareas, parse_substation_coords
+from sinsim.adapters.sources_to_pandapower.field_mapping import RESPONSE_DATA
 from sinsim.domain.entities import LoadedSnapshot, Manifest, SnapshotSummary, SnapshotTables
 from sinsim.domain.errors import DomainError
-from sinsim.scraper.writer import NORMALIZED, TABLE_NAMES, sha256_bytes, sha256_file
+from sinsim.scraper.writer import NORMALIZED, RAW_PARATEC, TABLE_NAMES, sha256_bytes, sha256_file
 
 
 class ParquetSnapshotRepository:
@@ -88,12 +90,41 @@ class ParquetSnapshotRepository:
             )
         base = self._dir(snapshot_date) / NORMALIZED
         tables = {name: self._read_table(base / f"{name}.parquet") for name in TABLE_NAMES}
+        if not {"subarea", "lat", "lon"} <= set(tables["buses"].columns):
+            tables["buses"] = self._with_substation_attrs_from_raw(tables["buses"], snapshot_date)
         return LoadedSnapshot(
             date=snapshot_date,
             manifest=manifest,
             manifest_sha256=manifest_sha,
             tables=SnapshotTables(**tables),
         )
+
+    def _with_substation_attrs_from_raw(
+        self, buses: pd.DataFrame, snapshot_date: date
+    ) -> pd.DataFrame:
+        """Añade `subarea`, `lat` y `lon` a snapshots anteriores a FR-034/FR-035 desde `raw/`.
+
+        `raw/` es inmutable y ya está verificado contra el manifiesto, así que derivar las
+        columnas en memoria no altera el snapshot (constitución III.3 y III.4). No escribe nada.
+        """
+        out = buses.copy()
+        raw = sorted(
+            (self._dir(snapshot_date) / RAW_PARATEC).glob("*Substation_SubstationInfo.json")
+        )
+        records: list[dict[str, object]] = []
+        if raw:
+            payload = json.loads(raw[0].read_text(encoding="utf-8"))
+            records = (
+                payload.get(RESPONSE_DATA, []) if isinstance(payload, dict) else payload
+            ) or []
+        subareas = parse_subareas(records)
+        coords = parse_substation_coords(records)
+        if "subarea" not in out.columns:
+            out["subarea"] = out["substation"].map(lambda s: subareas.get(str(s)))
+        if "lat" not in out.columns or "lon" not in out.columns:
+            out["lat"] = out["substation"].map(lambda s: coords.get(str(s), (None, None))[0])
+            out["lon"] = out["substation"].map(lambda s: coords.get(str(s), (None, None))[1])
+        return out
 
     @staticmethod
     def _read_table(path: Path) -> pd.DataFrame:

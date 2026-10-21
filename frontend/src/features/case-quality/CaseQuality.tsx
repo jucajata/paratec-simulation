@@ -142,6 +142,24 @@ export function CaseQuality({ studyCase }: Props): JSX.Element {
           ))}
         </ul>
       </Section>
+      <Section title="Barras sin coordenadas en PARATEC" count={(q.buses_without_coordinates ?? []).length}>
+        <p className="muted">
+          En la disposición geográfica se dibujan aparte; su ubicación no se infiere (FR-035).
+        </p>
+        <ul>
+          {(q.buses_without_coordinates ?? []).map((b) => (
+            <li key={b}>{b}</li>
+          ))}
+        </ul>
+      </Section>
+      <Section title="Barras sin subárea en PARATEC" count={(q.buses_without_subarea ?? []).length}>
+        <p className="muted">PARATEC no publica la subárea de su subestación; no se infiere (FR-034).</p>
+        <ul>
+          {(q.buses_without_subarea ?? []).map((b) => (
+            <li key={b}>{b}</li>
+          ))}
+        </ul>
+      </Section>
       <Section title="Avisos de validación física" count={q.physical_issues.length}>
         <ul>
           {q.physical_issues.map((p) => (

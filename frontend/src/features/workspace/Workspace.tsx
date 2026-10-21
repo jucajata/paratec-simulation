@@ -7,6 +7,7 @@ import { CaseQuality } from "../case-quality/CaseQuality";
 import { ResultsTables } from "../results-tables/ResultsTables";
 import { RunPicker, type RunRequest } from "../run-picker/RunPicker";
 import { TopologyView } from "../topology/TopologyView";
+import { ViolationsReport } from "../violations/ViolationsReport";
 
 const ATTRIBUTION = "Información proporcionada por XM S.A. E.S.P. – PARATEC y archivos públicos de despacho";
 
@@ -65,7 +66,8 @@ export function Workspace(): JSX.Element {
               </a>
             </p>
             <ResultsTables run={run} />
-            {run.result && <TopologyView runId={run.run_id} />}
+            <ViolationsReport run={run} />
+            {run.result && <TopologyView run={run} />}
           </>
         )}
       </main>

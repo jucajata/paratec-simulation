@@ -99,6 +99,19 @@ def test_ac_flow_converges_with_full_trace_and_coherent_summary(built):
     assert s.slack_adjust_total_mw == pytest.approx(
         sum(g.slack_adjust_mw for g in run.result.generators)
     )
+    # FR-034: subárea de PARATEC en barras y ramas; las barras sin ella se reportan.
+    with_sub = [b for b in run.result.buses if b.subarea]
+    assert len(with_sub) > 0.9 * len(run.result.buses)
+    assert not any(b.subarea.startswith("SubArea") for b in with_sub)
+    assert any(
+        br.subarea_from and br.subarea_to and br.subarea_from != br.subarea_to
+        for br in run.result.lines
+    )
+    missing = set(built.case.quality.buses_without_subarea)
+    assert {b.bus_id for b in run.result.buses if not b.subarea} <= missing
+    # Ninguna rama del resultado une una barra consigo misma; esas líneas se reportan.
+    assert not any(br.from_bus == br.to_bus for br in run.result.lines + run.result.trafos)
+    assert any("misma barra" in n.reason for n in built.case.quality.not_modeled)
 
 
 def test_dc_flow_is_labelled_as_approximation(built):
