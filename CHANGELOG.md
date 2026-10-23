@@ -62,5 +62,5 @@ programado y el pronóstico de demanda de XM, y la interfaz web para ejecutarlo.
 
 - Snapshots de PARATEC del 2026-10-09, 2026-10-19, 2026-10-20 y 2026-10-21.
 
-[0.5.0]: https://github.com/jucajata/paratec-simulation/releases/tag/v0.5.0
-[0.4.0]: https://github.com/jucajata/paratec-simulation/releases/tag/v0.4.0
+[0.5.0]: https://github.com/jucajata/sinsim/releases/tag/v0.5.0
+[0.4.0]: https://github.com/jucajata/sinsim/releases/tag/v0.4.0

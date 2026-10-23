@@ -32,7 +32,7 @@ Cada release publicado trae el paquete listo para instalar. Con [uv](https://doc
 basta un comando; uv descarga Python 3.12 si hace falta:
 
 ```bash
-uv tool install https://github.com/jucajata/paratec-simulation/releases/download/v0.5.0/sinsim-0.5.0-py3-none-any.whl
+uv tool install https://github.com/jucajata/sinsim/releases/download/v0.5.0/sinsim-0.5.0-py3-none-any.whl
 sinsim serve          # abre la interfaz en http://127.0.0.1:8000
 ```
 
