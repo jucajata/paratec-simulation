@@ -91,6 +91,7 @@ Esquema en [contracts/snapshot-format.md §3](./contracts/snapshot-format.md).
 | `recursos_despacho.csv` | (`resource`, `valid_from`) | `resource`, `kind` ∈ {plant, unit, intl_link}, `paratec_ids` (separados por `;`), `connection_bus` (solo para `intl_link`), `valid_from`, `valid_to`, `note` | Una sola fila vigente por recurso y fecha |
 | `nodos_demanda.csv` | (`node`, `vn_kv`, `valid_from`) | `node`, `ucp`, `vn_kv`, `substation`, `paratec_vn_kv`, `valid_from`, `valid_to`, `note` | Igual |
 | `subestaciones_alias.csv` (añadida en la implementación, ver plan "Complejidad y desviaciones") | (`alias`, `valid_from`) | `alias`, `substation`, `valid_from`, `valid_to`, `note` | Nombres distintos de la misma subestación entre entidades de PARATEC (p. ej. `MONTERIA (ISA)` → `NUEVA MONTERIA`); los alias aplicados aparecen en `assumptions.alias_subestaciones` |
+| `coordenadas_subestaciones.csv` (opcional, añadida en la implementación) | (`substation`, `valid_from`) | `substation`, `lat`, `lon` (WGS84), `valid_from`, `valid_to`, `note` (fuente obligatoria) | Coordenadas de subestaciones que PARATEC publica sin ellas; solo completan, nunca reemplazan. Las aplicadas aparecen en `assumptions.coordenadas_curadas` (S21) |
 
 Una vigencia que se solapa es un error de validación. Un recurso o nodo sin fila vigente
 queda **no ubicado** (FR-012, FR-014a).

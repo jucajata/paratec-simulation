@@ -5,6 +5,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from datetime import date
 from pathlib import Path
 from typing import Protocol
@@ -43,6 +44,23 @@ class EquivalenceRepository(Protocol):
     def substation_aliases(self, on: date) -> dict[str, str]:
         """Alias vigentes de subestaciones: nombre de PARATEC → nombre canónico."""
         ...
+
+    def substation_coords(self, on: date) -> Mapping[str, SubstationCoord]:
+        """Coordenadas curadas vigentes de subestaciones sin coordenadas en PARATEC."""
+        ...
+
+
+class SubstationCoord(Protocol):
+    """Fila vigente de `coordenadas_subestaciones.csv` (solo lectura)."""
+
+    @property
+    def lat(self) -> float: ...  # noqa: D102
+
+    @property
+    def lon(self) -> float: ...  # noqa: D102
+
+    @property
+    def note(self) -> str: ...  # noqa: D102
 
 
 class ResourceEquivalence(Protocol):

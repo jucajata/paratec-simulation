@@ -80,8 +80,9 @@ en el reporte de calidad; nunca se completa en silencio. Para aportar:
 1. Corre un caso y revisa en el reporte de calidad los recursos y nodos sin ubicar (el aviso
    "Cómo colaborar" de la interfaz permite copiar la lista).
 2. Confirma el elemento real en [PARATEC](https://paratec.xm.com.co).
-3. Edita la tabla que corresponda (`recursos_despacho.csv`, `nodos_demanda.csv` o
-   `subestaciones_alias.csv`): fechas `AAAA-MM-DD`, una sola fila vigente por clave y fecha,
+3. Edita la tabla que corresponda (`recursos_despacho.csv`, `nodos_demanda.csv`,
+   `subestaciones_alias.csv` o, para una subestación sin coordenadas en PARATEC,
+   `coordenadas_subestaciones.csv`): fechas `AAAA-MM-DD`, una sola fila vigente por clave y fecha,
    fuente en `note` y sin la marca "NO CURADA". Deja sin fila lo que no puedas confirmar; nunca
    se inventan parámetros eléctricos.
 4. Verifica con `make test` y `make demo`: la cobertura debe subir y no debe aparecer nada nuevo

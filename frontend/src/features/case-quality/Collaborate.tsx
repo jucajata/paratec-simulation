@@ -90,6 +90,11 @@ export function Collaborate({ quality }: Props): JSX.Element {
                   <code>valid_from</code>, <code>valid_to</code>, <code>note</code>, cuando PARATEC nombra distinto una
                   misma subestación.
                 </li>
+                <li>
+                  <code>coordenadas_subestaciones.csv</code>: <code>substation</code>, <code>lat</code>,{" "}
+                  <code>lon</code>, <code>valid_from</code>, <code>valid_to</code>, <code>note</code>, cuando PARATEC
+                  publica una subestación sin coordenadas. Solo completa: nunca reemplaza una coordenada de PARATEC.
+                </li>
               </ul>
               Reglas: fechas <code>AAAA-MM-DD</code>; una sola fila vigente por clave y fecha; en <code>note</code> cita
               la fuente (PARATEC, unifilar) y quita la marca "NO CURADA"; deja sin fila lo que no puedas confirmar. Nunca

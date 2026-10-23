@@ -13,7 +13,8 @@ Orden:
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass, field
+from collections.abc import Mapping
+from dataclasses import dataclass, field, replace
 from datetime import UTC, date, datetime
 from typing import Any, cast
 
@@ -43,7 +44,7 @@ from sinsim.domain.entities import (
     UnlocatedResource,
 )
 from sinsim.domain.errors import DomainError
-from sinsim.domain.ports import CaseRepository, EquivalenceRepository
+from sinsim.domain.ports import CaseRepository, EquivalenceRepository, SubstationCoord
 from sinsim.services import islands as islands_service
 from sinsim.services.snapshots import require_operating_point
 
@@ -189,6 +190,44 @@ def _apply_aliases(tables: SnapshotTables, aliases: dict[str, str]) -> tuple[Sna
     return SnapshotTables(dispatch=tables.dispatch, demand=tables.demand, **renamed), merged
 
 
+def _apply_curated_coordinates(
+    buses: pd.DataFrame, coords: Mapping[str, SubstationCoord]
+) -> tuple[pd.DataFrame, list[dict[str, Any]]]:
+    """Completa con la tabla curada las coordenadas que PARATEC no publica (FR-035).
+
+    Solo llena barras sin latitud o sin longitud: una coordenada de PARATEC nunca se reemplaza.
+    Cada coordenada aplicada se devuelve con su fuente para el registro de supuestos.
+
+    Returns:
+        Barras completadas y lista de coordenadas aplicadas, una por subestación.
+    """
+    if not coords:
+        return buses, []
+    out = buses.copy()
+    if "lat" not in out.columns:
+        out["lat"] = None
+    if "lon" not in out.columns:
+        out["lon"] = None
+    missing = out.lat.isna() | out.lon.isna()
+    applied: list[dict[str, Any]] = []
+    for sub, row in sorted(coords.items()):
+        mask = missing & (out.substation.astype(str) == sub)
+        if not mask.any():
+            continue
+        out.loc[mask, "lat"] = float(row.lat)
+        out.loc[mask, "lon"] = float(row.lon)
+        applied.append(
+            {
+                "subestacion": sub,
+                "lat": float(row.lat),
+                "lon": float(row.lon),
+                "barras": sorted(str(b) for b in out.bus_id[mask]),
+                "fuente": row.note,
+            }
+        )
+    return out, applied
+
+
 # --- Alcance y frontera -----------------------------------------------------------
 
 
@@ -262,6 +301,9 @@ class _AliasedEquivalences:
 
     def substation_aliases(self, on: date) -> dict[str, str]:
         return self._inner.substation_aliases(on)
+
+    def substation_coords(self, on: date) -> Mapping[str, SubstationCoord]:
+        return self._inner.substation_coords(on)
 
 
 @dataclass(frozen=True)
@@ -627,6 +669,11 @@ def build_case(
     min_kv = c.network.min_vn_kv
     aliases = equivalences.substation_aliases(dispatch_snapshot.date)
     t, merged_buses = _apply_aliases(snapshot.tables, aliases)
+    # Coordenadas que PARATEC no publica (Pimampiro, en Ecuador), desde la tabla curada.
+    curated_buses, curated_coords = _apply_curated_coordinates(
+        t.buses, equivalences.substation_coords(dispatch_snapshot.date)
+    )
+    t = replace(t, buses=curated_buses)
 
     # 1. Alcance y elementos de red.
     buses = t.buses
@@ -875,6 +922,7 @@ def build_case(
         },
         "alcance_kv_min": min_kv,
         "alias_subestaciones": {"aplicados": aliases, "barras_fusionadas": merged_buses},
+        "coordenadas_curadas": curated_coords,
         "version_despacho": dispatch_snapshot.manifest.dispatch_version.model_dump()
         if dispatch_snapshot.manifest.dispatch_version
         else None,
