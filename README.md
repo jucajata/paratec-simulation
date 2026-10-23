@@ -45,12 +45,20 @@ sinsim run --fecha 2026-10-20 --periodo 19
 sinsim scrape --fecha 2026-10-22     # descarga otra fecha a tu carpeta de datos
 ```
 
+La primera ejecución después de instalar puede tardar hasta un minuto, mientras el sistema
+carga por primera vez las librerías científicas (pandas, pandapower). Después arranca en
+segundos.
+
 Los snapshots que descargas y los casos que construyes se guardan en tu carpeta de datos:
 `~/Library/Application Support/sinsim` en macOS, `~/.local/share/sinsim` en Linux y
 `%LOCALAPPDATA%\sinsim` en Windows. Para usar otra, define `SINSIM_HOME`. Dentro de una copia
 del repositorio, sinsim usa siempre `config/`, `data/` y `cases/` del repositorio.
 
 Para construir el paquete tú mismo: `make package` (deja el wheel y el sdist en `backend/dist/`).
+
+La API escucha solo en `127.0.0.1` y no tiene usuarios ni contraseñas. Para que otra página web
+abierta en tu navegador no pueda usarla, rechaza las peticiones dirigidas a otro host y los
+cambios que vienen de un origen que no es local.
 
 ## Comandos públicos
 

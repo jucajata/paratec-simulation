@@ -29,7 +29,7 @@ def web_dir(tmp_path: Path) -> Path:
 
 def test_the_api_serves_the_built_interface_without_hiding_the_api(app_context, web_dir):
     ctx = replace(app_context, paths=replace(app_context.paths, web=web_dir))
-    client = TestClient(create_app(ctx))
+    client = TestClient(create_app(ctx), base_url="http://127.0.0.1")
     home = client.get("/")
     assert home.status_code == 200 and "<title>sinsim</title>" in home.text
     assert client.get("/assets/app.js").status_code == 200
@@ -39,7 +39,7 @@ def test_the_api_serves_the_built_interface_without_hiding_the_api(app_context, 
 
 def test_without_a_built_interface_only_the_api_answers(app_context):
     ctx = replace(app_context, paths=replace(app_context.paths, web=None))
-    client = TestClient(create_app(ctx))
+    client = TestClient(create_app(ctx), base_url="http://127.0.0.1")
     assert client.get("/").status_code == 404
     assert client.get("/api/snapshots").status_code == 200
 

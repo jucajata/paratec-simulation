@@ -93,7 +93,9 @@ def test_no_convergio_export_has_only_metadata(case_and_run):
 
 
 def test_api_export_and_topology(app_context):
-    client = TestClient(create_app(app_context), raise_server_exceptions=False)
+    client = TestClient(
+        create_app(app_context), raise_server_exceptions=False, base_url="http://127.0.0.1"
+    )
     case = client.post("/api/cases", json={"snapshot_date": "2026-10-20", "period": 19}).json()
     run = client.post(f"/api/cases/{case['case_id']}/runs", json={"flow_type": "ac"}).json()
     r = client.get(f"/api/runs/{run['run_id']}/export")

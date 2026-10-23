@@ -22,6 +22,15 @@ sinsim se instala con un comando y funciona desde cualquier carpeta.
 - **`make package`** construye el wheel y el sdist, y una acción de GitHub los adjunta a cada
   release publicado.
 
+### Seguridad
+
+- La API local rechaza las peticiones de páginas web ajenas. Solo atiende peticiones dirigidas
+  a `127.0.0.1` o `localhost`, lo que bloquea el DNS rebinding. En los cambios, como iniciar una
+  descarga o construir un caso, exige que el origen sea local, lo que bloquea el CSRF. La
+  interfaz y la CLI no notan nada.
+- La acción de release fija cada acción a un commit exacto, y solo el trabajo que sube el
+  paquete tiene permiso de escritura.
+
 ### Sin cambios para quien clona el repositorio
 
 - Dentro del repositorio, sinsim sigue usando `config/`, `data/` y `cases/`. Un mismo escenario

@@ -36,6 +36,15 @@
 - [X] T209 [US5] Verificación SC-010 y SC-011: instalar el wheel en un entorno limpio y ejecutar
   `snapshots list`, `run` y `serve` fuera del repositorio.
 
+## Fase 4b: Seguridad (HU-5)
+
+- [X] T211 [US5] Rechazar peticiones de páginas ajenas: host local y origen local en cambios;
+  códigos `HOST_NOT_ALLOWED` y `ORIGIN_NOT_ALLOWED` en el catálogo; pruebas
+  (`backend/src/sinsim/api/security.py`, `backend/src/sinsim/api/app.py`,
+  `backend/src/sinsim/domain/errors.py`, `backend/tests/contract/test_security.py`).
+- [X] T212 Fijar por SHA las acciones del release y separar la subida en un trabajo con permiso de
+  escritura (`.github/workflows/release.yml`).
+
 ## Fase 5: Documentación y versión
 
 - [X] T210 README: instalación como herramienta, carpeta de datos y `sinsim serve`; supuesto S22;

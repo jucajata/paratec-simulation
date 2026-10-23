@@ -65,6 +65,13 @@ igual, con los datos del repositorio.
   el wheel y el sdist al release. Con eso se instala con
   `uv tool install <url del wheel del release>`.
 
+- **FR-047** La API rechaza las peticiones de páginas ajenas. Toda petición debe ir dirigida a
+  `127.0.0.1` o `localhost`; si no, responde 400 `HOST_NOT_ALLOWED` (contra DNS rebinding). En
+  los métodos que modifican, si el navegador declara un origen (`Origin` o `Referer`), debe ser
+  local; si no, responde 403 `ORIGIN_NOT_ALLOWED` (contra CSRF). Las peticiones sin esas
+  cabeceras (CLI, scripts) se aceptan. Origen: hallazgo de la revisión de seguridad, validado
+  contra la API local y aprobado por el usuario el 2026-10-23.
+
 ## Fuera de alcance
 
 - Publicar en PyPI (paso 4 de la propuesta): requiere decidir el nombre y la cuenta.
@@ -79,4 +86,7 @@ igual, con los datos del repositorio.
 - **SC-011** El resultado de `sinsim run --fecha 2026-10-20 --periodo 19` instalado coincide con el del
   repositorio: mismo `case_id`.
 - **SC-012** Todas las pruebas existentes pasan; las nuevas cubren la resolución de rutas, la lectura
-  de snapshots en dos carpetas, el servicio de la interfaz y el comando `serve`.
+  de snapshots en dos carpetas, el servicio de la interfaz, el comando `serve` y la protección de
+  FR-047.
+- **SC-013** Un POST con un origen ajeno y una petición con un host ajeno no llegan a la lógica de
+  la API; la interfaz local, por Vite o por `sinsim serve`, sigue funcionando.

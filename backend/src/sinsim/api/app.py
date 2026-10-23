@@ -16,6 +16,7 @@ from starlette.middleware.gzip import GZipMiddleware
 
 from sinsim.api import problems
 from sinsim.api.routers import cases, geo, runs, snapshots
+from sinsim.api.security import host_allowed, origin_allowed
 from sinsim.bootstrap import AppContext, build_context
 from sinsim.config import sinsim_version
 from sinsim.domain.errors import DomainError
@@ -38,7 +39,21 @@ def create_app(ctx: AppContext | None = None) -> FastAPI:
         request: Request, call_next: Callable[[Request], Awaitable[Response]]
     ) -> Response:
         trace_id = new_trace_id()
-        response = await call_next(request)
+        # FR-047: solo peticiones dirigidas a 127.0.0.1/localhost y, en cambios, desde un origen
+        # local. Ver api/security.py.
+        blocked: DomainError | None = None
+        if not host_allowed(request.headers.get("host")):
+            blocked = DomainError("HOST_NOT_ALLOWED", f"host {request.headers.get('host')!r}")
+        elif not origin_allowed(
+            request.method, request.headers.get("origin"), request.headers.get("referer")
+        ):
+            origin = request.headers.get("origin") or request.headers.get("referer")
+            blocked = DomainError("ORIGIN_NOT_ALLOWED", f"origen {origin!r}")
+        response = (
+            problems.from_domain_error(blocked, trace_id)
+            if blocked is not None
+            else await call_next(request)
+        )
         response.headers["X-Trace-Id"] = trace_id
         log_event(
             log,

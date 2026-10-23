@@ -60,6 +60,14 @@ levanta API e interfaz juntas. Una acción de GitHub adjunta el paquete a cada r
 - **Mismo caso en ambos modos**: config, equivalencias y snapshot se copian sin transformar, así que
   sus SHA-256, y por tanto el `case_id`, coinciden (SC-011).
 
+## Seguridad (FR-047)
+
+La API no tiene autenticación (NG-08) y escucha solo en `127.0.0.1`, pero el navegador del
+usuario sí llega a esa dirección: una página ajena podía enviar un POST (verificado: la API lo
+procesaba) y, con DNS rebinding, leer respuestas (verificado: la API respondía a un `Host`
+ajeno). `api/security.py` exige host local en toda petición y origen local en los métodos que
+modifican. Las peticiones sin `Origin` ni `Referer` no vienen de una página web y se aceptan.
+
 ## Riesgos
 
 - Un wheel construido sin `frontend/dist/` no trae interfaz. Mitigación: `make package` construye la

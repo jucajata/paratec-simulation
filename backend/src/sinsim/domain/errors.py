@@ -190,6 +190,22 @@ CATALOG: dict[str, ErrorSpec] = {
             "La petición no cumple el esquema. Revisa los campos indicados.",
         ),
         ErrorSpec(
+            "HOST_NOT_ALLOWED",
+            "Host no permitido",
+            400,
+            ExitCode.USAGE,
+            "La API de sinsim solo atiende peticiones dirigidas a 127.0.0.1 o localhost. Abre la "
+            "interfaz en http://127.0.0.1 con el puerto que indicó `sinsim serve`.",
+        ),
+        ErrorSpec(
+            "ORIGIN_NOT_ALLOWED",
+            "Origen no permitido",
+            403,
+            ExitCode.USAGE,
+            "La API de sinsim solo acepta cambios hechos desde su propia interfaz local. "
+            "Una página externa no puede iniciar descargas ni construir casos.",
+        ),
+        ErrorSpec(
             "INTERNAL_ERROR",
             "Error no previsto",
             500,
