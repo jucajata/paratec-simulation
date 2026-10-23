@@ -16,6 +16,8 @@ const COS_LAT0 = Math.cos((LAT0 * Math.PI) / 180);
 
 /** Radio de la separación entre barras de una misma subestación, en píxeles de modelo. */
 export const SAME_SUBSTATION_RADIUS = 3;
+/** Radio máximo al repartirlas según el zoom: unos 13 km, para no alejarlas de su ubicación. */
+export const MAX_SUBSTATION_RADIUS = 12;
 /** Distancia de la franja de barras sin coordenadas al borde oeste del mapa. */
 export const UNPLACED_MARGIN = 60;
 const UNPLACED_STEP = 14;
@@ -30,8 +32,16 @@ function substationOf(busId: string): string {
   return i < 0 ? busId : busId.slice(0, i);
 }
 
+export interface SubstationGroup {
+  center: Point;
+  /** Barras de la subestación, la de mayor tensión primero. */
+  members: string[];
+}
+
 export interface GeoLayout {
   positions: Map<string, Point>;
+  /** Subestaciones con más de una barra: la vista las reparte según el zoom. */
+  groups: SubstationGroup[];
   /** Barras sin coordenadas, dibujadas en una franja al oeste: nunca se ubican por inferencia. */
   unplaced: string[];
 }
@@ -44,6 +54,7 @@ export function geoLayout(nodes: readonly TopologyNode[]): GeoLayout {
   const positions = new Map<string, Point>();
   const groups = new Map<string, TopologyNode[]>();
   const unplaced: string[] = [];
+  const multi: SubstationGroup[] = [];
   for (const n of nodes) {
     if (n.lat === null || n.lon === null || n.lat === undefined || n.lon === undefined) {
       unplaced.push(n.id);
@@ -54,6 +65,10 @@ export function geoLayout(nodes: readonly TopologyNode[]): GeoLayout {
   }
   for (const members of groups.values()) {
     const sorted = [...members].sort((a, b) => b.vn_kv - a.vn_kv || a.id.localeCompare(b.id));
+    const head = sorted[0];
+    if (head && sorted.length > 1) {
+      multi.push({ center: project(head.lat as number, head.lon as number), members: sorted.map((n) => n.id) });
+    }
     sorted.forEach((n, i) => {
       const center = project(n.lat as number, n.lon as number);
       if (sorted.length === 1) {
@@ -75,7 +90,7 @@ export function geoLayout(nodes: readonly TopologyNode[]): GeoLayout {
       positions.set(id, { x: minX - UNPLACED_MARGIN, y: minY + i * UNPLACED_STEP });
     });
   }
-  return { positions, unplaced: [...unplaced].sort() };
+  return { positions, groups: multi, unplaced: [...unplaced].sort() };
 }
 
 type Ring = readonly (readonly number[])[];

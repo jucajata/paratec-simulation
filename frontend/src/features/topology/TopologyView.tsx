@@ -6,7 +6,26 @@ import type { Run, TopologyNode } from "../../api/types";
 import { BusDetail } from "./BusDetail";
 import { busDetail, type BusDetailData } from "./busModel";
 import { angleColor, loadingColor, voltageColor } from "./colors";
-import { type BasemapGeometry, geoLayout, geometryPath } from "./geo";
+import {
+  BRANCH_FONT_PX,
+  BUS_FONT_PX,
+  PARALLEL_GAP_PX,
+  arrowScale,
+  branchLabelBox,
+  branchWidthPx,
+  busDiameterPx,
+  busLabelBoxes,
+  LABEL_OFFSET_PX,
+  LABEL_POSITIONS,
+  overlaps,
+  placeLabels,
+  ringRadius,
+  screenGrowth,
+  type Box,
+  type LabelCandidate,
+  type Obstacle,
+} from "./declutter";
+import { MAX_SUBSTATION_RADIUS, SAME_SUBSTATION_RADIUS, type BasemapGeometry, geoLayout, geometryPath } from "./geo";
 import {
   BRANCH_LABELS,
   BRANCH_LABEL_TEXT,
@@ -48,8 +67,8 @@ interface Props {
 
 /** Zoom a partir del cual se leen las etiquetas de barras y de flujos (FR-036). */
 const LABEL_ZOOM = 2.5;
-/** Tamaños ∝ zoom^−0,6: crecen con el acercamiento, pero más despacio, y las barras se separan. */
-const SIZE_EXPONENT = -0.6;
+/** Espera tras el último zoom o desplazamiento antes de recolocar etiquetas y subestaciones. */
+const SETTLE_MS = 140;
 
 
 export function TopologyView({ run }: Props): JSX.Element {
@@ -57,6 +76,9 @@ export function TopologyView({ run }: Props): JSX.Element {
   const topology = useTopology(runId);
   const [selectedBus, setSelectedBus] = useState<string | null>(null);
   const cyRef = useRef<cytoscape.Core | null>(null);
+  // Recoloca las etiquetas sin solapes; la define el efecto que crea el grafo.
+  const declutterRef = useRef<(() => void) | null>(null);
+  const selectedBusRef = useRef<string | null>(null);
   const busIds = useMemo(
     () => (topology.data?.nodes ?? []).filter((n) => n.in_service).map((n) => n.id).sort(),
     [topology.data],
@@ -137,7 +159,14 @@ export function TopologyView({ run }: Props): JSX.Element {
         if (e) ele.data("flow_label", branchCaption(e, labels.branch));
       });
     });
+    declutterRef.current?.();
   }, [labels, topology.data]);
+
+  // La barra seleccionada siempre muestra su etiqueta.
+  useEffect(() => {
+    selectedBusRef.current = selectedBus;
+    declutterRef.current?.();
+  }, [selectedBus]);
 
   useEffect(() => {
     colorByRef.current = colorBy;
@@ -159,8 +188,14 @@ export function TopologyView({ run }: Props): JSX.Element {
     setUnplaced(geo ? geo.unplaced : []);
     const unplacedIds = new Set(geo ? geo.unplaced : []);
     let zoom = 1;
-    const sizeFactor = () => Math.pow(zoom, SIZE_EXPONENT);
+    // Tamaños en unidades de modelo calculados desde su tamaño en pantalla, que crece con el
+    // zoom solo hasta un tope: al acercarse las barras se separan sin crecer sin límite.
+    const busSize = (ele: NodeSingular) => busDiameterPx(Number(ele.data("vn_kv")) || 0, zoom) / zoom;
+    const edgeWidth = (ele: EdgeSingular) => branchWidthPx(String(ele.data("kind")), zoom) / zoom;
+    const stroke = (px: number) => (px * screenGrowth(zoom)) / zoom;
     const labelsVisible = () => zoom >= LABEL_ZOOM;
+    const flowArrow = (ele: EdgeSingular, sign: 1 | -1) =>
+      labelsVisible() && typeof ele.data("p_from") === "number" && Math.sign(ele.data("p_from")) === sign ? "triangle" : "none";
     const theme = {
       node: cssVar("--graph-node", "#5f6368"),
       border: cssVar("--graph-node-border", "#000000"),
@@ -216,8 +251,8 @@ export function TopologyView({ run }: Props): JSX.Element {
           style: {
             // Nivel de detalle: con poco zoom solo el STN; Cytoscape oculta también sus ramas.
             display: (ele: NodeSingular) => (busVisible(Number(ele.data("vn_kv")) || 0, zoom) ? "element" : "none"),
-            width: (ele: NodeSingular) => sizeFactor() * (6 + Math.sqrt(Number(ele.data("vn_kv")) || 0) / 2),
-            height: (ele: NodeSingular) => sizeFactor() * (6 + Math.sqrt(Number(ele.data("vn_kv")) || 0) / 2),
+            width: busSize,
+            height: busSize,
             "background-color": (ele: NodeSingular) => {
               const by = colorByRef.current;
               if (by === "voltage") return voltageColor(ele.data("vm_pu") as number | null);
@@ -226,48 +261,74 @@ export function TopologyView({ run }: Props): JSX.Element {
               return theme.node;
             },
             "background-opacity": (ele: NodeSingular) => (ele.data("frontier") ? 0.35 : 1),
-            "border-width": (ele: NodeSingular) => sizeFactor() * (ele.data("violation") ? 2 : 0),
+            "border-width": (ele: NodeSingular) => (ele.data("violation") ? stroke(2) : 0),
             "border-color": theme.border,
-            label: (ele: NodeSingular) => (labelsVisible() ? String(ele.data("caption")) : ""),
+            // Solo las etiquetas que caben sin solaparse (placeLabels), o la de la barra bajo el cursor.
+            label: (ele: NodeSingular) =>
+              labelsVisible() && (ele.data("showLabel") || ele.data("hover")) ? String(ele.data("caption")) : "",
             color: theme.fg,
             "text-wrap": "wrap",
-            "font-size": () => 10 / zoom,
-            "text-valign": "bottom",
-            "text-margin-y": () => 3 / zoom,
-            "text-background-color": theme.labelBg,
-            "text-background-opacity": 0.75,
-            "text-background-padding": "1px",
+            "text-max-width": () => `${400 / zoom}px`,
+            "font-size": () => BUS_FONT_PX / zoom,
+            // Posición elegida por placeLabels: debajo, encima, a la derecha o a la izquierda.
+            "text-valign": (ele: NodeSingular) => {
+              const pos = ele.data("labelPos");
+              return pos === "top" ? "top" : pos === "right" || pos === "left" ? "center" : "bottom";
+            },
+            "text-halign": (ele: NodeSingular) => {
+              const pos = ele.data("labelPos");
+              return pos === "right" ? "right" : pos === "left" ? "left" : "center";
+            },
+            "text-justification": (ele: NodeSingular) => {
+              const pos = ele.data("labelPos");
+              return pos === "right" ? "left" : pos === "left" ? "right" : "center";
+            },
+            "text-margin-y": (ele: NodeSingular) => {
+              const pos = ele.data("labelPos");
+              return pos === "top" ? -LABEL_OFFSET_PX / zoom : pos === "right" || pos === "left" ? 0 : LABEL_OFFSET_PX / zoom;
+            },
+            "text-margin-x": (ele: NodeSingular) => {
+              const pos = ele.data("labelPos");
+              return pos === "right" ? LABEL_OFFSET_PX / zoom : pos === "left" ? -LABEL_OFFSET_PX / zoom : 0;
+            },
+            // Halo del color del fondo en vez de recuadro: no tapa el mapa ni las ramas vecinas.
+            "text-outline-color": theme.labelBg,
+            "text-outline-width": () => 2.5 / zoom,
+            "text-outline-opacity": 0.9,
+            // Las barras rotuladas por encima de las demás, para que ningún disco tape su etiqueta.
+            "z-index": (ele: NodeSingular) => (ele.data("hover") ? 10 : ele.data("showLabel") ? 5 : 1),
           },
         },
         {
           selector: "node:selected",
-          style: { "border-width": () => sizeFactor() * 3, "border-color": theme.accent },
+          style: { "border-width": () => stroke(3), "border-color": theme.accent, "z-index": 11 },
         },
         {
           selector: "edge",
           style: {
-            width: (ele: EdgeSingular) => sizeFactor() * (ele.data("kind") === "line" ? 1.5 : 2.5),
+            width: edgeWidth,
             "line-style": (ele: EdgeSingular) => (ele.data("kind") === "line" ? "solid" : "dashed"),
             "line-color": (ele: EdgeSingular) =>
               colorByRef.current === "loading" ? loadingColor(ele.data("loading") as number | null) : theme.edge,
             "line-opacity": (ele: EdgeSingular) => (ele.data("unplaced") ? 0.12 : ele.data("frontier") ? 0.45 : 1),
-            "curve-style": "straight",
-            // Flecha en el sentido del flujo de P: hacia target si p_from > 0, hacia source si < 0.
-            "target-arrow-shape": (ele: EdgeSingular) =>
-              labelsVisible() && typeof ele.data("p_from") === "number" && ele.data("p_from") > 0 ? "triangle" : "none",
-            "source-arrow-shape": (ele: EdgeSingular) =>
-              labelsVisible() && typeof ele.data("p_from") === "number" && ele.data("p_from") < 0 ? "triangle" : "none",
-            "target-arrow-color": theme.node,
-            "source-arrow-color": theme.node,
-            // En pantalla la flecha mide ∝ zoom · ancho · escala; con escala ∝ zoom^−0,7 y ancho
-            // ∝ zoom^−0,6, la flecha se hace proporcionalmente más pequeña al acercarse.
-            "arrow-scale": () => Math.max(0.15, 1.2 * Math.pow(zoom, -0.7)),
-            label: (ele: EdgeSingular) => (labelsVisible() ? String(ele.data("flow_label")) : ""),
+            // Rectas, salvo los dobles circuitos, que se separan en curvas para no superponerse.
+            "curve-style": "bezier",
+            "control-point-step-size": () => PARALLEL_GAP_PX / zoom,
+            // Flecha a mitad de la rama, en el sentido del flujo de P: lejos de las barras, donde
+            // se amontonan las ramas. Hacia target si p_from > 0, hacia source si < 0.
+            "mid-target-arrow-shape": (ele: EdgeSingular) => flowArrow(ele, 1),
+            "mid-source-arrow-shape": (ele: EdgeSingular) => flowArrow(ele, -1),
+            "mid-target-arrow-color": theme.node,
+            "mid-source-arrow-color": theme.node,
+            // Tamaño fijo en pantalla con cualquier zoom (ver arrowScale).
+            "arrow-scale": (ele: EdgeSingular) => arrowScale(edgeWidth(ele), zoom),
+            label: (ele: EdgeSingular) => (labelsVisible() && ele.data("showLabel") ? String(ele.data("flow_label")) : ""),
             color: theme.fg,
-            "font-size": () => 9 / zoom,
+            "font-size": () => BRANCH_FONT_PX / zoom,
             "text-rotation": "autorotate",
-            "text-background-color": theme.labelBg,
-            "text-background-opacity": 0.75,
+            "text-outline-color": theme.labelBg,
+            "text-outline-width": () => 2.5 / zoom,
+            "text-outline-opacity": 0.9,
           },
         },
       ],
@@ -292,7 +353,93 @@ export function TopologyView({ run }: Props): JSX.Element {
     cy.on("viewport", syncBasemap);
     syncBasemap();
     zoom = cy.zoom();
-    cy.style().update();
+
+    // Reparte las barras visibles de cada subestación en un círculo cuyo tamaño en pantalla
+    // evita que se tapen. El centro es la coordenada de PARATEC: no se mueve.
+    const spreadSubstations = () => {
+      if (!geo) return;
+      cy.batch(() => {
+        for (const g of geo.groups) {
+          const members = g.members.map((id) => cy.getElementById(id)).filter((n) => n.nonempty());
+          const shown = members.filter((n) => busVisible(Number(n.data("vn_kv")) || 0, zoom));
+          if (shown.length === 0) continue;
+          const d = Math.max(...shown.map((n) => busDiameterPx(Number(n.data("vn_kv")) || 0, zoom)));
+          const r = ringRadius(shown.length, d, zoom, SAME_SUBSTATION_RADIUS, MAX_SUBSTATION_RADIUS);
+          shown.forEach((n, i) => {
+            const angle = (2 * Math.PI * i) / shown.length - Math.PI / 2;
+            n.position({ x: g.center.x + r * Math.cos(angle), y: g.center.y + r * Math.sin(angle) });
+          });
+        }
+      });
+    };
+
+    // Decide qué etiquetas caben sin solaparse ni tapar otras barras, en el orden de prioridad:
+    // seleccionada, fuera de límite, mayor tensión, más potencia. Solo mira lo que está en pantalla.
+    const declutter = () => {
+      if (!labelsVisible()) return;
+      const view: Box = { x1: -40, y1: -40, x2: el.clientWidth + 40, y2: el.clientHeight + 40 };
+      const discs = new Map<string, { x: number; y: number; d: number }>();
+      const obstacles: Obstacle[] = [];
+      const busCandidates: LabelCandidate[] = [];
+      cy.nodes().forEach((n) => {
+        if (!n.visible()) return;
+        const p = n.renderedPosition();
+        const d = n.renderedWidth();
+        const box = { x1: p.x - d / 2, y1: p.y - d / 2, x2: p.x + d / 2, y2: p.y + d / 2 };
+        if (!overlaps(box, view)) return;
+        discs.set(n.id(), { x: p.x, y: p.y, d });
+        obstacles.push({ owner: n.id(), box });
+        const text = String(n.data("caption") ?? "");
+        if (!text) return;
+        const priority =
+          (n.data("violation") ? 1e7 : 0) +
+          (Number(n.data("vn_kv")) || 0) * 1e4 +
+          Math.abs(Number(n.data("p_gen")) || 0) +
+          Math.abs(Number(n.data("p_load")) || 0);
+        busCandidates.push({ id: n.id(), boxes: busLabelBoxes(p.x, p.y, d, text), priority, force: n.id() === selectedBusRef.current });
+      });
+      const placed: Box[] = [];
+      const busShown = placeLabels(busCandidates, obstacles, placed);
+      const branchCandidates: LabelCandidate[] = [];
+      cy.edges().forEach((e) => {
+        if (!e.visible()) return;
+        const a = discs.get(e.source().id());
+        const b = discs.get(e.target().id());
+        const text = String(e.data("flow_label") ?? "");
+        if (!a || !b || !text) return;
+        const box = branchLabelBox(a, b, e.renderedMidpoint(), text);
+        if (box) branchCandidates.push({ id: e.id(), boxes: [box], priority: (e.data("overload") ? 1e7 : 0) + Math.abs(Number(e.data("p_from")) || 0) });
+      });
+      const branchShown = placeLabels(branchCandidates, obstacles, placed);
+      cy.batch(() => {
+        cy.nodes().forEach((n) => {
+          const index = busShown.get(n.id());
+          const show = index !== undefined;
+          if (n.data("showLabel") !== show) n.data("showLabel", show);
+          const pos = LABEL_POSITIONS[index ?? 0];
+          if (n.data("labelPos") !== pos) n.data("labelPos", pos);
+        });
+        cy.edges().forEach((e) => {
+          const show = branchShown.has(e.id());
+          if (e.data("showLabel") !== show) e.data("showLabel", show);
+        });
+      });
+    };
+    declutterRef.current = declutter;
+
+    // Tras cada zoom o desplazamiento: subestaciones repartidas, estilos y etiquetas al día.
+    let settleTimer = 0;
+    const settle = () => {
+      spreadSubstations();
+      cy.style().update();
+      declutter();
+    };
+    const scheduleSettle = () => {
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(settle, SETTLE_MS);
+    };
+    cy.on("viewport", scheduleSettle);
+    settle();
     let frame = 0;
     let strShown = zoom >= STR_ZOOM;
     setStrVisible(strShown);
@@ -311,6 +458,7 @@ export function TopologyView({ run }: Props): JSX.Element {
       if (evt.target === cy) setSelectedBus(null);
     });
     cy.on("mouseover", "node", (evt) => {
+      evt.target.data("hover", true);
       const d = evt.target.data();
       const vm = d.vm_pu !== null ? ` · ${Number(d.vm_pu).toFixed(3)} pu` : "";
       const sa = d.subarea ? ` · ${d.subarea}${d.frontier ? " (vecina)" : ""}` : " · sin subárea";
@@ -321,9 +469,12 @@ export function TopologyView({ run }: Props): JSX.Element {
       const ld = d.loading !== null ? ` · ${Number(d.loading).toFixed(1)} %` : "";
       setHover(`${d.id}${ld}${d.frontier ? " · frontera entre subáreas" : ""}`);
     });
+    cy.on("mouseout", "node", (evt) => evt.target.data("hover", false));
     cy.on("mouseout", () => setHover(""));
     return () => {
       cancelAnimationFrame(frame);
+      window.clearTimeout(settleTimer);
+      declutterRef.current = null;
       cyRef.current = null;
       cy.destroy();
     };
@@ -475,7 +626,8 @@ export function TopologyView({ run }: Props): JSX.Element {
       </div>
       {layout === "geo" && basemap.data && <p className="hint attribution">{basemap.data.attribution}</p>}
       <p className="hint">
-        Líneas continuas, transformadores discontinuos · acerca más para ver G, C y flujos
+        Líneas continuas, transformadores discontinuos · acerca más para ver G, C y flujos · las etiquetas que no caben se
+        ocultan: pasa el cursor por una barra para verla
         {layout === "geo" ? " · barras fijas en su ubicación" : " · barras arrastrables"}
         {subarea && " · barras y ramas de frontera atenuadas"}
         {layout === "geo" && unplaced.length > 0 && (
