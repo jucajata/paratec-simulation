@@ -6,6 +6,9 @@
 - `subestaciones_alias.csv` (opcional): nombre de subestación de PARATEC que designa el mismo
   nodo físico que otra ("MONTERIA (ISA)" ≡ "NUEVA MONTERIA"). PARATEC parte algunas
   subestaciones por propietario y ninguna regla general puede deducirlo.
+- `coordenadas_subestaciones.csv` (opcional): latitud y longitud WGS84 de subestaciones que
+  PARATEC publica sin coordenadas (por ejemplo Pimampiro, en Ecuador). Cada fila cita su
+  fuente en `note`; solo completa lo que falta y nunca reemplaza una coordenada de PARATEC.
 
 Una vigencia solapada para la misma clave es `EQUIVALENCE_OVERLAP`. En tiempo de ejecución
 solo se consulta la tabla: nunca hay coincidencia aproximada (research R7).
@@ -25,6 +28,7 @@ from sinsim.domain.errors import DomainError
 RESOURCES_FILE = "recursos_despacho.csv"
 NODES_FILE = "nodos_demanda.csv"
 ALIASES_FILE = "subestaciones_alias.csv"
+COORDS_FILE = "coordenadas_subestaciones.csv"
 RESOURCE_KINDS = {"plant", "unit", "intl_link"}
 
 
@@ -66,6 +70,18 @@ class AliasRow:
     note: str
 
 
+@dataclass(frozen=True)
+class CoordRow:
+    """Fila de `coordenadas_subestaciones.csv`."""
+
+    substation: str
+    lat: float
+    lon: float
+    valid_from: date
+    valid_to: date | None
+    note: str
+
+
 def _date(text: str) -> date | None:
     text = text.strip()
     return date.fromisoformat(text) if text else None
@@ -91,9 +107,10 @@ class CsvEquivalenceRepository:
         self._resources = self._read_resources(directory / RESOURCES_FILE)
         self._nodes = self._read_nodes(directory / NODES_FILE)
         self._aliases = self._read_aliases(directory / ALIASES_FILE)
+        self._coords = self._read_coords(directory / COORDS_FILE)
         self._check_overlaps()
         h = hashlib.sha256()
-        for name in (RESOURCES_FILE, NODES_FILE, ALIASES_FILE):
+        for name in (RESOURCES_FILE, NODES_FILE, ALIASES_FILE, COORDS_FILE):
             p = directory / name
             h.update(p.read_bytes() if p.exists() else b"")
         self._sha256 = h.hexdigest()
@@ -167,6 +184,36 @@ class CsvEquivalenceRepository:
                 )
         return rows
 
+    @staticmethod
+    def _read_coords(path: Path) -> list[CoordRow]:
+        if not path.exists():
+            return []
+        rows: list[CoordRow] = []
+        with path.open(encoding="utf-8", newline="") as fh:
+            for n, rec in enumerate(csv.DictReader(fh), start=2):
+                where = f"{path.name} línea {n}"
+                try:
+                    lat = float(rec["lat"].replace(",", "."))
+                    lon = float(rec["lon"].replace(",", "."))
+                except (KeyError, ValueError) as exc:
+                    raise DomainError("EQUIVALENCE_OVERLAP", f"{where}: lat/lon inválidas") from exc
+                if not (-90.0 <= lat <= 90.0 and -180.0 <= lon <= 180.0):
+                    raise DomainError("EQUIVALENCE_OVERLAP", f"{where}: lat/lon fuera de rango")
+                note = rec.get("note", "").strip()
+                if not note:
+                    raise DomainError("EQUIVALENCE_OVERLAP", f"{where}: falta la fuente en note")
+                rows.append(
+                    CoordRow(
+                        substation=rec["substation"].strip(),
+                        lat=lat,
+                        lon=lon,
+                        valid_from=_required_date(rec, where),
+                        valid_to=_date(rec.get("valid_to", "")),
+                        note=note,
+                    )
+                )
+        return rows
+
     def _check_overlaps(self) -> None:
         def overlap(a_from: date, a_to: date | None, b_from: date, b_to: date | None) -> bool:
             return a_from <= (b_to or date.max) and b_from <= (a_to or date.max)
@@ -186,6 +233,7 @@ class CsvEquivalenceRepository:
         check(list(self._resources), lambda r: r.resource, "recurso")
         check(list(self._nodes), lambda r: (r.node, r.vn_kv), "nodo")
         check(list(self._aliases), lambda r: r.alias, "alias")
+        check(list(self._coords), lambda r: r.substation, "coordenada")
 
     def resolve_resource(self, resource: str, on: date) -> ResourceRow | None:
         """Fila vigente para un recurso del despacho, o `None`."""
@@ -207,6 +255,15 @@ class CsvEquivalenceRepository:
         return {
             r.alias: r.substation for r in self._aliases if _is_valid(r.valid_from, r.valid_to, on)
         }
+
+    def substation_coords(self, on: date) -> dict[str, CoordRow]:
+        """Coordenadas curadas vigentes: subestación → fila (con su fuente)."""
+        return {r.substation: r for r in self._coords if _is_valid(r.valid_from, r.valid_to, on)}
+
+    @property
+    def coords(self) -> list[CoordRow]:
+        """Todas las filas de coordenadas (para reportes y pruebas)."""
+        return list(self._coords)
 
     @property
     def resources(self) -> list[ResourceRow]:

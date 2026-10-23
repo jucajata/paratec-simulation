@@ -70,3 +70,43 @@ def test_sha256_changes_with_content(tmp_path: Path):
     a = write(tmp_path, "X,plant,A,,2020-01-01,,\n", "").sha256
     b = write(tmp_path, "X,plant,B,,2020-01-01,,\n", "").sha256
     assert a != b
+
+
+COORD_HEADER = "substation,lat,lon,valid_from,valid_to,note\n"
+
+
+def test_curated_coordinates_are_read_with_validity_and_source(tmp_path: Path):
+    (tmp_path / "coordenadas_subestaciones.csv").write_text(
+        COORD_HEADER + "PIMAMPIRO,0.4077455,-77.9471597,2020-01-01,,Google Maps (CELEC EP)\n",
+        encoding="utf-8",
+    )
+    repo = write(tmp_path, "", "")
+    coords = repo.substation_coords(date(2026, 10, 20))
+    assert set(coords) == {"PIMAMPIRO"}
+    assert coords["PIMAMPIRO"].lat == pytest.approx(0.4077455)
+    assert coords["PIMAMPIRO"].lon == pytest.approx(-77.9471597)
+    assert "Google Maps" in coords["PIMAMPIRO"].note
+    assert repo.substation_coords(date(2019, 1, 1)) == {}
+
+
+def test_curated_coordinates_change_the_tables_checksum(tmp_path: Path):
+    before = write(tmp_path, "", "").sha256
+    (tmp_path / "coordenadas_subestaciones.csv").write_text(
+        COORD_HEADER + "PIMAMPIRO,0.4,-77.9,2020-01-01,,fuente\n", encoding="utf-8"
+    )
+    assert CsvEquivalenceRepository(tmp_path).sha256 != before
+
+
+@pytest.mark.parametrize(
+    "row",
+    [
+        "PIMAMPIRO,95,-77.9,2020-01-01,,fuente\n",  # latitud fuera de rango
+        "PIMAMPIRO,abc,-77.9,2020-01-01,,fuente\n",  # no numérica
+        "PIMAMPIRO,0.4,-77.9,2020-01-01,,\n",  # sin fuente
+        "PIMAMPIRO,0.4,-77.9,2020-01-01,,a\nPIMAMPIRO,0.5,-77.9,2024-01-01,,b\n",  # solapada
+    ],
+)
+def test_invalid_curated_coordinates_are_rejected(tmp_path: Path, row: str):
+    (tmp_path / "coordenadas_subestaciones.csv").write_text(COORD_HEADER + row, encoding="utf-8")
+    with pytest.raises(DomainError):
+        write(tmp_path, "", "")

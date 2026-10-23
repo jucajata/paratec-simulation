@@ -176,7 +176,7 @@ Cada barra se dibuja en la latitud y longitud que PARATEC publica para su subest
 punto y se reparten en un círculo de 3 px de modelo para que no se tapen. Una coordenada fuera
 del rectángulo de Colombia se descarta como dato inválido. Una barra sin coordenadas se dibuja
 en una franja al oeste y se lista en `quality.buses_without_coordinates`; nunca se ubica por
-cercanía ni por nombre. En el snapshot incluido faltan las coordenadas de 6 de 509
+cercanía ni por nombre. La única excepción es una coordenada curada con fuente (S21). En el snapshot incluido faltan las coordenadas de 6 de 509
 subestaciones. El mapa de fondo es solo visual: no interviene en el cálculo ni en el hash del
 caso. Origen: el usuario retiró NG-12 el 2026-10-20.
 
@@ -214,6 +214,18 @@ que viene de `config/defaults.toml` con su fuente. Una rama cuyos extremos está
 distintas se reporta "entre subáreas". El reporte se exporta en `violaciones.csv`. Las
 etiquetas de barras y ramas de la topología se eligen por el usuario; la elección se guarda
 solo en el navegador y no forma parte del caso.
+
+### S21. Coordenadas curadas de subestaciones sin coordenadas en PARATEC (FR-035)
+
+PARATEC declara algunas subestaciones sin latitud ni longitud. La tabla versionada
+`data/equivalencias/coordenadas_subestaciones.csv` (`substation`, `lat`, `lon`, `valid_from`,
+`valid_to`, `note`) completa esas coordenadas, con la fuente obligatoria en `note`. Solo llena
+barras sin coordenada de PARATEC y nunca reemplaza una publicada. Las coordenadas aplicadas
+aparecen en `assumptions.coordenadas_curadas` con sus barras y su fuente, y el SHA-256 de la
+tabla entra en el hash del caso. Primera fila: Pimampiro (CELEC EP, Ecuador), extremo de los
+cuatro circuitos Jamondino–Pimampiro 230 kV, que antes se dibujaba en la franja de barras sin
+coordenadas y cruzaba el mapa con líneas falsas. Ubicación tomada de Google Maps (0,4077455;
+−77,9471597). Origen: aporte del usuario, 2026-10-22.
 
 ## Lo que NO es un supuesto sino una limitación conocida
 
