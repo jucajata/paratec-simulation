@@ -64,6 +64,10 @@ igual, con los datos del repositorio.
 - **FR-046** Al publicar un release en GitHub, una acción construye la interfaz y el paquete y adjunta
   el wheel y el sdist al release. Con eso se instala con
   `uv tool install <url del wheel del release>`.
+- **FR-048** La misma acción publica el wheel y el sdist en PyPI con el nombre `sinsim`, mediante
+  Trusted Publishing (entorno `pypi`, sin tokens guardados). Con eso se instala con
+  `uv tool install sinsim`. Una versión ya publicada en PyPI no se reemplaza: relanzar la acción
+  para esa etiqueta no la vuelve a subir. Aprobado por el usuario el 2026-10-23.
 
 - **FR-047** La API rechaza las peticiones de páginas ajenas. Toda petición debe ir dirigida a
   `127.0.0.1` o `localhost`; si no, responde 400 `HOST_NOT_ALLOWED` (contra DNS rebinding). En
@@ -74,7 +78,6 @@ igual, con los datos del repositorio.
 
 ## Fuera de alcance
 
-- Publicar en PyPI (paso 4 de la propuesta): requiere decidir el nombre y la cuenta.
 - Tablas de equivalencias editables en modo instalado: quien cura equivalencias trabaja en el
   repositorio y aporta por pull request.
 - Escuchar en otra interfaz distinta de `127.0.0.1`.
