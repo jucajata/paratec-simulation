@@ -14,7 +14,7 @@ modelos del Sistema Interconectado Nacional (SIN) de Colombia a partir de:
 ## Requisitos
 
 - Python 3.12 y [uv](https://docs.astral.sh/uv/)
-- Node 20+ y [pnpm](https://pnpm.io/) (solo para la interfaz web)
+- Node 22.13+ y [pnpm](https://pnpm.io/) 11 (solo para la interfaz web)
 
 ## Primeros pasos (sin internet, con el snapshot incluido)
 
