@@ -3,7 +3,7 @@ PNPM ?= pnpm
 DEMO_DATE ?= 2026-10-20
 DEMO_PERIOD ?= 19
 
-.PHONY: dev demo test backend-dev frontend-dev
+.PHONY: dev demo test package backend-dev frontend-dev
 
 ## Levanta backend (127.0.0.1:8000) y frontend (127.0.0.1:5173) en local.
 dev:
@@ -24,3 +24,8 @@ test:
 	cd backend && uv run pytest --cov --cov-report=term-missing
 	cd frontend && $(PNPM) test
 	cd frontend && $(PNPM) exec playwright test
+
+## Construye la interfaz y el paquete instalable (wheel y sdist) en backend/dist/.
+package:
+	cd frontend && $(PNPM) install --frozen-lockfile && $(PNPM) build
+	cd backend && uv build

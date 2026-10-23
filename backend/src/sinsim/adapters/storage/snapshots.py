@@ -23,12 +23,32 @@ from sinsim.scraper.writer import NORMALIZED, RAW_PARATEC, TABLE_NAMES, sha256_b
 class ParquetSnapshotRepository:
     """Lee snapshots inmutables desde el sistema de archivos."""
 
-    def __init__(self, root: Path) -> None:
-        """Crea el repositorio sobre un directorio raíz (`data/paratec/`)."""
+    def __init__(self, root: Path, read_only_roots: tuple[Path, ...] = ()) -> None:
+        """Crea el repositorio sobre un directorio raíz.
+
+        Args:
+            root: Donde se leen y se escriben snapshots (`data/paratec/` o la carpeta de datos
+                del usuario).
+            read_only_roots: Raíces que solo se leen, después de `root`; en modo instalado, el
+                snapshot de demostración del paquete (FR-043).
+        """
         self.root = root
+        self.read_only_roots = read_only_roots
+
+    def _roots(self) -> tuple[Path, ...]:
+        return (self.root, *self.read_only_roots)
 
     def _dir(self, snapshot_date: date) -> Path:
-        return self.root / snapshot_date.isoformat()
+        """Carpeta del snapshot: la primera raíz que lo tiene; si ninguna, la escribible."""
+        name = snapshot_date.isoformat()
+        for root in self._roots():
+            if (root / name / "manifest.json").exists():
+                return root / name
+        return self.root / name
+
+    def has(self, snapshot_date: date) -> bool:
+        """¿Existe el snapshot en alguna raíz? Evita descargar de nuevo uno incluido."""
+        return (self._dir(snapshot_date) / "manifest.json").exists()
 
     def read_manifest(self, snapshot_date: date) -> tuple[Manifest, str]:
         """Lee el manifiesto y devuelve también su SHA-256."""
@@ -52,13 +72,16 @@ class ParquetSnapshotRepository:
     def list_summaries(self) -> list[SnapshotSummary]:
         """Lista las fechas disponibles con disponibilidad e integridad (FR-002)."""
         out: list[SnapshotSummary] = []
-        if not self.root.exists():
-            return out
-        for d in sorted(self.root.iterdir()):
-            if not d.is_dir() or d.name.startswith("."):
-                continue
+        names = {
+            d.name
+            for root in self._roots()
+            if root.exists()
+            for d in root.iterdir()
+            if d.is_dir() and not d.name.startswith(".")
+        }
+        for name in sorted(names):
             try:
-                snapshot_date = date.fromisoformat(d.name)
+                snapshot_date = date.fromisoformat(name)
                 manifest, _ = self.read_manifest(snapshot_date)
             except (ValueError, DomainError):
                 continue

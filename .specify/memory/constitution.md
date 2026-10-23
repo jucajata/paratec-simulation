@@ -1,6 +1,14 @@
 <!--
 Sync Impact Report
-- Versión: 1.1.0 → 1.1.1 (PATCH, 2026-10-20). Aclaración en IV "Comandos públicos":
+- Versión: 1.1.1 → 1.2.0 (MINOR, 2026-10-23). Se añade el modo instalado: sinsim se instala
+  como paquete y funciona fuera del repositorio (specs/002-paquete-instalable/; decisión del
+  usuario del 2026-10-23). No se elimina ni se redefine ningún principio.
+  - III.4: un snapshot también puede vivir en la carpeta de datos del usuario o dentro del
+    paquete (copia byte a byte del versionado). Inmutabilidad, manifiesto y verificación iguales.
+  - IV: el árbol suma `backend/hatch_build.py` y `.github/workflows/release.yml`; se añade el
+    comando público `sinsim serve` y una subsección «Modo instalado».
+  - Plantillas (.specify/templates/): revisadas; no requieren cambios.
+- Enmienda anterior, 1.1.0 → 1.1.1 (PATCH, 2026-10-20). Aclaración en IV "Comandos públicos":
   `--fecha` de `sinsim scrape` pasa de opcional a obligatoria (hallazgo I2 de
   /speckit-analyze; decisión del usuario). Sin cambios de principios.
 - Enmienda anterior, 1.0.0 → 1.1.0 (MINOR). Se amplía materialmente la guía: nuevas fuentes
@@ -118,7 +126,9 @@ evita que cada feature introduzca herramientas paralelas.
 3. **Datos crudos inmutables**: el flujo es `raw → normalized → modelo`. Los archivos en
    `raw/` NUNCA se modifican después de descargados.
 4. **Snapshots inmutables**: cada snapshot vive en `data/paratec/<YYYY-MM-DD>/`, incluye los
-   datos de PARATEC y los archivos de XM de esa fecha, y no se edita tras su commit. Un dato
+   datos de PARATEC y los archivos de XM de esa fecha, y no se edita tras su commit. En modo
+   instalado (IV) vive en `paratec/<YYYY-MM-DD>/` de la carpeta de datos del usuario, o dentro
+   del paquete como copia byte a byte de uno versionado; las mismas reglas aplican. Un dato
    nuevo implica un snapshot nuevo. Cada snapshot DEBE tener
    `manifest.json` con: fecha de extracción, URL/endpoint de origen, versión del scraper,
    número de registros por entidad y checksum SHA-256 de cada archivo.
@@ -161,6 +171,7 @@ origen verificables; cualquier valor silencioso o inventado invalida el análisi
 ├── specs/                         # Specs de features (spec.md, plan.md, tasks.md)
 ├── backend/
 │   ├── pyproject.toml
+│   ├── hatch_build.py             # Copia config, datos de referencia e interfaz al paquete
 │   ├── src/sinsim/
 │   │   ├── api/                   # Routers FastAPI y esquemas de entrada/salida
 │   │   ├── domain/                # Entidades, constantes, unidades, reglas puras
@@ -179,6 +190,7 @@ origen verificables; cualquier valor silencioso o inventado invalida el análisi
 ├── config/                        # Configuración (límites con su fuente, reglas, consignas)
 ├── cases/                         # Casos de ejemplo en JSON pandapower
 ├── docs/
+├── .github/workflows/release.yml  # Adjunta el paquete a cada release publicado
 └── Makefile
 ```
 
@@ -192,6 +204,14 @@ origen verificables; cualquier valor silencioso o inventado invalida el análisi
 - `make dev` — levanta backend y frontend en local.
 - `make demo` — ejecuta un caso de ejemplo con el snapshot incluido.
 - `make test` — corre todas las pruebas.
+- `sinsim serve [--puerto N]` — levanta la API y la interfaz construida en `127.0.0.1`.
+
+#### Modo instalado
+
+Fuera del repositorio, sinsim usa los recursos de solo lectura del paquete (configuración,
+equivalencias, mapa base, un snapshot de demostración e interfaz) y guarda lo que genera en la
+carpeta de datos del usuario: `$SINSIM_HOME` o la convención del sistema operativo. Dentro del
+repositorio, todo funciona como antes. El paquete se construye con `make package`.
 
 #### Convenciones
 
@@ -313,4 +333,4 @@ decisión documentada; el código no especificado es deuda que nadie revisó.
   `.specify/templates/`.
 - El "Constitution Check" de cada `plan.md` DEBE verificar los principios III, IV y VI.
 
-**Versión**: 1.1.1 | **Ratificada**: 2026-10-19 | **Última enmienda**: 2026-10-20
+**Versión**: 1.2.0 | **Ratificada**: 2026-10-19 | **Última enmienda**: 2026-10-23

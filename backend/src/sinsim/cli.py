@@ -5,6 +5,10 @@ from __future__ import annotations
 import json
 import logging
 import sys
+import threading
+import time
+import urllib.request
+import webbrowser
 from datetime import date
 from pathlib import Path
 from typing import Annotated, Any
@@ -270,6 +274,58 @@ def scrape(
         f"| estándar: XM-CND-2014-045 ed. 2025"
     )
     raise typer.Exit(code=int(ExitCode.OK))
+
+
+# --- serve -------------------------------------------------------------------------
+
+HOST = "127.0.0.1"  # Solo local, sin autenticación (NG-08).
+
+
+def _open_when_ready(url: str, timeout_s: float = 15.0) -> None:
+    """Abre el navegador cuando la API responde, sin bloquear el servidor."""
+
+    def wait_and_open() -> None:
+        deadline = time.monotonic() + timeout_s
+        while time.monotonic() < deadline:
+            try:
+                with urllib.request.urlopen(f"{url}/api/snapshots", timeout=1):
+                    webbrowser.open(url)
+                    return
+            except OSError:
+                time.sleep(0.3)
+
+    threading.Thread(target=wait_and_open, daemon=True).start()
+
+
+@app.command()
+def serve(
+    puerto: Annotated[
+        int, typer.Option("--puerto", min=1, max=65535, help="Puerto local (127.0.0.1).")
+    ] = 8000,
+    abrir: Annotated[
+        bool, typer.Option("--abrir/--no-abrir", help="Abrir la interfaz en el navegador.")
+    ] = True,
+) -> None:
+    """Levanta la API y la interfaz en 127.0.0.1 (FR-044)."""
+    import uvicorn
+
+    from sinsim.api.app import create_app
+
+    ctx = _context()
+    url = f"http://{HOST}:{puerto}"
+    typer.echo(f"Datos: {ctx.paths.root} (modo {ctx.paths.mode})")
+    if ctx.paths.web is None:
+        typer.echo(
+            f"La interfaz no está incluida: solo se sirve la API en {url}/api. "
+            "Instala sinsim desde un release, o en el repositorio ejecuta `pnpm --dir frontend "
+            "build`.",
+            err=True,
+        )
+    else:
+        typer.echo(f"sinsim en {url} (Ctrl+C para salir)")
+        if abrir:
+            _open_when_ready(url)
+    uvicorn.run(create_app(ctx), host=HOST, port=puerto, log_level="warning")
 
 
 def main() -> None:

@@ -8,6 +8,38 @@ proyecto está en desarrollo y el contenido de un caso puede cambiar entre versi
 Cada caso registra en su traza la versión de sinsim con que se calculó: para reproducir un
 resultado, usa el código de esa versión.
 
+## [0.5.0] - 2026-10-23
+
+sinsim se instala con un comando y funciona desde cualquier carpeta.
+
+### Añadido
+
+- **Paquete instalable** con todo lo necesario para trabajar sin internet: configuración, tablas
+  de equivalencias, mapa base, la interfaz construida y el snapshot del 2026-10-20.
+- **Comando `sinsim serve`**: levanta la API y la interfaz en `127.0.0.1` y abre el navegador.
+- **Carpeta de datos del usuario** para los snapshots descargados y los casos, configurable con
+  `SINSIM_HOME`.
+- **`make package`** construye el wheel y el sdist, y una acción de GitHub los adjunta a cada
+  release publicado.
+
+### Seguridad
+
+- La API local rechaza las peticiones de páginas web ajenas. Solo atiende peticiones dirigidas
+  a `127.0.0.1` o `localhost`, lo que bloquea el DNS rebinding. En los cambios, como iniciar una
+  descarga o construir un caso, exige que el origen sea local, lo que bloquea el CSRF. La
+  interfaz y la CLI no notan nada.
+- La acción de release fija cada acción a un commit exacto, y solo el trabajo que sube el
+  paquete tiene permiso de escritura.
+
+### Sin cambios para quien clona el repositorio
+
+- Dentro del repositorio, sinsim sigue usando `config/`, `data/` y `cases/`. Un mismo escenario
+  produce el mismo `case_id` en los dos modos.
+
+### Gobernanza
+
+- Constitución 1.2.0: se añade el modo instalado (III.4 y IV).
+
 ## [0.4.0] - 2026-10-23
 
 Primera versión publicada. Reúne el modelo del SIN construido desde PARATEC, el despacho
@@ -39,4 +71,5 @@ programado y el pronóstico de demanda de XM, y la interfaz web para ejecutarlo.
 
 - Snapshots de PARATEC del 2026-10-09, 2026-10-19, 2026-10-20 y 2026-10-21.
 
-[0.4.0]: https://github.com/jucajata/paratec-simulation/releases/tag/v0.4.0
+[0.5.0]: https://github.com/jucajata/sinsim/releases/tag/v0.5.0
+[0.4.0]: https://github.com/jucajata/sinsim/releases/tag/v0.4.0

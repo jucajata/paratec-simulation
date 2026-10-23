@@ -23,7 +23,9 @@ PROBLEM_FIELDS = {"type", "title", "status", "detail", "code", "user_message", "
 
 @pytest.fixture
 def client(app_context) -> TestClient:
-    return TestClient(create_app(app_context), raise_server_exceptions=False)
+    return TestClient(
+        create_app(app_context), raise_server_exceptions=False, base_url="http://127.0.0.1"
+    )
 
 
 def test_every_contract_path_exists_in_generated_openapi(client: TestClient):

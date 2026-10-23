@@ -32,7 +32,9 @@ def client(tmp_path: Path) -> tuple[TestClient, Path]:
     data_dir = tmp_path / "paratec"
     data_dir.mkdir()
     ctx = make_context(data_dir, tmp_path / "cases")
-    return TestClient(create_app(ctx), raise_server_exceptions=False), data_dir
+    return TestClient(
+        create_app(ctx), raise_server_exceptions=False, base_url="http://127.0.0.1"
+    ), data_dir
 
 
 def wait_done(client: TestClient, job_id: str, timeout_s: float = 60.0) -> dict:
