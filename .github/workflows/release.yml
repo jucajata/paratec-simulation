@@ -1,5 +1,8 @@
 # Adjunta el paquete instalable (wheel y sdist) a cada release publicado (FR-046).
 # Con eso sinsim se instala con: uv tool install <url del wheel del release>
+#
+# Cada acción está fijada a un commit exacto (la etiqueta va en el comentario). La construcción
+# corre con permisos de solo lectura; solo el trabajo que sube los archivos puede escribir.
 name: Paquete del release
 
 on:
@@ -7,33 +10,37 @@ on:
     types: [published]
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  paquete:
+  construir:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
 
       - name: La versión del paquete coincide con la etiqueta
+        env:
+          TAG: ${{ github.event.release.tag_name }}
         run: |
           version="v$(grep -m1 '^version' backend/pyproject.toml | cut -d'"' -f2)"
-          if [ "$version" != "${{ github.event.release.tag_name }}" ]; then
-            echo "backend/pyproject.toml dice $version y la etiqueta es ${{ github.event.release.tag_name }}"
+          if [ "$version" != "$TAG" ]; then
+            echo "backend/pyproject.toml dice $version y la etiqueta es $TAG"
             exit 1
           fi
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
         with:
           version: 11
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 20
           cache: pnpm
           cache-dependency-path: frontend/pnpm-lock.yaml
 
-      - uses: astral-sh/setup-uv@v5
+      - uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86 # v5
 
       - name: Construir la interfaz y el paquete
         run: make package
@@ -44,7 +51,27 @@ jobs:
           unzip -l "$wheel" | grep -q "sinsim/web/index.html"
           unzip -l "$wheel" | grep -q "sinsim/_bundled/paratec/.*/manifest.json"
 
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: paquete
+          path: |
+            backend/dist/*.whl
+            backend/dist/*.tar.gz
+          if-no-files-found: error
+
+  adjuntar:
+    needs: construir
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: paquete
+          path: dist
+
       - name: Adjuntar al release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release upload "${{ github.event.release.tag_name }}" backend/dist/*.whl backend/dist/*.tar.gz --clobber
+          TAG: ${{ github.event.release.tag_name }}
+        run: gh release upload "$TAG" dist/*.whl dist/*.tar.gz --clobber --repo "$GITHUB_REPOSITORY"
