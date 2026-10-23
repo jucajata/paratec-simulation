@@ -44,6 +44,8 @@
   `backend/src/sinsim/domain/errors.py`, `backend/tests/contract/test_security.py`).
 - [X] T212 Fijar por SHA las acciones del release y separar la subida en un trabajo con permiso de
   escritura (`.github/workflows/release.yml`).
+- [X] T213 [US5] Publicar en PyPI desde la acción de release con Trusted Publishing; README con
+  `uv tool install sinsim` (FR-048, `.github/workflows/release.yml`, `README.md`).
 
 ## Fase 5: Documentación y versión
 

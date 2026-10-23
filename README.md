@@ -28,13 +28,16 @@ make demo                       # construye el caso del 2026-10-20, periodo 19, 
 
 ## Instalar sin clonar el repositorio
 
-Cada release publicado trae el paquete listo para instalar. Con [uv](https://docs.astral.sh/uv/)
-basta un comando; uv descarga Python 3.12 si hace falta:
+sinsim está publicado en [PyPI](https://pypi.org/project/sinsim/). Con
+[uv](https://docs.astral.sh/uv/) basta un comando; uv descarga Python 3.12 si hace falta:
 
 ```bash
-uv tool install https://github.com/jucajata/sinsim/releases/download/v0.5.0/sinsim-0.5.0-py3-none-any.whl
+uv tool install sinsim
 sinsim serve          # abre la interfaz en http://127.0.0.1:8000
 ```
+
+Para actualizar a la última versión: `uv tool upgrade sinsim`. Cada release de GitHub también
+trae el wheel y el sdist adjuntos.
 
 El paquete incluye la configuración, las tablas de equivalencias, el mapa base, la interfaz y
 el snapshot del 2026-10-20, así que funciona sin internet desde cualquier carpeta:

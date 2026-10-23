@@ -1,11 +1,12 @@
-# Adjunta el paquete instalable (wheel y sdist) a cada release publicado (FR-046).
-# Con eso sinsim se instala con: uv tool install <url del wheel del release>
+# Adjunta el paquete instalable (wheel y sdist) a cada release publicado (FR-046) y lo publica en
+# PyPI (FR-048). Con eso sinsim se instala con: uv tool install sinsim
 #
 # También se lanza a mano para una etiqueta que ya existe (Actions › Run workflow): construye el
 # código de esa etiqueta con esta versión de la acción. Sirve para reintentar un release.
 #
 # Cada acción está fijada a un commit exacto (la etiqueta va en el comentario). La construcción
 # corre con permisos de solo lectura; solo el trabajo que sube los archivos puede escribir.
+# PyPI usa Trusted Publishing: confía en este workflow y en el entorno `pypi`, sin tokens guardados.
 name: Paquete del release
 
 on:
@@ -84,3 +85,22 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh release upload "$TAG" dist/*.whl dist/*.tar.gz --clobber --repo "$GITHUB_REPOSITORY"
+
+  publicar-pypi:
+    needs: construir
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/sinsim/
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: paquete
+          path: dist
+
+      # skip-existing: al relanzar para una etiqueta ya publicada, PyPI no admite reemplazar la versión.
+      - uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
+        with:
+          skip-existing: true
