@@ -26,6 +26,32 @@ make demo                       # construye el caso del 2026-10-20, periodo 19, 
 
 `make demo` escribe la exportación en `out/demo/` (cuatro CSV y `metadatos.json`).
 
+## Instalar sin clonar el repositorio
+
+Cada release publicado trae el paquete listo para instalar. Con [uv](https://docs.astral.sh/uv/)
+basta un comando; uv descarga Python 3.12 si hace falta:
+
+```bash
+uv tool install https://github.com/jucajata/paratec-simulation/releases/download/v0.5.0/sinsim-0.5.0-py3-none-any.whl
+sinsim serve          # abre la interfaz en http://127.0.0.1:8000
+```
+
+El paquete incluye la configuración, las tablas de equivalencias, el mapa base, la interfaz y
+el snapshot del 2026-10-20, así que funciona sin internet desde cualquier carpeta:
+
+```bash
+sinsim snapshots list
+sinsim run --fecha 2026-10-20 --periodo 19
+sinsim scrape --fecha 2026-10-22     # descarga otra fecha a tu carpeta de datos
+```
+
+Los snapshots que descargas y los casos que construyes se guardan en tu carpeta de datos:
+`~/Library/Application Support/sinsim` en macOS, `~/.local/share/sinsim` en Linux y
+`%LOCALAPPDATA%\sinsim` en Windows. Para usar otra, define `SINSIM_HOME`. Dentro de una copia
+del repositorio, sinsim usa siempre `config/`, `data/` y `cases/` del repositorio.
+
+Para construir el paquete tú mismo: `make package` (deja el wheel y el sdist en `backend/dist/`).
+
 ## Comandos públicos
 
 | Comando | Qué hace |
@@ -34,6 +60,8 @@ make demo                       # construye el caso del 2026-10-20, periodo 19, 
 | `uv run --project backend sinsim run --fecha YYYY-MM-DD --periodo N [--tipo ac\|dc] [--exportar DIR] [--json]` | Construye el caso, imprime el reporte de calidad y corre el flujo |
 | `uv run --project backend sinsim scrape --fecha YYYY-MM-DD [--out data/paratec/]` | Descarga PARATEC, `dDEC` y `PRON_BARRA` de esa fecha y crea un snapshot nuevo. Se admite hasta mañana (XM publica el despacho la víspera). La interfaz hace lo mismo desde el campo de fecha |
 | `make dev` | Levanta la API (`127.0.0.1:8000`) y la interfaz (`127.0.0.1:5173`) |
+| `sinsim serve [--puerto N] [--no-abrir]` | Levanta la API y la interfaz construida en `127.0.0.1` y abre el navegador |
+| `make package` | Construye la interfaz y el paquete instalable en `backend/dist/` |
 | `make test` | Corre todas las pruebas |
 
 Códigos de salida del CLI: `0` éxito (incluye un flujo que no convergió), `1` error general,

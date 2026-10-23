@@ -77,8 +77,8 @@ def scrape_snapshot(
     from sinsim.scraper.writer import RawSnapshot, write_snapshot
 
     root = out_dir or ctx.snapshots.root
-    if (root / day.isoformat()).exists():
-        raise DomainError("SNAPSHOT_EXISTS", f"ya existe {root / day.isoformat()}")
+    if (root / day.isoformat()).exists() or (out_dir is None and ctx.snapshots.has(day)):
+        raise DomainError("SNAPSHOT_EXISTS", f"ya existe el snapshot del {day.isoformat()}")
     s = ctx.cfg.config.scraper
     with RateLimitedClient(
         user_agent=ctx.cfg.config.user_agent(),

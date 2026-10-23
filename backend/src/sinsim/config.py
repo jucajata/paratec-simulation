@@ -1,14 +1,20 @@
-"""Carga de `config/defaults.toml` y resolución de rutas del repositorio.
+"""Carga de `config/defaults.toml` y resolución de rutas (modo repositorio o instalado).
 
 Los límites y supuestos citan su fuente en el propio TOML (constitución III.9). El hash del
 archivo forma parte del identificador del caso (data-model.md §4).
+
+Dentro del repositorio, las rutas son las de siempre. Fuera de él (paquete instalado, FR-040),
+la configuración, las equivalencias, el mapa base y un snapshot de demostración salen de los
+recursos de solo lectura del paquete, y lo que el usuario genera va a su carpeta de datos.
 """
 
 from __future__ import annotations
 
 import hashlib
 import os
+import sys
 import tomllib
+from collections.abc import Mapping
 from dataclasses import dataclass
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
@@ -18,6 +24,16 @@ from pydantic import BaseModel, ConfigDict
 from sinsim.domain.limits import LoadingLimit, VoltageBand
 
 CONFIG_ENV = "SINSIM_CONFIG"
+HOME_ENV = "SINSIM_HOME"
+
+_PACKAGE_DIR = Path(__file__).resolve().parent
+# Recursos que el build hook copia al paquete (backend/hatch_build.py). No existen en el
+# árbol de código: solo en un wheel instalado.
+BUNDLED_DIR = _PACKAGE_DIR / "_bundled"
+WEB_DIR = _PACKAGE_DIR / "web"
+
+REPO_MODE = "repositorio"
+INSTALLED_MODE = "instalado"
 
 
 def sinsim_version() -> str:
@@ -185,7 +201,7 @@ class LoadedConfig:
 
 @dataclass(frozen=True)
 class RepoPaths:
-    """Rutas del repositorio que usan CLI y API."""
+    """Rutas que usan CLI y API, en modo repositorio o instalado (FR-040)."""
 
     root: Path
     config_file: Path
@@ -193,15 +209,50 @@ class RepoPaths:
     equivalences: Path
     cases: Path
     geo: Path
+    mode: str = REPO_MODE
+    # Snapshots de solo lectura que se consultan después de `snapshots` (FR-043).
+    bundled_snapshots: tuple[Path, ...] = ()
+    # Interfaz construida que sirve la API, si existe (FR-045).
+    web: Path | None = None
 
 
-def find_repo_root(start: Path | None = None) -> Path:
+def user_data_dir(
+    env: Mapping[str, str] | None = None,
+    platform: str | None = None,
+    home: Path | None = None,
+) -> Path:
+    """Carpeta de datos del usuario en modo instalado (FR-041).
+
+    `$SINSIM_HOME` si está definida; si no, la convención del sistema operativo.
+
+    Args:
+        env: Variables de entorno (por defecto, las del proceso).
+        platform: Valor estilo `sys.platform` (por defecto, el actual).
+        home: Carpeta personal (por defecto, `Path.home()`).
+    """
+    env = os.environ if env is None else env
+    if env.get(HOME_ENV):
+        return Path(env[HOME_ENV]).expanduser()
+    platform = sys.platform if platform is None else platform
+    home = Path.home() if home is None else home
+    if platform == "darwin":
+        return home / "Library" / "Application Support" / "sinsim"
+    if platform.startswith("win"):
+        local = env.get("LOCALAPPDATA")
+        return (Path(local) if local else home / "AppData" / "Local") / "sinsim"
+    xdg = env.get("XDG_DATA_HOME")
+    return (Path(xdg) if xdg else home / ".local" / "share") / "sinsim"
+
+
+def find_repo_root(start: Path | None = None, *, search_package: bool = True) -> Path:
     """Busca hacia arriba el directorio que contiene `config/defaults.toml`.
 
-    Empieza en `start` (por defecto el directorio actual) y, si no lo encuentra, en la
-    ubicación del paquete instalado en modo editable.
+    Empieza en `start` (por defecto el directorio actual) y, si `search_package` y no lo
+    encuentra, en la ubicación del paquete instalado en modo editable.
     """
-    candidates = [start or Path.cwd(), Path(__file__).resolve()]
+    candidates = [start or Path.cwd()]
+    if search_package:
+        candidates.append(_PACKAGE_DIR)
     for base in candidates:
         for d in (base, *base.parents):
             if (d / "config" / "defaults.toml").exists():
@@ -210,9 +261,10 @@ def find_repo_root(start: Path | None = None) -> Path:
     raise FileNotFoundError(msg)
 
 
-def repo_paths(start: Path | None = None) -> RepoPaths:
-    """Resuelve las rutas del repositorio."""
-    root = find_repo_root(start)
+def repo_paths(start: Path | None = None, *, search_package: bool = True) -> RepoPaths:
+    """Resuelve las rutas del repositorio (modo repositorio)."""
+    root = find_repo_root(start, search_package=search_package)
+    web = root / "frontend" / "dist"
     return RepoPaths(
         root=root,
         config_file=root / "config" / "defaults.toml",
@@ -220,7 +272,55 @@ def repo_paths(start: Path | None = None) -> RepoPaths:
         equivalences=root / "data" / "equivalencias",
         cases=root / "cases",
         geo=root / "data" / "geo",
+        web=web if (web / "index.html").exists() else None,
     )
+
+
+def installed_paths(data_home: Path, bundled: Path, web: Path | None = None) -> RepoPaths:
+    """Rutas del modo instalado (FR-041 a FR-043).
+
+    Args:
+        data_home: Carpeta de datos del usuario; ahí van snapshots descargados y casos.
+        bundled: Recursos de solo lectura del paquete (`sinsim/_bundled/`).
+        web: Interfaz construida incluida en el paquete, si existe.
+    """
+    demo = bundled / "paratec"
+    return RepoPaths(
+        root=data_home,
+        config_file=bundled / "config" / "defaults.toml",
+        snapshots=data_home / "paratec",
+        equivalences=bundled / "equivalencias",
+        cases=data_home / "cases",
+        geo=bundled / "geo",
+        mode=INSTALLED_MODE,
+        bundled_snapshots=(demo,) if demo.is_dir() else (),
+        web=web if web is not None and (web / "index.html").exists() else None,
+    )
+
+
+def resolve_paths(
+    start: Path | None = None,
+    *,
+    search_package: bool = True,
+    bundled: Path = BUNDLED_DIR,
+    web: Path = WEB_DIR,
+    env: Mapping[str, str] | None = None,
+) -> RepoPaths:
+    """Rutas del repositorio si sinsim corre dentro de él; si no, las del modo instalado (FR-040).
+
+    Raises:
+        FileNotFoundError: ni repositorio ni recursos del paquete (instalación incompleta).
+    """
+    try:
+        return repo_paths(start, search_package=search_package)
+    except FileNotFoundError:
+        if not (bundled / "config" / "defaults.toml").exists():
+            msg = (
+                "no se encontró config/defaults.toml ni los recursos del paquete; ejecuta desde "
+                "el repositorio, define SINSIM_CONFIG o reinstala sinsim desde un release"
+            )
+            raise FileNotFoundError(msg) from None
+        return installed_paths(user_data_dir(env), bundled, web)
 
 
 def load_config(path: Path | None = None) -> LoadedConfig:
@@ -231,7 +331,7 @@ def load_config(path: Path | None = None) -> LoadedConfig:
     """
     if path is None:
         env = os.environ.get(CONFIG_ENV)
-        path = Path(env) if env else repo_paths().config_file
+        path = Path(env) if env else resolve_paths().config_file
     raw = path.read_bytes()
     config = Config.model_validate(tomllib.loads(raw.decode("utf-8")))
     return LoadedConfig(config=config, path=path, sha256=hashlib.sha256(raw).hexdigest())

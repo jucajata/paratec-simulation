@@ -11,6 +11,7 @@ from collections.abc import Awaitable, Callable
 
 from fastapi import FastAPI, Request, Response
 from fastapi.exceptions import RequestValidationError
+from fastapi.staticfiles import StaticFiles
 from starlette.middleware.gzip import GZipMiddleware
 
 from sinsim.api import problems
@@ -78,6 +79,11 @@ def create_app(ctx: AppContext | None = None) -> FastAPI:
     app.include_router(cases.router, prefix="/api")
     app.include_router(runs.router, prefix="/api")
     app.include_router(geo.router, prefix="/api")
+    # La interfaz construida, si existe, se sirve desde la raíz (FR-045). Se monta al final:
+    # las rutas /api/… tienen prioridad.
+    web = app.state.ctx.paths.web
+    if web is not None:
+        app.mount("/", StaticFiles(directory=web, html=True), name="web")
     return app
 
 

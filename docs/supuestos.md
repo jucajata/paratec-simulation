@@ -227,6 +227,15 @@ cuatro circuitos Jamondino–Pimampiro 230 kV, que antes se dibujaba en la franj
 coordenadas y cruzaba el mapa con líneas falsas. Ubicación tomada de Google Maps (0,4077455;
 −77,9471597). Origen: aporte del usuario, 2026-10-22.
 
+### S22. Modo instalado: datos del paquete y carpeta del usuario (FR-040 a FR-046)
+
+Fuera del repositorio, sinsim lee la configuración, las equivalencias, el mapa base y el snapshot
+del 2026-10-20 de los recursos de solo lectura del paquete, copiados byte a byte del repositorio
+al construirlo. Lo que el usuario genera va a su carpeta de datos (`$SINSIM_HOME` o la convención
+del sistema). Como los archivos son idénticos, un mismo escenario produce el mismo `case_id`
+instalado o en el repositorio. Una fecha que ya está en el paquete no se vuelve a descargar.
+Origen: decisión del usuario, 2026-10-23 (specs/002-paquete-instalable/).
+
 ## Lo que NO es un supuesto sino una limitación conocida
 
 - Las tablas `recursos_despacho.csv` y `nodos_demanda.csv` del snapshot incluido son propuestas
