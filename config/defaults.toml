@@ -83,7 +83,7 @@ distributed_slack = true
 [scraper]
 min_interval_s = 1.0
 timeout_s = 60.0
-user_agent = "sinsim/{version} (+https://github.com/jucajata/paratec-simulation)"
+user_agent = "sinsim/{version} (+https://github.com/jucajata/sinsim)"
 
 [attribution]
 text = "Información proporcionada por XM S.A. E.S.P. – PARATEC y archivos públicos de despacho"
