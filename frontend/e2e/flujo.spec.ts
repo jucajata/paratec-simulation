@@ -166,3 +166,47 @@ test("un periodo inválido se rechaza con un mensaje claro", async ({ page }) =>
   await expect(page.getByText("El periodo debe estar entre 1 y 24.")).toBeVisible();
   await expect(page.getByTestId("run-button")).toBeDisabled();
 });
+
+// HU-7: el análisis N-1 completo desde la interfaz (FR-058). Corre las ~1.260 contingencias del
+// snapshot incluido: entre 1 y 3 minutos según el equipo (SC-014).
+test("análisis N-1 completo desde la interfaz", async ({ page }) => {
+  test.setTimeout(420_000);
+  await page.goto("/");
+  await page.getByTestId("snapshot-date").fill("2026-10-20");
+  await page.getByTestId("period").fill("19");
+  await page.getByTestId("run-button").click();
+  await expect(page.getByTestId("results")).toContainText("Estado: convergio", { timeout: 120_000 });
+  await expect(page.getByTestId("n1-start")).toBeEnabled();
+  await page.getByTestId("n1-start").click();
+  await expect(page.getByTestId("n1-progress")).toBeVisible();
+  await expect(page.getByTestId("n1-progress")).toContainText("contingencias", { timeout: 60_000 });
+  await expect(page.getByTestId("n1-summary")).toBeVisible({ timeout: 240_000 });
+  await expect(page.getByTestId("n1-loading")).toBeVisible();
+  await expect(page.getByTestId("n1-voltage")).toBeVisible();
+  await expect(page.getByTestId("n1-loading").locator("tbody tr").first()).toBeVisible();
+  await expect(page.getByTestId("n1-voltage").locator("tbody tr").first()).toBeVisible();
+
+  // SC-017: el resumen cuadra con los grupos que devuelve la API.
+  const jobId = await page.getByTestId("n1").getAttribute("data-job-id");
+  expect(jobId).toBeTruthy();
+  const job = (await (await page.request.get(`/api/n1/${jobId}`)).json()) as {
+    status: string;
+    result: {
+      summary: { n_total: number; n_loading: number; n_voltage: number; n_isolation: number; n_unsolved: number; n_no_impact: number };
+      loading: { outage: { element_id: string } }[];
+      voltage: { outage: { element_id: string } }[];
+      isolation: { outage: { element_id: string } }[];
+      unsolved: { outage: { element_id: string } }[];
+    };
+  };
+  expect(job.status).toBe("listo");
+  const s = job.result.summary;
+  expect(s.n_total).toBeGreaterThan(1000);
+  const withImpact = new Set([...job.result.loading, ...job.result.voltage, ...job.result.isolation].map((r) => r.outage.element_id));
+  expect(s.n_unsolved).toBe(job.result.unsolved.length);
+  expect(s.n_no_impact).toBe(s.n_total - s.n_unsolved - withImpact.size);
+  expect(s.n_loading).toBe(job.result.loading.length);
+  expect(s.n_voltage).toBe(job.result.voltage.length);
+  expect(s.n_isolation).toBe(job.result.isolation.length);
+  await expect(page.getByTestId("n1-total")).toHaveText(String(s.n_total));
+});

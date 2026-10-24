@@ -17,11 +17,13 @@ import pandapower as pp
 import typer
 
 from sinsim.adapters.storage.export import write_export
+from sinsim.adapters.storage.export_n1 import write_export_n1
 from sinsim.bootstrap import AppContext, build_context
 from sinsim.domain.dates import parse_allowed
-from sinsim.domain.entities import Run, StudyCase
+from sinsim.domain.entities import N1Analysis, Run, StudyCase
 from sinsim.domain.errors import DomainError, ExitCode
 from sinsim.observability import log_event, new_trace_id
+from sinsim.services import n1 as n1_service
 from sinsim.services import snapshots as snapshot_service
 from sinsim.services.build_case import build_case
 from sinsim.services.run_flow import run_flow
@@ -228,6 +230,111 @@ def run(
     else:
         _print_case(built.case)
         _print_run(result)
+    raise typer.Exit(code=int(ExitCode.OK))
+
+
+def _print_n1(analysis: N1Analysis) -> None:
+    s = analysis.summary
+    typer.echo("── Análisis de contingencias N-1 ──")
+    typer.echo(
+        f"Contingencias analizadas: {s.n_total} | cargabilidad: {s.n_loading} | tensiones: "
+        f"{s.n_voltage} | aíslan demanda: {s.n_isolation} | sin solución: {s.n_unsolved} | "
+        f"sin impacto: {s.n_no_impact} | {s.duration_s:,.1f} s con {analysis.workers} proceso(s)"
+    )
+    for lim in analysis.limits:
+        typer.echo(f"  límite {lim.name}: {lim.value} ({lim.source})")
+    typer.echo("Cargabilidad (10 primeras):")
+    for r in analysis.loading[:10]:
+        typer.echo(f"  {r.rank}. {r.outage.element_id} → {r.element_id}: {r.loading_percent:.1f} %")
+    typer.echo("Tensiones (10 primeras):")
+    for v in analysis.voltage[:10]:
+        typer.echo(
+            f"  {v.rank}. {v.outage.element_id} → {v.bus_id}: {v.vm_pu:.3f} pu "
+            f"({v.deviation_pu:+.3f} pu fuera de banda)"
+        )
+    typer.echo("Aíslan demanda (10 primeras):")
+    for i in analysis.isolation[:10]:
+        typer.echo(
+            f"  {i.rank}. {i.outage.element_id}: {i.n_buses} barras, "
+            f"{i.p_demand_lost_mw:,.1f} MW sin servicio"
+        )
+    typer.echo("Sin solución:")
+    for u in analysis.unsolved[:10]:
+        typer.echo(
+            f"  {u.outage.element_id}: {u.diagnostics.iterations} iteraciones, desbalance "
+            f"{u.diagnostics.max_mismatch_mva:,.2f} MVA"
+        )
+
+
+@app.command()
+def n1(
+    fecha: Annotated[
+        str, typer.Option("--fecha", help="Fecha del snapshot de PARATEC (YYYY-MM-DD).")
+    ],
+    periodo: Annotated[int, typer.Option("--periodo", help="Periodo horario 1–24.")],
+    fecha_despacho: Annotated[
+        str | None, typer.Option("--fecha-despacho", help="Snapshot del despacho y la demanda.")
+    ] = None,
+    salida: Annotated[
+        Path | None,
+        typer.Option("--salida", help="Carpeta de los CSV; por defecto ./n1-<fecha>-p<NN>/."),
+    ] = None,
+    json_output: Annotated[bool, typer.Option("--json", help="Salida en JSON.")] = False,
+) -> None:
+    """Corre el flujo AC base y el análisis de contingencias N-1; escribe los listados (HU-8)."""
+    try:
+        if not 1 <= periodo <= 24:
+            raise DomainError("PERIOD_OUT_OF_RANGE", f"periodo {periodo}")
+        snapshot_date = parse_date(fecha)
+        dispatch_date = parse_date(fecha_despacho) if fecha_despacho else snapshot_date
+        ctx = _context()
+        snapshot = snapshot_service.load_verified(ctx.snapshots, snapshot_date)
+        dispatch_snapshot = (
+            snapshot
+            if dispatch_date == snapshot_date
+            else snapshot_service.load_verified(ctx.snapshots, dispatch_date)
+        )
+        built = build_case(
+            snapshot=snapshot,
+            dispatch_snapshot=dispatch_snapshot,
+            period=periodo,
+            equivalences=ctx.equivalences,
+            cfg=ctx.cfg,
+            sinsim_version=ctx.version,
+            cases=ctx.cases,
+        )
+        run = run_flow(built.case, built.net, "ac", ctx.cfg, ctx.version)
+        ctx.cases.save_run(run)
+        if run.status != "convergio":
+            _print_run(run)
+            raise DomainError(
+                "N1_BASE_INVALID",
+                f"el flujo base de {snapshot_date} periodo {periodo} no convergió",
+            )
+        net_json = ctx.cases.get_net_json(built.case.case_id)
+
+        def progress(done: int, total: int) -> None:
+            typer.echo(f"\rN-1: {done}/{total} contingencias", nl=False, err=True)
+
+        analysis = n1_service.analyze(run, net_json, ctx.cfg, progress=progress)
+        typer.echo("", err=True)
+        out_dir = salida if salida is not None else Path(f"n1-{snapshot_date}-p{periodo:02d}")
+        written = write_export_n1(analysis, ctx.cfg.config.attribution.text, out_dir)
+        typer.echo(f"Análisis N-1 escrito en {out_dir} ({len(written)} archivos)", err=True)
+        log_event(
+            log,
+            "n1 terminado",
+            case_id=built.case.case_id,
+            run_id=run.run_id,
+            n_total=analysis.summary.n_total,
+        )
+    except DomainError as exc:
+        _fail(exc)
+        return
+    if json_output:
+        typer.echo(_dump(analysis.model_dump(mode="json")))
+    else:
+        _print_n1(analysis)
     raise typer.Exit(code=int(ExitCode.OK))
 
 

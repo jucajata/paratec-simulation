@@ -128,22 +128,15 @@ def _result(net: pp.pandapowerNet, case: StudyCase, cfg: LoadedConfig, *, dc: bo
     loading = cfg.config.loading_limit()
     bus_name = net.bus.name.to_dict()
     bus_subarea = subareas_of(net)
-    has_nominal = "nominal_kv" in net.bus.columns
     buses: list[BusResult] = []
-    for idx, row in net.res_bus.iterrows():
-        if not net.bus.at[idx, "in_service"] or pd.isna(row.vm_pu):
-            continue
-        base_kv = float(net.bus.at[idx, "vn_kv"])
-        nominal = float(net.bus.at[idx, "nominal_kv"]) if has_nominal else base_kv
-        vm_kv = float(row.vm_pu) * base_kv
-        vm_pu = vm_kv / nominal  # pu respecto al nominal declarado por PARATEC
+    for idx, (vm_pu, nominal, vm_kv) in bus_vm_nominal(net).items():
         buses.append(
             BusResult(
                 bus_id=str(bus_name[idx]),
                 vn_kv=nominal,
                 vm_pu=vm_pu,
                 vm_kv=vm_kv,
-                va_degree=float(row.va_degree),
+                va_degree=float(net.res_bus.at[idx, "va_degree"]),
                 violation=None if dc else bus_violation(vm_pu, nominal, bands),
                 subarea=bus_subarea.get(idx),
             )
@@ -260,6 +253,25 @@ def _result(net: pp.pandapowerNet, case: StudyCase, cfg: LoadedConfig, *, dc: bo
         violations=violations_report(buses, lines + trafos, bands, loading),
     )
     return RunResult(buses=buses, lines=lines, trafos=trafos, generators=gens, summary=summary)
+
+
+def bus_vm_nominal(net: pp.pandapowerNet) -> dict[int, tuple[float, float, float]]:
+    """Tensión de cada barra en servicio con resultado, en pu del nominal de PARATEC.
+
+    Devuelve índice de barra → `(vm_pu, nominal_kv, vm_kv)`. pandapower expresa `vm_pu` sobre
+    `vn_kv` (la base del modelo); PARATEC declara un nominal que puede diferir (`nominal_kv`).
+    La usan el flujo (FR-030) y el análisis N-1 (research R7 de la spec 003).
+    """
+    has_nominal = "nominal_kv" in net.bus.columns
+    out: dict[int, tuple[float, float, float]] = {}
+    for idx, row in net.res_bus.iterrows():
+        if not net.bus.at[idx, "in_service"] or pd.isna(row.vm_pu):
+            continue
+        base_kv = float(net.bus.at[idx, "vn_kv"])
+        nominal = float(net.bus.at[idx, "nominal_kv"]) if has_nominal else base_kv
+        vm_kv = float(row.vm_pu) * base_kv
+        out[int(idx)] = (vm_kv / nominal, nominal, vm_kv)
+    return out
 
 
 def subareas_of(net: pp.pandapowerNet) -> dict[Any, str]:

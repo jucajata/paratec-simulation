@@ -4,6 +4,7 @@ import { ProblemError, api } from "../../api/client";
 import { useCreateCase, useRunCase } from "../../api/hooks";
 import type { Run, StudyCase } from "../../api/types";
 import { CaseQuality } from "../case-quality/CaseQuality";
+import { N1Panel } from "../contingencies/N1Panel";
 import { ResultsTables } from "../results-tables/ResultsTables";
 import { RunPicker, type RunRequest } from "../run-picker/RunPicker";
 import { TopologyView } from "../topology/TopologyView";
@@ -80,6 +81,7 @@ export function Workspace(): JSX.Element {
         {busy && <p className="muted">Construyendo el caso y corriendo el flujo…</p>}
         {run && run.result && <TopologyView run={run} />}
         {run && <ResultsTables run={run} />}
+        {run && <N1Panel key={run.run_id} run={run} />}
         {studyCase && (
           <div className="reports">
             <CaseQuality studyCase={studyCase} />

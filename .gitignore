@@ -237,3 +237,7 @@ data/paratec/.tmp-*/
 .DS_Store
 frontend/.vite/
 frontend/*.tsbuildinfo
+# Bocetos del compañero visual de brainstorming
+.superpowers/
+# Salida por defecto de `sinsim n1`
+n1-*/

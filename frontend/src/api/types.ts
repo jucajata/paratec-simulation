@@ -347,3 +347,89 @@ export interface Basemap {
   attribution: string;
   features: BasemapFeature[];
 }
+
+// --- Contingencias N-1 (specs/003-contingencias-n1/contracts/openapi-n1.yaml) ---
+
+export type OutageKind = "line" | "trafo2w" | "gen" | "compensador";
+export type N1Status = "en_cola" | "calculando" | "listo" | "error";
+
+export interface Outage {
+  element_id: string;
+  kind: OutageKind;
+  subarea: string | null;
+  angle_ref_moved_to: string | null;
+}
+
+export interface Isolation {
+  n_buses: number;
+  p_demand_lost_mw: number;
+}
+
+export interface LoadingRow {
+  rank: number;
+  outage: Outage;
+  element_id: string;
+  loading_base_percent: number;
+  loading_percent: number;
+  n_elements: number;
+  isolation: Isolation | null;
+}
+
+export interface VoltageRow {
+  rank: number;
+  outage: Outage;
+  bus_id: string;
+  vm_base_pu: number;
+  vm_pu: number;
+  /** Negativa en subtensión, positiva en sobretensión. */
+  deviation_pu: number;
+  n_buses: number;
+  isolation: Isolation | null;
+}
+
+export interface IsolationRow {
+  rank: number;
+  outage: Outage;
+  n_buses: number;
+  p_demand_lost_mw: number;
+}
+
+export interface UnsolvedRow {
+  outage: Outage;
+  diagnostics: Diagnostics;
+}
+
+export interface N1Summary {
+  n_total: number;
+  n_loading: number;
+  n_voltage: number;
+  n_isolation: number;
+  n_unsolved: number;
+  n_no_impact: number;
+  duration_s: number;
+}
+
+export interface N1Analysis {
+  run_id: string;
+  trace: Trace;
+  limits: LimitInfo[];
+  analyzed_at: string;
+  workers: number;
+  summary: N1Summary;
+  loading: LoadingRow[];
+  voltage: VoltageRow[];
+  isolation: IsolationRow[];
+  unsolved: UnsolvedRow[];
+}
+
+export interface N1Job {
+  job_id: string;
+  run_id: string;
+  status: N1Status;
+  done: number;
+  total: number;
+  started_at: string;
+  finished_at: string | null;
+  result: N1Analysis | null;
+  error: Problem | null;
+}

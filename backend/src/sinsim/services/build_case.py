@@ -592,7 +592,7 @@ def _missing_subarea(buses: pd.DataFrame) -> pd.Series:
 # --- Barra de ángulo ------------------------------------------------------------------
 
 
-def _angle_ref(gens: pd.DataFrame, buses: pd.DataFrame, configured: str) -> tuple[str, str]:
+def choose_angle_ref(gens: pd.DataFrame, buses: pd.DataFrame, configured: str) -> tuple[str, str]:
     """Elige la barra de referencia de ángulo.
 
     Usa la configurada si tiene generación despachada en el periodo; si no, la barra STN del
@@ -783,7 +783,7 @@ def build_case(
     loads, p_demand, p_demand_unlocated = _locate_demand(
         demand, model_buses, declared_buses, frontier, equivalences_with_alias, on, report
     )
-    ref_bus, ref_reason = _angle_ref(gens, buses, c.network.angle_ref_bus)
+    ref_bus, ref_reason = choose_angle_ref(gens, buses, c.network.angle_ref_bus)
     gens["is_angle_ref"] = gens.bus == ref_bus
     gens.loc[gens.is_angle_ref, "is_angle_ref"] = [True] + [False] * (
         int(gens.is_angle_ref.sum()) - 1

@@ -1,0 +1,120 @@
+# Rutas nuevas de la API para el análisis N-1 (spec 003). Se suman a
+# specs/001-flujo-potencia-despacho/contracts/openapi.yaml; los componentes `RunId`, `JobId`,
+# `Problem`, `Trace`, `LimitInfo`, `Diagnostics` y `ProblemInfo` son los de ese contrato.
+# Todas las rutas quedan bajo la protección de FR-047 (host y origen locales).
+openapi: 3.1.0
+info:
+  title: sinsim — análisis N-1
+  version: 0.6.0
+paths:
+  /runs/{run_id}/n1:
+    post:
+      summary: Lanza el análisis N-1 sobre una ejecución AC convergida (FR-058)
+      parameters: [{$ref: "#/components/parameters/RunId"}]
+      responses:
+        "202":
+          description: Análisis aceptado; se consulta con GET /n1/{job_id}
+          content: {application/json: {schema: {$ref: "#/components/schemas/N1Job"}}}
+        "404": {description: "RUN_NOT_FOUND", $ref: "#/components/responses/Problem"}
+        "409": {description: "N1_IN_PROGRESS: ya hay un análisis corriendo", $ref: "#/components/responses/Problem"}
+        "422": {description: "N1_BASE_INVALID: la ejecución es DC o no convergió (FR-061)", $ref: "#/components/responses/Problem"}
+  /n1/{job_id}:
+    get:
+      summary: Estado y, al terminar, resultado del análisis
+      parameters: [{$ref: "#/components/parameters/JobId"}]
+      responses:
+        "200":
+          description: Estado actual
+          content: {application/json: {schema: {$ref: "#/components/schemas/N1Job"}}}
+        "404": {description: "N1_JOB_NOT_FOUND (los análisis solo se recuerdan mientras la API sigue encendida)", $ref: "#/components/responses/Problem"}
+components:
+  schemas:
+    N1Job:
+      type: object
+      required: [job_id, run_id, status, done, total, started_at]
+      properties:
+        job_id: {type: string, format: uuid}
+        run_id: {type: string, format: uuid}
+        status: {type: string, enum: [en_cola, calculando, listo, error]}
+        done: {type: integer, minimum: 0}
+        total: {type: integer, minimum: 0}
+        started_at: {type: string, format: date-time}
+        finished_at: {type: [string, "null"], format: date-time}
+        result: {oneOf: [{$ref: "#/components/schemas/N1Analysis"}, {type: "null"}]}
+        error: {oneOf: [{$ref: "#/components/schemas/ProblemInfo"}, {type: "null"}]}
+    N1Analysis:
+      type: object
+      required: [run_id, trace, limits, analyzed_at, workers, summary, loading, voltage, isolation, unsolved]
+      properties:
+        run_id: {type: string, format: uuid}
+        trace: {$ref: "#/components/schemas/Trace"}
+        limits: {type: array, items: {$ref: "#/components/schemas/LimitInfo"}}
+        analyzed_at: {type: string, format: date-time}
+        workers: {type: integer, minimum: 1}
+        summary: {$ref: "#/components/schemas/N1Summary"}
+        loading: {type: array, items: {$ref: "#/components/schemas/LoadingRow"}}
+        voltage: {type: array, items: {$ref: "#/components/schemas/VoltageRow"}}
+        isolation: {type: array, items: {$ref: "#/components/schemas/IsolationRow"}}
+        unsolved: {type: array, items: {$ref: "#/components/schemas/UnsolvedRow"}}
+    N1Summary:
+      type: object
+      required: [n_total, n_loading, n_voltage, n_isolation, n_unsolved, n_no_impact, duration_s]
+      properties:
+        n_total: {type: integer}
+        n_loading: {type: integer}
+        n_voltage: {type: integer}
+        n_isolation: {type: integer}
+        n_unsolved: {type: integer}
+        n_no_impact: {type: integer}
+        duration_s: {type: number}
+    Outage:
+      type: object
+      required: [element_id, kind]
+      properties:
+        element_id: {type: string}
+        kind: {type: string, enum: [line, trafo2w, gen, compensador]}
+        subarea: {type: [string, "null"]}
+        angle_ref_moved_to: {type: [string, "null"]}
+    Isolation:
+      type: object
+      required: [n_buses, p_demand_lost_mw]
+      properties:
+        n_buses: {type: integer, minimum: 1}
+        p_demand_lost_mw: {type: number, minimum: 0}
+    LoadingRow:
+      type: object
+      required: [rank, outage, element_id, loading_base_percent, loading_percent, n_elements]
+      properties:
+        rank: {type: integer, minimum: 1}
+        outage: {$ref: "#/components/schemas/Outage"}
+        element_id: {type: string}
+        loading_base_percent: {type: number}
+        loading_percent: {type: number}
+        n_elements: {type: integer, minimum: 1}
+        isolation: {oneOf: [{$ref: "#/components/schemas/Isolation"}, {type: "null"}]}
+    VoltageRow:
+      type: object
+      required: [rank, outage, bus_id, vm_base_pu, vm_pu, deviation_pu, n_buses]
+      properties:
+        rank: {type: integer, minimum: 1}
+        outage: {$ref: "#/components/schemas/Outage"}
+        bus_id: {type: string}
+        vm_base_pu: {type: number}
+        vm_pu: {type: number}
+        deviation_pu: {type: number, description: "negativa = subtensión, positiva = sobretensión"}
+        n_buses: {type: integer, minimum: 1}
+        isolation: {oneOf: [{$ref: "#/components/schemas/Isolation"}, {type: "null"}]}
+    IsolationRow:
+      type: object
+      required: [rank, outage, n_buses, p_demand_lost_mw]
+      properties:
+        rank: {type: integer, minimum: 1}
+        outage: {$ref: "#/components/schemas/Outage"}
+        n_buses: {type: integer, minimum: 1}
+        p_demand_lost_mw: {type: number, exclusiveMinimum: 0}
+    UnsolvedRow:
+      type: object
+      required: [outage, diagnostics]
+      properties:
+        outage: {$ref: "#/components/schemas/Outage"}
+        diagnostics: {$ref: "#/components/schemas/Diagnostics"}
