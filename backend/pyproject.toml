@@ -1,6 +1,6 @@
 [project]
 name = "sinsim"
-version = "0.6.0"
+version = "0.6.1"
 description = "Flujo de potencia del SIN colombiano con pandapower, PARATEC y archivos públicos de XM"
 license = "MIT"
 requires-python = ">=3.12,<3.13"
@@ -15,6 +15,11 @@ dependencies = [
     "duckdb>=1.1",
     "networkx>=3.3",
 ]
+
+[project.urls]
+Homepage = "https://github.com/jucajata/sinsim"
+Repository = "https://github.com/jucajata/sinsim"
+Changelog = "https://github.com/jucajata/sinsim/blob/main/CHANGELOG.md"
 
 [project.scripts]
 sinsim = "sinsim.cli:app"

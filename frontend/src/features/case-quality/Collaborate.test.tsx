@@ -36,7 +36,7 @@ describe("Collaborate", () => {
     expect(dialog).toHaveTextContent("recursos_despacho.csv");
     expect(dialog).toHaveTextContent("nodos_demanda.csv");
     expect(dialog).toHaveTextContent("make test");
-    expect(screen.getByRole("link", { name: /github\.com\/jucajata\/paratec-simulation/ })).toHaveAttribute("target", "_blank");
+    expect(screen.getByRole("link", { name: /github\.com\/jucajata\/sinsim/ })).toHaveAttribute("target", "_blank");
   });
 
   it("prepara la lista de pendientes para copiar", () => {

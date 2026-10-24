@@ -103,7 +103,7 @@ def run_flow(
         )
 
     if flow_type == "dc":
-        pp.rundcpp(net, check_connectivity=True)
+        pp.rundcpp(net, check_connectivity=True, numba=False)
         return make("convergio", result=_result(net, case, cfg, dc=True))
     try:
         pp.runpp(
@@ -117,6 +117,7 @@ def run_flow(
             calculate_voltage_angles=True,
             check_connectivity=True,
             v_debug=True,
+            numba=False,  # numba no es dependencia; sin esto pandapower avisa en cada proceso
         )
     except pp.LoadflowNotConverged as exc:
         return make("no_convergio", diagnostics=diagnose(net, exc))

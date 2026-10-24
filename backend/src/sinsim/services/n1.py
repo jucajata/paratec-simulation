@@ -170,6 +170,7 @@ class Worker:
             calculate_voltage_angles=True,
             check_connectivity=True,
             v_debug=True,
+            numba=False,  # numba no es dependencia; sin esto pandapower avisa en cada proceso
         )
 
     def _restore(self) -> None:

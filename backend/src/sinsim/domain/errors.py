@@ -239,7 +239,7 @@ CATALOG: dict[str, ErrorSpec] = {
 }
 
 
-ERROR_TYPE_BASE = "https://github.com/jucajata/paratec-simulation/errors/"
+ERROR_TYPE_BASE = "https://github.com/jucajata/sinsim/errors/"
 """Prefijo del campo `type` de Problem Details (constitución V)."""
 
 

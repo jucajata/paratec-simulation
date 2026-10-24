@@ -8,6 +8,18 @@ proyecto está en desarrollo y el contenido de un caso puede cambiar entre versi
 Cada caso registra en su traza la versión de sinsim con que se calculó: para reproducir un
 resultado, usa el código de esa versión.
 
+## [0.6.1] - 2026-10-24
+
+### Corregido
+
+- pandapower ya no avisa «numba cannot be imported» en cada proceso del análisis N-1 ni en el
+  flujo: numba no es dependencia del proyecto y ahora se le indica explícitamente (`numba=False`).
+- Los enlaces al nombre anterior del repositorio (`paratec-simulation`) apuntan a `sinsim`: la
+  ventana «Cómo colaborar», el `type` de los errores de la API y el User-Agent del scraper. Como el
+  User-Agent vive en `config/defaults.toml`, el `case_id` de un mismo escenario cambia respecto a
+  0.6.0.
+- La página de sinsim en PyPI enlaza al repositorio y al registro de cambios.
+
 ## [0.6.0] - 2026-10-24
 
 Análisis de contingencias N-1: qué salida de un activo deja la red en peor estado.
@@ -100,6 +112,7 @@ programado y el pronóstico de demanda de XM, y la interfaz web para ejecutarlo.
 
 - Snapshots de PARATEC del 2026-10-09, 2026-10-19, 2026-10-20 y 2026-10-21.
 
+[0.6.1]: https://github.com/jucajata/sinsim/releases/tag/v0.6.1
 [0.6.0]: https://github.com/jucajata/sinsim/releases/tag/v0.6.0
 [0.5.0]: https://github.com/jucajata/sinsim/releases/tag/v0.5.0
 [0.4.0]: https://github.com/jucajata/sinsim/releases/tag/v0.4.0

@@ -1,6 +1,6 @@
 import type { QualityReport } from "../../api/types";
 
-export const REPO_URL = "https://github.com/jucajata/paratec-simulation";
+export const REPO_URL = "https://github.com/jucajata/sinsim";
 export const PARATEC_URL = "https://paratec.xm.com.co";
 
 /** Texto listo para pegar en una nota o issue con lo que falta por ubicar en este caso (FR-040). */
