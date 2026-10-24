@@ -22,6 +22,7 @@ from sinsim.config import (
     sinsim_version,
 )
 from sinsim.observability import configure_logging
+from sinsim.services.n1 import N1Runner
 from sinsim.services.scrape import ScrapeRunner
 
 
@@ -36,6 +37,7 @@ class AppContext:
     cases: FileCaseRepository
     version: str
     scrape_runner: ScrapeRunner
+    n1_runner: N1Runner
 
 
 def build_context(
@@ -68,4 +70,5 @@ def build_context(
         cases=FileCaseRepository(cases_dir or paths.cases),
         version=sinsim_version(),
         scrape_runner=ScrapeRunner(),
+        n1_runner=N1Runner(),
     )

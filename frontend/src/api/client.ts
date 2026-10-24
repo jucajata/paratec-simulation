@@ -2,6 +2,7 @@ import type {
   Basemap,
   CaseRequest,
   FlowType,
+  N1Job,
   Problem,
   Run,
   ScrapeJob,
@@ -62,4 +63,6 @@ export const api = {
   topology: (runId: string) => request<Topology>(`/runs/${runId}/topology`),
   basemap: () => request<Basemap>(`/geo/basemap`),
   exportUrl: (runId: string) => `/api/runs/${runId}/export`,
+  startN1: (runId: string) => request<N1Job>(`/runs/${runId}/n1`, { method: "POST" }),
+  n1Job: (jobId: string) => request<N1Job>(`/n1/${jobId}`),
 };

@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { api } from "./client";
-import type { CaseRequest, FlowType, ScrapeJob } from "./types";
+import type { CaseRequest, FlowType, N1Job, ScrapeJob } from "./types";
 
 export function useSnapshots() {
   return useQuery({ queryKey: ["snapshots"], queryFn: api.snapshots });
@@ -67,4 +67,26 @@ export function useTopology(runId: string | null) {
 /** Mapa base para la disposición geográfica (FR-035); no cambia, así que no se refresca. */
 export function useBasemap(enabled: boolean) {
   return useQuery({ queryKey: ["basemap"], queryFn: () => api.basemap(), enabled, staleTime: Infinity });
+}
+
+/** Lanza el análisis N-1 sobre una ejecución (FR-058). */
+export function useStartN1() {
+  return useMutation({ mutationFn: (runId: string) => api.startN1(runId) });
+}
+
+const N1_POLL_MS = 1000;
+
+function isN1Running(job: N1Job | undefined): boolean {
+  return job !== undefined && job.status !== "listo" && job.status !== "error";
+}
+
+/** Estado del análisis N-1; sondea cada segundo mientras corre (FR-058). */
+export function useN1Job(jobId: string | null) {
+  return useQuery({
+    queryKey: ["n1", jobId],
+    queryFn: () => api.n1Job(jobId as string),
+    enabled: jobId !== null,
+    staleTime: 0,
+    refetchInterval: (query) => (isN1Running(query.state.data) || query.state.data === undefined ? N1_POLL_MS : false),
+  });
 }

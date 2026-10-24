@@ -410,3 +410,109 @@ WARNING_PROGRAM_NOT_REAL_STATE = (
     "PROGRAM_NOT_REAL_STATE: el resultado describe el despacho programado por XM, "
     "no el estado real del SIN."
 )
+
+
+# --- Contingencias N-1 (specs/003-contingencias-n1/data-model.md) ---------------------
+
+OutageKind = Literal["line", "trafo2w", "gen", "compensador"]
+N1Status = Literal["en_cola", "calculando", "listo", "error"]
+
+
+class Outage(Frozen):
+    """El activo que sale de servicio en una contingencia (FR-049)."""
+
+    element_id: str
+    kind: OutageKind
+    subarea: str | None = None
+    angle_ref_moved_to: str | None = None
+    """Barra que toma la referencia de ángulo si sale el generador de referencia (FR-051)."""
+
+
+class Isolation(Frozen):
+    """Barras que una contingencia deja sin la componente de referencia (FR-055)."""
+
+    n_buses: int = Field(gt=0)
+    p_demand_lost_mw: float = Field(ge=0)
+
+
+class LoadingRow(Frozen):
+    """Fila del listado de cargabilidad (FR-053)."""
+
+    rank: int = Field(ge=1)
+    outage: Outage
+    element_id: str
+    loading_base_percent: float
+    loading_percent: float
+    n_elements: int = Field(ge=1)
+    isolation: Isolation | None = None
+
+
+class VoltageRow(Frozen):
+    """Fila del listado de tensiones (FR-054)."""
+
+    rank: int = Field(ge=1)
+    outage: Outage
+    bus_id: str
+    vm_base_pu: float
+    vm_pu: float
+    deviation_pu: float
+    """Distancia a la banda con signo: negativa en subtensión, positiva en sobretensión."""
+    n_buses: int = Field(ge=1)
+    isolation: Isolation | None = None
+
+
+class IsolationRow(Frozen):
+    """Fila del bloque «Aíslan demanda» (FR-055)."""
+
+    rank: int = Field(ge=1)
+    outage: Outage
+    n_buses: int = Field(ge=1)
+    p_demand_lost_mw: float = Field(gt=0)
+
+
+class UnsolvedRow(Frozen):
+    """Fila del bloque «Sin solución» (FR-056)."""
+
+    outage: Outage
+    diagnostics: Diagnostics
+
+
+class N1Summary(Frozen):
+    """Resumen del análisis (FR-057; invariante SC-017)."""
+
+    n_total: int
+    n_loading: int
+    n_voltage: int
+    n_isolation: int
+    n_unsolved: int
+    n_no_impact: int
+    duration_s: float
+
+
+class N1Analysis(Frozen):
+    """Resultado completo de un análisis N-1 con su trazabilidad (FR-060)."""
+
+    run_id: str
+    trace: Trace
+    limits: list[LimitInfo]
+    analyzed_at: datetime
+    workers: int = Field(ge=1)
+    summary: N1Summary
+    loading: list[LoadingRow]
+    voltage: list[VoltageRow]
+    isolation: list[IsolationRow]
+    unsolved: list[UnsolvedRow]
+
+
+class N1Job(Frozen):
+    """Análisis N-1 en segundo plano (FR-058); vive en memoria mientras la API está encendida."""
+
+    job_id: str
+    run_id: str
+    status: N1Status
+    done: int = Field(ge=0)
+    total: int = Field(ge=0)
+    started_at: datetime
+    finished_at: datetime | None = None
+    result: N1Analysis | None = None
+    error: ProblemInfo | None = None

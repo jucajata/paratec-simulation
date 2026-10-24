@@ -8,6 +8,35 @@ proyecto está en desarrollo y el contenido de un caso puede cambiar entre versi
 Cada caso registra en su traza la versión de sinsim con que se calculó: para reproducir un
 resultado, usa el código de esa versión.
 
+## [0.6.0] - 2026-10-24
+
+Análisis de contingencias N-1: qué salida de un activo deja la red en peor estado.
+
+### Añadido
+
+- **Análisis N-1** sobre un flujo AC convergido: saca de servicio cada línea, transformador y
+  generador (planta por barra, compensadores incluidos), uno a la vez, corre un flujo AC por
+  contingencia y compara con el caso base. Solo cuenta lo que empeora, sin umbral mínimo.
+- **Dos listados independientes**, cargabilidad y tensiones, ordenados por el peor valor que
+  provoca cada contingencia, y dos bloques: «Aíslan demanda» y «Sin solución», este con el
+  diagnóstico de la no convergencia (nunca se descarta).
+- **Botón «Analizar N-1»** en la interfaz, con avance y resumen. Un solo análisis a la vez.
+- **Comando `sinsim n1`**, que escribe los cuatro listados en CSV y `metadatos.json` con la
+  trazabilidad.
+- El cálculo se reparte entre los núcleos del equipo sin dependencias nuevas: 1.261 contingencias
+  en unos 76 s con 11 procesos.
+
+### Cambiado
+
+- Códigos nuevos en el catálogo de errores: `N1_BASE_INVALID` (422, salida 4), `N1_IN_PROGRESS`
+  (409) y `N1_JOB_NOT_FOUND` (404).
+- La versión de sinsim entra en el hash del caso, así que el `case_id` de un mismo escenario
+  cambia respecto a 0.5.0.
+
+### Gobernanza
+
+- Constitución 1.3.0: se añade el comando público `sinsim n1`.
+
 ## [0.5.0] - 2026-10-23
 
 sinsim se instala con un comando y funciona desde cualquier carpeta.
@@ -71,5 +100,6 @@ programado y el pronóstico de demanda de XM, y la interfaz web para ejecutarlo.
 
 - Snapshots de PARATEC del 2026-10-09, 2026-10-19, 2026-10-20 y 2026-10-21.
 
+[0.6.0]: https://github.com/jucajata/sinsim/releases/tag/v0.6.0
 [0.5.0]: https://github.com/jucajata/sinsim/releases/tag/v0.5.0
 [0.4.0]: https://github.com/jucajata/sinsim/releases/tag/v0.4.0

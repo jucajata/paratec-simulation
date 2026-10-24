@@ -236,6 +236,29 @@ del sistema). Como los archivos son idénticos, un mismo escenario produce el mi
 instalado o en el repositorio. Una fecha que ya está en el paquete no se vuelve a descargar.
 Origen: decisión del usuario, 2026-10-23 (specs/002-paquete-instalable/).
 
+### S23. Reparto de la potencia del generador que sale en una contingencia N-1 (FR-050, FR-051)
+
+Cuando sale una planta, su potencia la absorben los demás generadores despachados según la
+referencia distribuida ya existente (FR-015): en proporción a su `slack_weight`, que es su P
+programada. No se modela reserva primaria ni AGC. Si sale el generador de la barra de referencia
+de ángulo, la referencia pasa a la barra STN con mayor P programada entre las que quedan (el mismo
+criterio de reserva de la construcción del caso); con la referencia distribuida, esa elección no
+cambia los flujos. Origen: decisión del agente aceptada por el usuario, 2026-10-24
+(specs/003-contingencias-n1/).
+
+### S24. El análisis N-1 no se guarda en disco (FR-058, FR-059)
+
+La API guarda cada análisis en memoria mientras sigue encendida; `sinsim n1` lo escribe en CSV.
+Volver a abrir la interfaz exige lanzarlo de nuevo. Origen: decisión del agente aceptada por el
+usuario, 2026-10-24.
+
+### S25. Los compensadores (SVC/STATCOM) son contingencias y un generador es la planta por barra (FR-049)
+
+El modelo representa los compensadores como generadores con P = 0 que regulan tensión; su salida
+se analiza como la de cualquier generador y se etiqueta «compensador». Un generador es la planta
+completa en su barra (`RECURSO@BARRA`), no una unidad: sacar una planta grande es más severo que el
+N-1 por unidad del sector. Origen: decisión del usuario, 2026-10-24.
+
 ## Lo que NO es un supuesto sino una limitación conocida
 
 - Las tablas `recursos_despacho.csv` y `nodos_demanda.csv` del snapshot incluido son propuestas

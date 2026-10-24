@@ -122,7 +122,8 @@ def problem_of(exc: DomainError, trace_id: str) -> ProblemInfo:
     )
 
 
-def _internal_problem(trace_id: str) -> ProblemInfo:
+def internal_problem(trace_id: str) -> ProblemInfo:
+    """Problem Details de un error no previsto; el detalle remite a los logs (constitución V)."""
     spec = CATALOG["INTERNAL_ERROR"]
     return ProblemInfo(
         type=problem_type_url(spec.code),
@@ -226,7 +227,7 @@ class ScrapeRunner:
             return
         except Exception:  # nunca un stack trace al usuario (constitución V)
             log.exception("descarga con error no previsto", extra={"extra_fields": {}})
-            self._finish(state, error=_internal_problem(trace_id))
+            self._finish(state, error=internal_problem(trace_id))
             return
         self._finish(state, snapshot=outcome.summary)
         log_event(log, "descarga terminada", job_id=state.job_id, path=str(outcome.path))

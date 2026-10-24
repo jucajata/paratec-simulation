@@ -828,3 +828,32 @@ tr.violation td {
     max-width: none;
   }
 }
+
+/* ---------- Contingencias N-1 ---------- */
+.n1__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.n1__lists {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.n1__list {
+  min-width: 0;
+}
+.n1__list h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.n1 .table-scroll {
+  max-height: 420px;
+}
+@media (max-width: 900px) {
+  .n1__lists {
+    grid-template-columns: 1fr;
+  }
+}

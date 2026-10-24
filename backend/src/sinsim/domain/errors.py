@@ -206,6 +206,29 @@ CATALOG: dict[str, ErrorSpec] = {
             "Una página externa no puede iniciar descargas ni construir casos.",
         ),
         ErrorSpec(
+            "N1_BASE_INVALID",
+            "El análisis N-1 necesita un flujo AC convergido",
+            422,
+            ExitCode.VALIDATION,
+            "El análisis N-1 se hace sobre un flujo AC que convergió. Corre el flujo AC primero.",
+        ),
+        ErrorSpec(
+            "N1_IN_PROGRESS",
+            "Ya hay un análisis N-1 en curso",
+            409,
+            ExitCode.GENERAL,
+            "Ya hay un análisis N-1 en curso y ocupa casi todos los núcleos del equipo. Espera a "
+            "que termine e inténtalo de nuevo.",
+        ),
+        ErrorSpec(
+            "N1_JOB_NOT_FOUND",
+            "Análisis N-1 no encontrado",
+            404,
+            ExitCode.GENERAL,
+            "No hay ningún análisis N-1 con ese identificador. Los análisis solo se recuerdan "
+            "mientras la API sigue encendida.",
+        ),
+        ErrorSpec(
             "INTERNAL_ERROR",
             "Error no previsto",
             500,

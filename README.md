@@ -69,6 +69,7 @@ cambios que vienen de un origen que no es local.
 |---|---|
 | `uv run --project backend sinsim snapshots list` | Lista las fechas disponibles y qué datos tiene cada una |
 | `uv run --project backend sinsim run --fecha YYYY-MM-DD --periodo N [--tipo ac\|dc] [--exportar DIR] [--json]` | Construye el caso, imprime el reporte de calidad y corre el flujo |
+| `uv run --project backend sinsim n1 --fecha YYYY-MM-DD --periodo N [--fecha-despacho F] [--salida DIR] [--json]` | Corre el flujo AC base y el análisis de contingencias N-1; escribe los cuatro listados en CSV |
 | `uv run --project backend sinsim scrape --fecha YYYY-MM-DD [--out data/paratec/]` | Descarga PARATEC, `dDEC` y `PRON_BARRA` de esa fecha y crea un snapshot nuevo. Se admite hasta mañana (XM publica el despacho la víspera). La interfaz hace lo mismo desde el campo de fecha |
 | `make dev` | Levanta la API (`127.0.0.1:8000`) y la interfaz (`127.0.0.1:5173`) |
 | `sinsim serve [--puerto N] [--no-abrir]` | Levanta la API y la interfaz construida en `127.0.0.1` y abre el navegador |
@@ -77,6 +78,33 @@ cambios que vienen de un origen que no es local.
 
 Códigos de salida del CLI: `0` éxito (incluye un flujo que no convergió), `1` error general,
 `2` uso incorrecto, `3` error de red, `4` validación fallida o cambio de estructura en la fuente.
+
+## Análisis de contingencias N-1
+
+Sobre un flujo AC convergido, sinsim saca de servicio cada línea, cada transformador y cada
+generador (la planta completa en su barra, compensadores incluidos), uno a la vez, corre un flujo
+AC y compara con el caso base. **Solo cuenta lo que la contingencia empeora**: una línea cuenta si
+supera el 100 % y está más cargada que en el caso base; una barra, si queda fuera de su banda y más
+lejos de ella que en el caso base. No hay umbral mínimo. Los resultados van en cuatro bloques:
+
+- **Cargabilidad**: contingencias de mayor a menor cargabilidad provocada en cualquier elemento.
+- **Tensiones**: de mayor a menor distancia fuera de banda, por debajo o por encima.
+- **Aíslan demanda**: contingencias que dejan barras sin servicio, por MW.
+- **Sin solución**: el flujo no converge ni partiendo de DC; se muestra con su diagnóstico.
+
+En la interfaz, el botón «Analizar N-1» está debajo de las tablas de resultados y muestra el
+avance. Desde la terminal:
+
+```bash
+uv run --project backend sinsim n1 --fecha 2026-10-20 --periodo 19 --salida out/n1
+```
+
+escribe `n1_cargabilidad.csv`, `n1_tensiones.csv`, `n1_aislan_demanda.csv`, `n1_sin_solucion.csv`
+y `metadatos.json` con la trazabilidad: snapshot, pandapower, solver, hash del caso y límites con
+su fuente. El cálculo se reparte entre los núcleos del equipo, sin dependencias nuevas: las 1.261
+contingencias del caso incluido tardan alrededor de un minuto y medio en un portátil de 12 núcleos.
+Si sale el generador de referencia de ángulo, la referencia pasa a la barra de reserva (supuestos
+S23 a S25 en [docs/supuestos.md](docs/supuestos.md)).
 
 ## Cómo se construye el caso
 

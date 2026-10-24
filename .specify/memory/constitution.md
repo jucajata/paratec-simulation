@@ -1,6 +1,12 @@
 <!--
 Sync Impact Report
-- Versión: 1.1.1 → 1.2.0 (MINOR, 2026-10-23). Se añade el modo instalado: sinsim se instala
+- Versión: 1.2.0 → 1.3.0 (MINOR, 2026-10-24). Se añade el comando público `sinsim n1`, que
+  corre el análisis de contingencias N-1 ya previsto en I «Capacidades en alcance»
+  (specs/003-contingencias-n1/; decisión del usuario del 2026-10-24). No se elimina ni se
+  redefine ningún principio.
+  - IV «Comandos públicos»: nueva entrada `uv run sinsim n1 …`.
+  - Plantillas (.specify/templates/): revisadas; no requieren cambios.
+- Enmienda anterior, 1.1.1 → 1.2.0 (MINOR, 2026-10-23). Se añade el modo instalado: sinsim se instala
   como paquete y funciona fuera del repositorio (specs/002-paquete-instalable/; decisión del
   usuario del 2026-10-23). No se elimina ni se redefine ningún principio.
   - III.4: un snapshot también puede vivir en la carpeta de datos del usuario o dentro del
@@ -205,6 +211,8 @@ origen verificables; cualquier valor silencioso o inventado invalida el análisi
 - `make demo` — ejecuta un caso de ejemplo con el snapshot incluido.
 - `make test` — corre todas las pruebas.
 - `sinsim serve [--puerto N]` — levanta la API y la interfaz construida en `127.0.0.1`.
+- `uv run sinsim n1 --fecha YYYY-MM-DD --periodo N [--fecha-despacho F] [--salida CARPETA] [--json]`
+  — corre el flujo AC base y el análisis de contingencias N-1, y escribe los listados en CSV.
 
 #### Modo instalado
 
@@ -333,4 +341,4 @@ decisión documentada; el código no especificado es deuda que nadie revisó.
   `.specify/templates/`.
 - El "Constitution Check" de cada `plan.md` DEBE verificar los principios III, IV y VI.
 
-**Versión**: 1.2.0 | **Ratificada**: 2026-10-19 | **Última enmienda**: 2026-10-23
+**Versión**: 1.3.0 | **Ratificada**: 2026-10-19 | **Última enmienda**: 2026-10-24
